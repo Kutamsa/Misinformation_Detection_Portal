@@ -62,6 +62,7 @@ def get_db_connection():
             password=password,
             host=hostname,
             port=port
+            sslmode="require"
         )
         return conn
     except Exception as e:
