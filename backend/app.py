@@ -32,6 +32,10 @@ app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 def serve_index():
     index_file_path = os.path.join(frontend_path, "index.html")
     return FileResponse(index_file_path)
+    
+@app.head("/")
+def head_root():
+    return {"status": "ok"}
 
 app.add_middleware(
     CORSMiddleware,
