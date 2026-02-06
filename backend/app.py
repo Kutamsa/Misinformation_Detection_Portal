@@ -97,6 +97,15 @@ def init_news_db():
             );
         """)
         conn.commit()
+# Serve index.html at root URL
+@app.get("/")
+def serve_index():
+    index_file_path = os.path.join(frontend_path, "index.html")
+    return FileResponse(index_file_path)
+    
+@app.head("/")
+def head_root():
+    return {"status": "ok"}
 
         # Add ALTER TABLE statement to add 'last_fetched' column if it doesn't exist
         cur.execute("""
