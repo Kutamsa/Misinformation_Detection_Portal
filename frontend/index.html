@@ -3,22 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify It</title>
-    <link rel="stylesheet" href="/static/style.css" />
-    <script src="/static/script.js" defer></script>
+    <!-- Updated paths to reference /frontend/ for static files -->
+    <link rel="stylesheet" href="/frontend/style.css" />
+    <script src="/frontend/script.js" defer></script>
 
 </head>
 
 <body>
     <div class="header-full">
         <h1 class="main-title">🔍Verifyit </h1>
-        <p class="subtitle">Fact-Checking Made Simple</p>
+        <p class="subtitle">Spot Misinformation Stay Informed.</p>
     </div>
 
-    <div class="layout single-panel">
-        <div class="left-panel centered-panel">
+    <div class="layout two-panel">
+        <div class="left-panel">
             <div class="module-box">
-                <h2 class="section-title">Verifying Module</h2>
+                <h2 class="section-title">✅Verifying Module</h2>
                 <p class="section-sub">Choose fact-checking method:</p>
                 <div class="mode-buttons-row">
                     <button onclick="showMode('voiceMode')">🎤 Voice mode</button>
@@ -26,34 +28,23 @@
                     <button onclick="showMode('imageMode')">🖼️ Image Upload</button>
                 </div>
 
-                <!-- VOICE MODE -->
-                <div id="voiceMode" class="mode-section" style="display:none;">
+                <div id="voiceMode" class="mode-section" style="display:block;">
                     <div class="record-btn-wrapper">
                         <button id="recordBtn" onclick="toggleRecording()" class="record-circle">🎤</button>
-                        <div id="recordLabel" class="record-label">Click to start recording</div>
+                        <div id="recordLabel" class="record-label">Click to Record</div>
                     </div>
-
-                    <audio id="player" controls style="display:none; margin-top: 10px;"></audio>
-                    <div class="file-row">
-                        <input type="file" id="audioInput" accept="audio/*">
-                        <span class="trash-icon" onclick="removeAudioFile()">🗑️</span>
+                    <audio id="player" controls style="width: 100%; margin-top: 15px; display: none;"></audio>
+                    <div id="transcriptionBox" class="transcription-box">
+                        <h4>Transcription:</h4>
+                        <p id="transcriptionText">Ready to transcribe...</p>
                     </div>
-                    <button onclick="uploadAudio()">Fact Check</button>
-                    <div id="transcriptionBox" class="result-text" style="display: none;">
-                        <h3>🗣️ Transcription</h3>
-                        <p id="transcriptionText">(No transcription yet)</p>
-                    </div>
-
-
                 </div>
 
-                <!-- TEXT MODE -->
                 <div id="textMode" class="mode-section" style="display:none;">
-                    <textarea id="inputText" placeholder="Paste or type text to fact-check..." rows="4"></textarea>
+                    <textarea id="inputText" placeholder="Enter text to fact-check..."></textarea>
                     <button onclick="submitText()">Fact Check</button>
                 </div>
 
-                <!-- IMAGE MODE -->
                 <div id="imageMode" class="mode-section" style="display:none;">
                     <div class="file-row">
                         <input type="file" id="imageInput" accept="image/*">
@@ -64,7 +55,8 @@
                 </div>
 
 
-                <div id="loadingSpinner" style="display:none;">⏳ Loading...</div>
+                <div id="loadingSpinner" style="display:none;">Loading...</div>
+                <!-- Changed from ⏳ Loading... to Loading... -->
 
                 <div id="resultBox" class="result-text">
                     <h3>✅ Fact Check Result</h3>
@@ -72,7 +64,36 @@
                 </div>
             </div>
         </div>
+
+        <div class="right-panel">
+            <div class="module-box">
+                <h2 class="section-title">📰 News Feeds</h2>
+                <p class="section-sub">Add sources and view articles:</p>
+
+                <div class="news-source-input">
+                    <input type="text" id="rssUrlInput"
+                        placeholder="Enter website URL or RSS feed (e.g., https://example.com/rss)" />
+                    <input type="text" id="sourceNameInput" placeholder="Source Name (e.g., Example News)" />
+                    <button id="addSourceBtn" onclick="addNewsSource()">Add Source</button>
+                </div>
+
+                <div id="newsSourceButtonsContainer" class="news-source-buttons-container">
+                </div>
+
+                <div id="newsArticlesContainer" class="result-text news-articles-container">
+                    <h3>Recent Articles</h3>
+                    <ul id="articlesList">
+                        <li>No news sources added yet. Add RSS feeds or website URLs above.</li>
+                    </ul>
+                    <div id="loadMoreContainer" style="text-align: center; margin-top: 15px;">
+                        <button id="loadMoreBtn" class="load-more-btn" style="display:none;">Load More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- The message box for user feedback, included directly in HTML -->
+    <div id="messageBox" class="message-box"></div>
 
 </body>
 
