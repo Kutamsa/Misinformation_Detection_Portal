@@ -451,6 +451,10 @@ async def perform_image_factcheck(image_bytes: bytes, mime_type: str, caption: s
 @app.get("/")
 async def read_root():
     return FileResponse(os.path.join(frontend_dir, 'index.html'))
+    
+@app.head("/")
+def head_root():
+    return {"status": "ok"}
 
 @app.post("/factcheck/audio")
 async def factcheck_audio_web(audio_file: UploadFile = File(...)):
