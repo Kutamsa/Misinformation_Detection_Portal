@@ -1,100 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify It</title>
-    <!-- Updated paths to reference /frontend/ for static files -->
-    <link rel="stylesheet" href="/frontend/style.css" />
+    <title>VerifyIt — Independent AI Truth Radar & Fact-Checking Portal</title>
+    <!-- Editorial Fonts: Newsreader (Literary/Journalistic Serif) & DM Sans (Humanist Interface) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/frontend/style.css">
     <script src="/frontend/script.js" defer></script>
-
 </head>
-
 <body>
-    <div class="header-full">
-        <h1 class="main-title">🔍Verifyit </h1>
-        <p class="subtitle">Spot Misinformation Stay Informed.</p>
+    <!-- Top Archival Bar with Live Alert Ticker -->
+    <div class="breaking-ticker-bar">
+        <div class="ticker-inner">
+            <span class="ticker-badge"><span class="live-dot"></span> WIRE ALERTS</span>
+            <div class="ticker-scroll">
+                <span>🔴 <strong>DEBUNKED:</strong> Viral claim of ₹1000 note with GPS satellite chip is FALSE</span>
+                <span class="ticker-sep">·</span>
+                <span>🔴 <strong>AI DEEPFAKE:</strong> Pope Francis white puffer jacket was generated in Midjourney</span>
+                <span class="ticker-sep">·</span>
+                <span>🟡 <strong>MISLEADING:</strong> Boiled garlic water does not cure chronic respiratory asthma</span>
+                <span class="ticker-sep">·</span>
+                <span>🟢 <strong>VERIFIED:</strong> ISRO Chandrayaan-3 Moon South Pole landing confirmed</span>
+            </div>
+        </div>
     </div>
 
-    <div class="layout two-panel">
-        <div class="left-panel">
-            <div class="module-box">
-                <h2 class="section-title">✅Verifying Module</h2>
-                <p class="section-sub">Choose fact-checking method:</p>
-                <div class="mode-buttons-row">
-                    <button onclick="showMode('voiceMode')">🎤 Voice mode</button>
-                    <button onclick="showMode('textMode')">📝 Text Input</button>
-                    <button onclick="showMode('imageMode')">🖼️ Image Upload</button>
+    <!-- Editorial Masthead Header -->
+    <header class="editorial-masthead">
+        <div class="masthead-meta-row">
+            <span class="meta-item">📍 Bureau of Fact-Checking & Digital Forensics</span>
+            <span class="meta-item-center">TRUTH · EVIDENCE · ACCURACY</span>
+            <span class="meta-item">Edition: Multi-Lingual (Telugu + English)</span>
+        </div>
+
+        <div class="masthead-main">
+            <div class="masthead-branding">
+                <div class="masthead-emblem">⚖️</div>
+                <div>
+                    <h1 class="masthead-title">Verify<span class="title-serif-accent">It</span></h1>
+                    <div class="masthead-tagline">THE INDEPENDENT MISINFORMATION & SYNTHETIC MEDIA RADAR</div>
                 </div>
+            </div>
 
-                <div id="voiceMode" class="mode-section" style="display:block;">
-                    <div class="record-btn-wrapper">
-                        <button id="recordBtn" onclick="toggleRecording()" class="record-circle">🎤</button>
-                        <div id="recordLabel" class="record-label">Click to Record</div>
-                    </div>
-                    <audio id="player" controls style="width: 100%; margin-top: 15px; display: none;"></audio>
-                    <div id="transcriptionBox" class="transcription-box">
-                        <h4>Transcription:</h4>
-                        <p id="transcriptionText">Ready to transcribe...</p>
-                    </div>
+            <div class="masthead-badges">
+                <div class="bureau-stat">
+                    <span class="stat-num" id="statSourcesCount">5</span>
+                    <span class="stat-lbl">Active Wire Feeds</span>
                 </div>
-
-                <div id="textMode" class="mode-section" style="display:none;">
-                    <textarea id="inputText" placeholder="Enter text to fact-check..."></textarea>
-                    <button onclick="submitText()">Fact Check</button>
+                <div class="bureau-stat">
+                    <span class="stat-num">AI+Human</span>
+                    <span class="stat-lbl">Verification Protocol</span>
                 </div>
-
-                <div id="imageMode" class="mode-section" style="display:none;">
-                    <div class="file-row">
-                        <input type="file" id="imageInput" accept="image/*">
-                        <span class="trash-icon" onclick="removeImageFile()">🗑️</span>
-                    </div>
-                    <input type="text" id="captionInput" placeholder="Enter a caption or question...">
-                    <button onclick="uploadImage()">Fact Check</button>
-                </div>
-
-
-                <div id="loadingSpinner" style="display:none;">Loading...</div>
-                <!-- Changed from ⏳ Loading... to Loading... -->
-
-                <div id="resultBox" class="result-text">
-                    <h3>✅ Fact Check Result</h3>
-                    <p id="resultOutput">Fact checked results will appear here...</p>
-                </div>
+                <a href="#telegram-section" class="btn-telegram-masthead">
+                    <span>✈️ Telegram Bot</span>
+                </a>
             </div>
         </div>
 
-        <div class="right-panel">
-            <div class="module-box">
-                <h2 class="section-title">📰 News Feeds</h2>
-                <p class="section-sub">Add sources and view articles:</p>
+        <!-- Navigation Bar -->
+        <nav class="masthead-nav">
+            <a href="#verifier-section" class="nav-tab active">The Verification Desk</a>
+            <a href="#trending-section" class="nav-tab">Trending Debunks</a>
+            <a href="forensics.html" class="nav-tab nav-tab-highlight">🔬 Deepfake Academy & Forensics</a>
+            <a href="#telegram-section" class="nav-tab">Telegram Bot Assistant</a>
+            <a href="#news-section" class="nav-tab">Live Fact-Check Wire</a>
+        </nav>
+    </header>
+    <!-- Main Content Container -->
+    <main class="portal-main-body">
 
-                <div class="news-source-input">
-                    <input type="text" id="rssUrlInput"
-                        placeholder="Enter website URL or RSS feed (e.g., https://example.com/rss)" />
-                    <input type="text" id="sourceNameInput" placeholder="Source Name (e.g., Example News)" />
-                    <button id="addSourceBtn" onclick="addNewsSource()">Add Source</button>
+        <!-- HERO SECTION: Fact-Checking Engine & Quick Stats -->
+        <section id="verifier-section" class="section-anchor">
+            <div class="section-hero-header">
+                <div>
+                    <span class="kicker">MULTI-MODAL VERIFICATION ENGINE</span>
+                    <h1 class="hero-title">Verify News, Audio & Screenshots in Seconds</h1>
+                    <p class="hero-desc">Cross-reference viral rumors against authoritative truth databases. Delivers an objective Truth-O-Meter rating, clear reasoning, and spoken Telugu explanation.</p>
+                </div>
+                <div class="tech-pills-row">
+                    <span class="tech-badge">🎙️ OpenAI Whisper</span>
+                    <span class="tech-badge">👁️ Gemini Vision</span>
+                    <span class="tech-badge">🧠 GPT-4o Mini</span>
+                    <span class="tech-badge">🔊 Google Cloud TTS</span>
+                    <span class="tech-badge">✈️ Telegram Bot</span>
+                </div>
+            </div>
+
+            <div class="engine-workspace-grid">
+                <!-- Left: Multi-Modal Ingestion Box -->
+                <div class="engine-card">
+                    <div class="engine-tabs-header" role="tablist">
+                        <button type="button" class="tab-button active" id="tab-voice" onclick="switchMode('voice')">
+                            <span class="tab-icon">🎙️</span> Voice Audio
+                        </button>
+                        <button type="button" class="tab-button" id="tab-text" onclick="switchMode('text')">
+                            <span class="tab-icon">📝</span> Text Statement
+                        </button>
+                        <button type="button" class="tab-button" id="tab-image" onclick="switchMode('image')">
+                            <span class="tab-icon">🖼️</span> Image / Poster
+                        </button>
+                    </div>
+
+                    <!-- MODE 1: Voice Recording Console -->
+                    <div id="mode-voice" class="mode-container active">
+                        <div class="voice-deck">
+                            <div class="record-orb-wrap">
+                                <button id="recordBtn" class="record-orb-button" onclick="toggleRecording()" title="Click to start/stop speaking">
+                                    <span class="orb-icon">🎙️</span>
+                                </button>
+                                <div class="audio-wave-anim" id="waveVisualizer">
+                                    <span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            <div class="voice-meta">
+                                <h3 id="recordStatus" class="voice-status-title">Click Microphone to Speak</h3>
+                                <div id="recordTimer" class="voice-timer">00:00</div>
+                                <p class="voice-tip">Speak any claim in Telugu or English. OpenAI Whisper transcribes speech into text in real time.</p>
+                            </div>
+                            <audio id="recordedAudioPlayer" controls class="audio-playback-bar" style="display: none;"></audio>
+                        </div>
+                    </div>
+
+                    <!-- MODE 2: Text Statement Box -->
+                    <div id="mode-text" class="mode-container" style="display: none;">
+                        <div class="text-input-field-wrap">
+                            <textarea id="inputText" placeholder="Paste a viral forward, news headline, or claim to fact-check..." rows="4"></textarea>
+                            <div class="text-input-actions">
+                                <button class="btn-clear" onclick="clearTextInput()">Clear</button>
+                                <button class="btn-verify-primary" id="btnCheckText" onclick="submitText()">
+                                    <span>Verify Statement</span>
+                                    <span class="btn-arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- One-Click Instant Test Claims -->
+                        <div class="instant-claims-box">
+                            <span class="instant-label">⚡ Test Famous Viral Rumors (1-Click Instant Analysis):</span>
+                            <div class="chips-grid">
+                                <button class="rumor-chip chip-false" onclick="fillSample('మోదీ అమెరికా అధ్యక్షుడు')">
+                                    <span class="chip-badge red">FALSE</span> మోదీ అమెరికా అధ్యక్షుడు
+                                </button>
+                                <button class="rumor-chip chip-false" onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
+                                    <span class="chip-badge red">FALSE</span> COVID-19 5G chips
+                                </button>
+                                <button class="rumor-chip chip-mislead" onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
+                                    <span class="chip-badge amber">MISLEADING</span> Boiled water cures viruses
+                                </button>
+                                <button class="rumor-chip chip-true" onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
+                                    <span class="chip-badge green">TRUE</span> Chandrayaan-3 Moon landing
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODE 3: Image / Screenshot Upload -->
+                    <div id="mode-image" class="mode-container" style="display: none;">
+                        <div class="image-upload-dropzone" id="imageDropzone">
+                            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif" onchange="handleImageSelection(event)">
+                            <div id="dropzonePrompt" class="dropzone-text-block">
+                                <div class="dropzone-circle-icon">📷</div>
+                                <h4>Drop social media screenshot or <span class="link-browse">Browse</span></h4>
+                                <p>Upload WhatsApp forwards, newspaper clippings, or AI-generated photos</p>
+                                <span class="format-note">Supports PNG, JPG, WebP</span>
+                            </div>
+                            <div id="imagePreviewContainer" class="image-preview-wrapper" style="display: none;">
+                                <img id="imagePreview" alt="Upload preview">
+                                <button class="btn-remove-thumb" onclick="removeImageFile(event)" title="Remove image">✕</button>
+                            </div>
+                        </div>
+
+                        <div class="caption-input-box">
+                            <input type="text" id="captionInput" placeholder="Optional context or question (e.g. 'Is this circular from the Education Ministry real?')">
+                        </div>
+
+                        <button class="btn-verify-primary full-width" id="btnCheckImage" onclick="uploadImage()">
+                            <span>Analyze Image with Gemini Vision</span>
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </div>
+
+                    <!-- Loading Indicator -->
+                    <div id="loadingIndicator" class="verification-loader" style="display: none;">
+                        <div class="spinner-circle"></div>
+                        <div class="loader-labels">
+                            <strong id="loadingTitle">Cross-Checking Knowledge Bases...</strong>
+                            <span id="loadingMessage">Cross-referencing claims, computing Truth-O-Meter score, and synthesizing Telugu audio...</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="newsSourceButtonsContainer" class="news-source-buttons-container">
-                </div>
+                <!-- Right: THE TRUTH-O-METER VERDICT CARD -->
+                <div class="verdict-display-wrapper">
+                    <!-- Default State when no analysis has been run yet -->
+                    <div id="resultPlaceholder" class="verdict-placeholder-card">
+                        <div class="meter-illustration">⚖️</div>
+                        <h3>Truth-O-Meter Standby</h3>
+                        <p>Submit a statement, voice recording, or screenshot on the left to see the instant fact-check verdict, truth score, and spoken Telugu explanation.</p>
+                        <div class="placeholder-sample-hint">Or click any of the <strong>One-Click Test Rumors</strong> to see a live demo!</div>
+                    </div>
 
-                <div id="newsArticlesContainer" class="result-text news-articles-container">
-                    <h3>Recent Articles</h3>
-                    <ul id="articlesList">
-                        <li>No news sources added yet. Add RSS feeds or website URLs above.</li>
+                    <!-- Active Verdict Card -->
+                    <div id="resultCard" class="verdict-active-card" style="display: none;">
+                        <!-- Dynamic Color-coded Banner -->
+                        <div class="verdict-header-banner" id="verdictBanner">
+                            <div class="verdict-header-left">
+                                <span class="verdict-pre-tag" id="verdictTag">VERIFIED FINDING</span>
+                                <h2 class="verdict-headline" id="verdictTitle">🔴 FALSE / MISINFORMATION</h2>
+                                <div class="truth-progress-bar-wrap">
+                                    <div class="truth-progress-bar" id="truthProgressBar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <div class="confidence-badge-block" id="truthScoreBlock">
+                                <span class="conf-pct" id="truthScore">0%</span>
+                                <span class="conf-lbl" id="truthScoreLabel">TRUTH SCORE</span>
+                                <span class="conf-sub" id="certaintySub">AI Certainty: 95%</span>
+                            </div>
+                        </div>
+
+                        <!-- 1-Sentence English Executive Summary (For Beginners & Presentations) -->
+                        <div class="executive-summary-strip">
+                            <span class="summary-kicker">EXECUTIVE SUMMARY</span>
+                            <p id="englishSummaryText">Loading summary...</p>
+                        </div>
+
+                        <!-- Voice Transcription Bar (If Spoken) -->
+                        <div id="transcriptionSnippet" class="transcription-strip" style="display: none;">
+                            <span class="mic-glyph">🎙️</span>
+                            <div>
+                                <span class="transcribe-label">OpenAI Whisper Transcribed:</span>
+                                <strong id="transcriptionContent"></strong>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Telugu Explanation -->
+                        <div class="verdict-body-block">
+                            <div class="verdict-body-header">
+                                <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Detailed Telugu Verification)</span>
+                                <button class="btn-copy-verdict" onclick="copyResultText()">📋 Copy Verdict</button>
+                            </div>
+                            <p id="resultText" class="telugu-body-content"></p>
+                        </div>
+
+                        <!-- Spoken Voice Verdict Audio Player -->
+                        <div id="audioVerdictWrap" class="audio-verdict-player" style="display: none;">
+                            <div class="audio-player-meta">
+                                <div class="audio-avatar">🔊</div>
+                                <div>
+                                    <strong>Listen to Spoken Verdict (Telugu)</strong>
+                                    <span>Spoken Telugu audio explanation for accessibility & audio debunks</span>
+                                </div>
+                            </div>
+                            <audio id="verdictAudioPlayer" controls class="native-audio-player"></audio>
+                        </div>
+
+                        <!-- Live RAG Fact-Checking Wire Citations -->
+                        <div id="ragCitationsWrap" class="rag-citations-strip" style="display: none;">
+                            <span class="citations-label">🔗 Ground-Truth Citations (Live Fact-Checking Wire):</span>
+                            <div class="citations-chips-container" id="citationsList"></div>
+                        </div>
+
+                        <!-- Actionable Defense & WhatsApp Share Strip -->
+                        <div class="actionable-defense-strip" id="actionableDefenseWrap">
+                            <div class="defense-meta">
+                                <span class="defense-kicker">🛡️ ACTIONABLE DEFENSE ADVICE</span>
+                                <p class="defense-text" id="actionAdviceText">Do not forward this message. Viral claims spread when users share without independent verification.</p>
+                            </div>
+                            <button class="btn-whatsapp-debunk" id="btnWhatsappCopy" onclick="copyWhatsAppDebunkCard()">
+                                <span>📲 Copy for WhatsApp</span>
+                                <small>1-Click Debunk Card</small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: 🔥 TRENDING DEBUNKS & VIRAL MYTH BUSTER -->
+        <section id="trending-section" class="portal-section">
+            <div class="section-title-bar">
+                <div>
+                    <span class="kicker">VIRAL MISINFORMATION RADAR</span>
+                    <h2 class="section-heading">Trending Debunked Claims</h2>
+                    <p class="section-sub">Top fake news stories currently circulating on WhatsApp, YouTube, and social media, investigated by fact-checkers.</p>
+                </div>
+            </div>
+
+            <!-- Trending Claims Cards Grid -->
+            <div class="debunks-grid" id="debunksContainer">
+                <!-- Dynamically loaded from /api/trending-debunks -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: 👁️ SPOT THE FAKE: INTERACTIVE AI & DEEPFAKE GUIDE -->
+        <section id="deepfake-guide-section" class="portal-section deepfake-guide-bg">
+            <div class="section-title-bar">
+                <div>
+                    <span class="kicker">AI LITERACY & FORENSICS</span>
+                    <h2 class="section-heading">How to Identify AI-Generated Images & Deepfakes</h2>
+                    <p class="section-sub">As generative AI tools (Midjourney, DALL-E, Sora) become common, use this practical 4-point inspection checklist to spot synthetic media.</p>
+                </div>
+            </div>
+
+            <div class="forensics-cards-grid">
+                <!-- Card 1 -->
+                <div class="forensic-card">
+                    <div class="forensic-icon">✋</div>
+                    <h3>1. Hand & Finger Anatomy</h3>
+                    <p>AI image models frequently struggle with fine motor geometry. Look for:</p>
+                    <ul class="forensic-checklist">
+                        <li>Extra, missing, or conjoined fingers</li>
+                        <li>Unnatural finger lengths and deformed joints</li>
+                        <li>Melted fingernails or rings that blend into the skin</li>
                     </ul>
-                    <div id="loadMoreContainer" style="text-align: center; margin-top: 15px;">
-                        <button id="loadMoreBtn" class="load-more-btn" style="display:none;">Load More</button>
+                    <div class="forensic-tag">Common in Midjourney / Flux</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="forensic-card">
+                    <div class="forensic-icon">👁️</div>
+                    <h3>2. Eye Catchlights & Pupils</h3>
+                    <p>In authentic photography, light reflections in both pupils must match the scene's light sources:</p>
+                    <ul class="forensic-checklist">
+                        <li>Asymmetrical or non-circular pupil shapes</li>
+                        <li>Mismatched catchlights (e.g. square reflection in one eye, dot in another)</li>
+                        <li>Blurred boundaries between the iris and the sclera (white of eye)</li>
+                    </ul>
+                    <div class="forensic-tag">Key Clue in Portrait Deepfakes</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="forensic-card">
+                    <div class="forensic-icon">🔤</div>
+                    <h3>3. Background Text & Gibberish</h3>
+                    <p>Diffusion models often cannot render coherent typography in backgrounds:</p>
+                    <ul class="forensic-checklist">
+                        <li>Pseudo-English or gibberish symbols on street signs and shirts</li>
+                        <li>Warped logos on branded apparel or police badges</li>
+                        <li>Nonsensical numbers on license plates or building placards</li>
+                    </ul>
+                    <div class="forensic-tag">Dead Giveaway on Fake Posters</div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="forensic-card">
+                    <div class="forensic-icon">🔍</div>
+                    <h3>4. Reverse Image Search (Google Lens)</h3>
+                    <p>Trace the image back to its original creator before sharing viral graphics:</p>
+                    <ul class="forensic-checklist">
+                        <li>Upload to <strong>Google Lens</strong> or <strong>TinEye</strong> to find the earliest publication date</li>
+                        <li>Look for labels like "Created by AI Artist" on Reddit or ArtStation</li>
+                        <li>Check if the photo only appeared within the last 2 hours without credible news coverage</li>
+                    </ul>
+                    <div class="forensic-tag">Verification Gold Standard</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: 📱 TELEGRAM BOT ASSISTANT (MOBILE MISINFORMATION DEFENSE) -->
+        <section id="telegram-section" class="portal-section">
+            <div class="telegram-showcase-card">
+                <div class="tg-info-content">
+                    <span class="kicker-light">INTEGRATED MOBILE DEFENSE</span>
+                    <h2 class="tg-title">Fact-Check on Telegram Directly from Your Phone</h2>
+                    <p class="tg-desc">Most rumors spread on WhatsApp and Telegram groups. Instead of opening a computer, forward any viral text, voice message, or photo directly to our <strong>VerifyIt Telegram Bot</strong>. The bot responds within seconds with the verified truth and audio verdict.</p>
+
+                    <div class="tg-features-list">
+                        <div class="tg-feature-item">
+                            <span class="tg-feat-icon">🎙️</span>
+                            <div>
+                                <strong>Voice Note Transcription</strong>
+                                <span>Forwards voice recordings to OpenAI Whisper & fact-checks them automatically.</span>
+                            </div>
+                        </div>
+                        <div class="tg-feature-item">
+                            <span class="tg-feat-icon">🖼️</span>
+                            <div>
+                                <strong>Photo & Screenshot Verification</strong>
+                                <span>Inspects posters and viral circulars with Gemini Vision.</span>
+                            </div>
+                        </div>
+                        <div class="tg-feature-item">
+                            <span class="tg-feat-icon">🔊</span>
+                            <div>
+                                <strong>Audio Voice Notes Returned</strong>
+                                <span>The bot replies with a synthesized voice note in Telugu so anyone can listen.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tg-cta-row">
+                        <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="btn-open-telegram">
+                            <span class="tg-send-icon">✈️</span>
+                            <span>Connect on Telegram (@VerifyItFactCheckBot)</span>
+                        </a>
+                        <span class="tg-status-note">🟢 Active 24/7 via FastAPI Webhook</span>
+                    </div>
+                </div>
+
+                <!-- Visual Phone Mockup -->
+                <div class="tg-mockup-wrapper">
+                    <div class="phone-frame">
+                        <div class="chat-header">
+                            <div class="chat-bot-avatar">🛡️</div>
+                            <div>
+                                <strong>VerifyIt Assistant</strong>
+                                <span class="bot-online">bot · online</span>
+                            </div>
+                        </div>
+                        <div class="chat-bubbles">
+                            <div class="chat-bubble user">
+                                <p>Fwd: <em>"Schools closed for 15 days due to extreme heatwave in Andhra Pradesh."</em></p>
+                                <span class="chat-time">2:14 PM</span>
+                            </div>
+                            <div class="chat-bubble bot">
+                                <span class="bot-bubble-tag">🔴 VERDICT: FALSE</span>
+                                <p>The circular circulating on WhatsApp is fabricated. The Education Department confirmed that schools remain open as per regular schedule.</p>
+                                <div class="bubble-audio-indicator">🔊 Voice Verdict (0:18)</div>
+                                <span class="chat-time">2:14 PM</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- SECTION 5: 📰 LIVE VERIFIED NEWS & RSS WIRE -->
+        <section id="news-section" class="portal-section">
+            <div class="section-title-bar">
+                <div>
+                    <span class="kicker">REAL-TIME INTELLIGENCE</span>
+                    <h2 class="section-heading">Verified Fact-Checking Wire & Live Debunks</h2>
+                    <p class="section-sub">Live auto-synced feeds from IFCN-certified fact-checking bureaus: BOOM Live, Alt News, Snopes, Vishvas News, and FactCheck.org.</p>
+                </div>
+                <button class="btn-outline-add" onclick="toggleAddSourceForm()">+ Add Custom RSS Feed</button>
+            </div>
+
+            <!-- Collapsible Add Feed Drawer -->
+            <div id="addSourceForm" class="add-source-drawer" style="display: none;">
+                <h4>Add Custom News / Fact-Check RSS Feed</h4>
+                <div class="drawer-inputs-row">
+                    <input type="text" id="sourceNameInput" placeholder="Source Name (e.g. AltNews, Reuters Fact Check)">
+                    <input type="text" id="rssUrlInput" placeholder="RSS Feed URL (e.g. https://www.reuters.com/arc/outboundfeeds/rss/)">
+                    <div class="drawer-actions">
+                        <button class="btn-subtle" onclick="toggleAddSourceForm()">Cancel</button>
+                        <button class="btn-verify-primary btn-sm" onclick="addNewsSource()">Save & Sync Feed</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Source Filter Chips -->
+            <div class="sources-pill-scroll" id="sourceFiltersContainer">
+                <button class="source-filter-pill active" id="chipAllSources" onclick="selectSource(null)">
+                    All Feeds
+                </button>
+                <!-- Populated dynamically -->
+            </div>
+
+            <!-- Articles Feed Stream -->
+            <div class="articles-feed-grid" id="articlesList">
+                <!-- Articles loaded dynamically -->
+            </div>
+
+            <div id="loadMoreWrap" class="load-more-center" style="display: none;">
+                <button id="btnLoadMore" class="btn-load-more" onclick="loadMoreArticles()">
+                    Load More Headlines
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Professional Editorial Footer -->
+    <footer class="portal-footer-block">
+        <div class="footer-wrap">
+            <div class="footer-top">
+                <div class="footer-brand-info">
+                    <div class="footer-brand-name">🛡️ Verify<span class="accent-blue">It</span> Portal</div>
+                    <p>An integrated fact-checking intelligence platform combining speech-to-text, computer vision, generative reasoning, and vernacular voice synthesis.</p>
+                </div>
+                <div class="footer-links-col">
+                    <strong>Platform Stack</strong>
+                    <span>FastAPI & Python 3.13</span>
+                    <span>OpenAI Whisper & GPT-4o Mini</span>
+                    <span>Google Gemini 2.5 Flash</span>
+                    <span>Google Cloud Neural TTS</span>
+                    <span>python-telegram-bot</span>
+                </div>
+                <div class="footer-links-col">
+                    <strong>Trusted Wire Sources</strong>
+                    <span>FactCheck.org</span>
+                    <span>BBC World & BBC Telugu</span>
+                    <span>The Hindu & NDTV</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 VerifyIt Misinformation Detection Portal · Open Fact-Checking Project</span>
+                <span>Designed for accuracy, transparency, and accessible truth.</span>
+            </div>
         </div>
-    </div>
-    <!-- The message box for user feedback, included directly in HTML -->
-    <div id="messageBox" class="message-box"></div>
+    </footer>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
 </body>
-
 </html>

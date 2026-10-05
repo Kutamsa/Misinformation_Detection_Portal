@@ -3,3 +3,6 @@ venv/
 .venv/
 Verifyit.git/
 gcloud_key.json
+__pycache__/
+*.pyc
+factcheck_news.db
