@@ -7,13 +7,13 @@ import tempfile
 import sqlite3
 import asyncio
 from contextlib import asynccontextmanager, contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from urllib.parse import urlparse
 
 import httpx
 import feedparser
 from dotenv import load_dotenv
-from fastapi import FastAPI, UploadFile, File, Form, Request, Response, status, Query
+from fastapi import FastAPI, UploadFile, File, Form, Request, Response, status, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -902,8 +902,21 @@ async def lifespan(app: FastAPI):
 
     # 2. Initialize Database & Seed default RSS Feeds
     init_db()
-    # Trigger initial RSS sync in background task
+    # Trigger initial RSS sync in background task on startup
     asyncio.create_task(asyncio.to_thread(seed_articles_background))
+
+    # Background task for periodic RSS sync every 6 hours while server is alive
+    async def periodic_news_sync():
+        while True:
+            await asyncio.sleep(6 * 3600)  # Re-check every 6 hours
+            try:
+                await asyncio.to_thread(seed_articles_background)
+            except asyncio.CancelledError:
+                break
+            except Exception as e:
+                print(f"[Periodic RSS Sync Error] {e}")
+
+    sync_task = asyncio.create_task(periodic_news_sync())
 
     # 3. Setup Telegram Bot if configured
     if TELEGRAM_BOT_TOKEN:
@@ -922,6 +935,8 @@ async def lifespan(app: FastAPI):
             print(f"[Telegram Init Error] {e}")
 
     yield
+
+    sync_task.cancel()
 
     if temp_creds_path and os.path.exists(temp_creds_path):
         os.remove(temp_creds_path)
@@ -1141,7 +1156,36 @@ def remove_source(source_id: int = Form(...)):
 
 
 @app.get("/news/articles")
-def get_articles(source_id: int = Query(None), offset: int = Query(0, ge=0), limit: int = Query(10, ge=1, le=50)):
+def get_articles(
+    background_tasks: BackgroundTasks,
+    source_id: int = Query(None),
+    offset: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=50)
+):
+    # Auto-refresh check: if requesting the first batch and articles are empty or > 6 hours old,
+    # trigger an asynchronous background sync so users never need to click "Fetch" manually.
+    if offset == 0:
+        try:
+            with get_db() as check_conn:
+                check_cur = check_conn.cursor()
+                check_cur.execute("SELECT MAX(fetched_at) FROM articles;")
+                row = check_cur.fetchone()
+                latest_fetch = row[0] if row else None
+                check_cur.close()
+
+            is_stale = False
+            if not latest_fetch:
+                is_stale = True
+            elif isinstance(latest_fetch, datetime):
+                tz_aware = latest_fetch if latest_fetch.tzinfo else latest_fetch.replace(tzinfo=timezone.utc)
+                if (datetime.now(timezone.utc) - tz_aware).total_seconds() > 6 * 3600:
+                    is_stale = True
+
+            if is_stale:
+                background_tasks.add_task(seed_articles_background)
+        except Exception as check_err:
+            print(f"[Auto-Refresh Check] {check_err}")
+
     try:
         with get_db() as conn:
             cur = conn.cursor()
