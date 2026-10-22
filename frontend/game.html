@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swipe The Fake | Viral Claim Verification Game | VerifyIt</title>
+    <title>Swipe The Fake | Verification Game | VerifyIt</title>
     <meta name="description"
-        content="Test your misinformation detection radar! Swipe right for Real, left for Fake across 10 viral claims. Can you beat the viral hoaxes?">
+        content="Test your misinformation radar! Swipe right for Real, left for Fake across 10 viral claims. Fast, tactile, and educational.">
 
     <!-- Premium Google Fonts: Plus Jakarta Sans, Outfit, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,104 +19,95 @@
 
     <style>
         /* ==========================================================================
-           Dedicated Swipe Game Styles
+           Senior Designer Refined Swipe Game Aesthetics
+           Clean, human, editorial palette with tactile physical micro-interactions
            ========================================================================== */
         :root {
-            --game-bg: #0B1120;
-            --game-card-bg: #1E293B;
-            --game-card-border: #334155;
-            --stamp-fake: #EF4444;
-            --stamp-real: #10B981;
+            --bg-game-canvas: #F8FAFC;
+            --card-surface: #FFFFFF;
+            --border-clean: #E2E8F0;
+            --border-hover: #CBD5E1;
+            --text-title: #0F172A;
+            --text-body-slate: #334155;
+            --text-sub: #64748B;
+            --brand-blue: #2563EB;
+            --brand-blue-hover: #1D4ED8;
+            --status-fake: #DC2626;
+            --status-real: #16A34A;
         }
 
         .game-page-body {
-            background-color: var(--bg-canvas);
+            background-color: var(--bg-game-canvas);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            color: var(--text-title);
         }
 
+        /* Clean Editorial Hero Banner */
         .game-hero-banner {
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
-            color: #FFFFFF;
-            padding: 38px 20px 30px;
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-clean);
+            padding: 36px 20px 28px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
-            overflow: hidden;
-        }
-
-        .game-hero-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, transparent 70%);
-            pointer-events: none;
         }
 
         .game-hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(37, 99, 235, 0.2);
-            border: 1px solid rgba(96, 165, 250, 0.4);
-            color: #93C5FD;
+            gap: 7px;
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            color: #1D4ED8;
             font-family: var(--font-mono);
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             padding: 5px 14px;
-            border-radius: var(--radius-full);
+            border-radius: 9999px;
             margin-bottom: 12px;
             text-transform: uppercase;
         }
 
         .game-hero-title {
             font-family: var(--font-heading);
-            font-size: clamp(1.8rem, 4vw, 2.75rem);
+            font-size: clamp(2rem, 4.5vw, 2.65rem);
             font-weight: 800;
-            letter-spacing: -0.8px;
+            letter-spacing: -0.7px;
             margin-bottom: 8px;
-            color: #FFFFFF;
-        }
-
-        .game-hero-title span {
-            background: linear-gradient(135deg, #60A5FA 0%, #34D399 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-title);
+            line-height: 1.15;
         }
 
         .game-hero-sub {
-            font-size: 0.98rem;
-            color: #94A3B8;
-            max-width: 620px;
-            margin: 0 auto 18px;
-            line-height: 1.5;
+            font-size: 1.02rem;
+            color: var(--text-sub);
+            max-width: 560px;
+            margin: 0 auto 16px;
+            line-height: 1.55;
         }
 
-        /* Stats Bar */
+        /* Stats Capsule Ribbon */
         .user-stats-ribbon {
             display: inline-flex;
             align-items: center;
-            gap: 20px;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 8px 20px;
-            border-radius: var(--radius-full);
+            gap: 16px;
+            background: #F8FAFC;
+            border: 1px solid var(--border-clean);
+            padding: 6px 18px;
+            border-radius: 9999px;
             font-size: 0.82rem;
-            color: #CBD5E1;
+            color: var(--text-sub);
             flex-wrap: wrap;
             justify-content: center;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
         }
 
         .user-stats-ribbon strong {
-            color: #FFFFFF;
+            color: var(--text-title);
             font-family: var(--font-mono);
+            font-weight: 700;
         }
 
         .stat-item {
@@ -126,30 +117,30 @@
         }
 
         .stat-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: #10B981;
         }
 
         /* Main Game Arena */
         .game-arena-wrapper {
-            max-width: 640px;
-            margin: -20px auto 40px;
+            max-width: 540px;
+            margin: 24px auto 48px;
             padding: 0 16px;
             position: relative;
             z-index: 10;
             width: 100%;
         }
 
-        /* Progress Header */
+        /* Progress Bar Card */
         .game-progress-card {
             background: #FFFFFF;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-clean);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -159,59 +150,224 @@
         .progress-info {
             display: flex;
             align-items: baseline;
-            gap: 8px;
+            gap: 6px;
         }
 
         .progress-current {
             font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            color: var(--brand-primary);
+            color: var(--text-title);
         }
 
         .progress-total {
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--text-faint);
+            font-size: 0.78rem;
+            color: var(--text-sub);
         }
 
         .progress-bar-track {
             flex: 1;
-            max-width: 200px;
-            height: 8px;
-            background: var(--bg-subtle);
-            border-radius: var(--radius-full);
+            max-width: 180px;
+            height: 6px;
+            background: #F1F5F9;
+            border-radius: 9999px;
             overflow: hidden;
+            border: 1px solid #E2E8F0;
         }
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--brand-blue) 0%, #10B981 100%);
-            border-radius: var(--radius-full);
-            transition: width 0.3s ease;
+            background: var(--brand-blue);
+            border-radius: 9999px;
+            transition: width 0.25s ease;
         }
 
         .score-pill-tag {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-subtle);
+            background: #F8FAFC;
+            border: 1px solid var(--border-clean);
             padding: 4px 12px;
-            border-radius: var(--radius-full);
+            border-radius: 9999px;
             font-family: var(--font-mono);
             font-size: 0.8rem;
             font-weight: 700;
-            color: var(--brand-primary);
+            color: var(--text-title);
+        }
+
+        .btn-fresh-deck {
+            background: #FFFFFF;
+            border: 1px solid var(--border-clean);
+            color: var(--text-sub);
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 5px 11px;
+            border-radius: 9999px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-fresh-deck:hover {
+            background: #F8FAFC;
+            color: var(--brand-blue);
+            border-color: var(--brand-blue);
+            transform: translateY(-1px);
+        }
+
+        /* Non-blocking Live Feedback Bar */
+        .swipe-feedback-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 25;
+            min-height: 38px;
+        }
+
+        .feedback-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 0.84rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+            animation: slideDownPill 0.2s ease-out;
+            transition: all 0.2s ease;
+        }
+
+        @keyframes slideDownPill {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-pill.pill-correct {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #065F46;
+        }
+
+        .feedback-pill.pill-wrong {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #991B1B;
+        }
+
+        .feedback-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .feedback-pill.pill-correct .feedback-status-dot { background: #10B981; }
+        .feedback-pill.pill-wrong .feedback-status-dot { background: #EF4444; }
+
+        .btn-feedback-expand {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: inherit;
+            border-radius: 9999px;
+            padding: 2px 8px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-feedback-expand:hover {
+            background: rgba(0, 0, 0, 0.04);
+            transform: scale(1.05);
+        }
+
+        /* Expandable Inline Fact-Check Drawer */
+        .feedback-drawer {
+            background: #FFFFFF;
+            border: 1px solid var(--border-clean);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 8px;
+            box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.1);
+            text-align: left;
+            width: 100%;
+            max-width: 460px;
+            animation: fadeInDrawer 0.2s ease;
+        }
+
+        @keyframes fadeInDrawer {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .feedback-drawer-verdict {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .feedback-drawer-verdict.verdict-real {
+            background: #ECFDF5;
+            color: #059669;
+            border: 1px solid #A7F3D0;
+        }
+
+        .feedback-drawer-verdict.verdict-fake {
+            background: #FEF2F2;
+            color: #DC2626;
+            border: 1px solid #FECACA;
+        }
+
+        .btn-drawer-close {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .btn-drawer-close:hover {
+            background: #F1F5F9;
+            color: var(--text-title);
+        }
+
+        .feedback-drawer-explanation {
+            font-size: 0.86rem;
+            color: var(--text-body-slate);
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* Card Swipe Container */
         .swipe-stack-container {
             position: relative;
             width: 100%;
-            height: 460px;
+            height: clamp(360px, 50vh, 440px);
             perspective: 1000px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
-        /* Swipe Card */
+        /* Swipe Card - Clean Apple/Linear Minimalism */
         .swipe-card {
             position: absolute;
             top: 0;
@@ -219,97 +375,110 @@
             width: 100%;
             height: 100%;
             background: #FFFFFF;
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-md);
-            box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
-            padding: 28px 24px 24px;
+            border: 1px solid var(--border-clean);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+            padding: 24px 24px 20px;
             display: flex;
             flex-direction: column;
             cursor: grab;
             user-select: none;
             touch-action: none;
-            transition: box-shadow 0.2s ease;
             overflow: hidden;
             transform-origin: 50% 100%;
+            transition: box-shadow 0.2s ease;
         }
 
         .swipe-card:active {
             cursor: grabbing;
         }
 
-        /* Background Stack Card (Preview behind) */
-        .swipe-card.card-behind {
-            transform: translateY(12px) scale(0.96);
+        /* Stack Cards Behind (Depth) */
+        .swipe-card.card-behind.card-behind-1 {
+            transform: translateY(10px) scale(0.965);
             opacity: 0.65;
             z-index: 1;
             pointer-events: none;
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+            background: #FAFAFA;
+            border-color: #E2E8F0;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+        }
+
+        .swipe-card.card-behind.card-behind-2 {
+            transform: translateY(18px) scale(0.93);
+            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            background: #F4F4F5;
+            border-color: #E2E8F0;
         }
 
         .swipe-card.card-top {
             z-index: 2;
         }
 
-        /* Swipe Stamp Indicators */
+        /* Drag Stamp Indicators */
         .card-stamp {
             position: absolute;
-            top: 24px;
-            padding: 6px 18px;
+            top: 22px;
+            padding: 5px 16px;
             font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            border-radius: 6px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            border-radius: 8px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.15s ease, transform 0.15s ease;
+            transition: opacity 0.12s ease;
             z-index: 10;
         }
 
         .stamp-fake {
-            left: 24px;
-            color: var(--stamp-fake);
-            border: 3.5px solid var(--stamp-fake);
-            transform: rotate(-18deg) scale(0.85);
+            left: 20px;
+            color: #DC2626;
+            background: rgba(254, 242, 242, 0.95);
+            border: 2px solid #EF4444;
+            transform: rotate(-15deg);
         }
 
         .stamp-real {
-            right: 24px;
-            color: var(--stamp-real);
-            border: 3.5px solid var(--stamp-real);
-            transform: rotate(18deg) scale(0.85);
+            right: 20px;
+            color: #16A34A;
+            background: rgba(236, 253, 245, 0.95);
+            border: 2px solid #10B981;
+            transform: rotate(15deg);
         }
 
-        /* Card Content Elements */
+        /* Card Content Layout */
         .card-top-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             gap: 8px;
         }
 
         .card-origin-tag {
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-subtle);
-            color: var(--brand-blue);
+            background: #F1F5F9;
+            border: 1px solid var(--border-clean);
+            color: var(--text-sub);
             font-family: var(--font-mono);
             font-size: 0.72rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: var(--radius-xs);
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .card-category-tag {
-            color: var(--text-faint);
-            font-size: 0.75rem;
+            color: var(--text-sub);
+            font-size: 0.74rem;
             font-family: var(--font-mono);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .card-claim-quote {
@@ -317,390 +486,231 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-align: center;
-            padding: 10px 8px;
-        }
-
-        .card-quote-mark {
-            font-size: 2.2rem;
-            color: var(--brand-blue);
-            line-height: 1;
-            font-family: Georgia, serif;
-            opacity: 0.4;
-            margin-bottom: 4px;
+            text-align: left;
+            padding: 10px 0;
         }
 
         .card-claim-text {
             font-family: var(--font-heading);
-            font-size: 1.35rem;
+            font-size: clamp(1.12rem, 2.7vw, 1.34rem);
             font-weight: 700;
-            line-height: 1.45;
-            color: var(--text-primary);
+            line-height: 1.55;
+            color: var(--text-title);
+            margin: 0;
         }
 
         .card-hint-drawer {
             background: #F8FAFC;
-            border: 1px dashed var(--border-strong);
-            border-radius: var(--radius-xs);
+            border: 1px dashed var(--border-clean);
+            border-radius: 8px;
             padding: 10px 14px;
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 0.82rem;
+            color: var(--text-sub);
+            line-height: 1.5;
             display: none;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .card-hint-drawer strong {
-            color: var(--brand-blue);
-            display: block;
-            margin-bottom: 2px;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            text-transform: uppercase;
         }
 
         .card-bottom-actions {
-            margin-top: auto;
             display: flex;
-            justify-content: center;
-            padding-top: 14px;
-            border-top: 1px solid var(--border-subtle);
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            margin-top: auto;
         }
 
         .btn-hint-toggle {
             background: transparent;
-            border: none;
-            color: var(--brand-blue);
-            font-size: 0.8rem;
+            border: 1px dashed var(--border-clean);
+            color: var(--text-sub);
+            font-size: 0.76rem;
             font-weight: 600;
-            font-family: var(--font-ui);
+            font-family: var(--font-mono);
+            padding: 5px 11px;
+            border-radius: 6px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: var(--radius-xs);
-            transition: var(--transition);
+            gap: 5px;
+            transition: all 0.2s ease;
         }
 
         .btn-hint-toggle:hover {
-            background: var(--bg-subtle);
+            background: #F8FAFC;
+            color: var(--text-title);
+            border-color: #94A3B8;
         }
 
-        /* Swipe Control Buttons Below Card */
+        /* Tactile Swipe Buttons */
         .swipe-controls-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 16px;
         }
 
         .btn-swipe-action {
-            display: inline-flex;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            border-radius: var(--radius-md);
-            padding: 14px 24px;
-            font-family: var(--font-ui);
-            font-weight: 700;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-family: var(--font-heading);
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 2px solid transparent;
-            min-width: 140px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-swipe-fake {
-            background: #FEF2F2;
-            border-color: #FECACA;
-            color: #DC2626;
-        }
-
-        .btn-swipe-fake:hover {
-            background: #DC2626;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
-        }
-
-        .btn-swipe-real {
-            background: #ECFDF5;
-            border-color: #A7F3D0;
-            color: #059669;
-        }
-
-        .btn-swipe-real:hover {
-            background: #059669;
-            color: #FFFFFF;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(5, 150, 105, 0.25);
+            position: relative;
         }
 
         .action-main-text {
-            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         .action-sub-hint {
-            font-size: 0.7rem;
             font-family: var(--font-mono);
-            opacity: 0.8;
-            font-weight: 500;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-top: 3px;
+            opacity: 0.75;
         }
 
-        /* Keyboard Shortcuts Helper */
+        .btn-swipe-fake {
+            background: #FFFFFF;
+            border: 1.5px solid #FCA5A5;
+            color: #DC2626;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.06);
+        }
+
+        .btn-swipe-fake:hover {
+            background: #FEF2F2;
+            border-color: #F87171;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.12);
+        }
+
+        .btn-swipe-real {
+            background: #FFFFFF;
+            border: 1.5px solid #86EFAC;
+            color: #16A34A;
+            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.06);
+        }
+
+        .btn-swipe-real:hover {
+            background: #F0FDF4;
+            border-color: #4ADE80;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(22, 163, 74, 0.12);
+        }
+
         .keyboard-shortcuts-pill {
             text-align: center;
             font-size: 0.76rem;
-            color: var(--text-faint);
+            color: var(--text-sub);
             font-family: var(--font-mono);
-            margin-bottom: 24px;
         }
 
         .key-cap {
             background: #FFFFFF;
-            border: 1px solid var(--border-strong);
+            border: 1px solid var(--border-clean);
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 700;
-            color: var(--text-primary);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-        }
-
-        /* Reveal Modal / Overlay */
-        .reveal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-        }
-
-        .reveal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .reveal-modal-card {
-            background: #FFFFFF;
-            border-radius: var(--radius-md);
-            max-width: 520px;
-            width: 100%;
-            padding: 32px 28px;
-            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
-            text-align: center;
-            transform: scale(0.92);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal-overlay.active .reveal-modal-card {
-            transform: scale(1);
-        }
-
-        .reveal-badge-icon {
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .reveal-badge-icon.correct {
-            background: #DCFCE7;
-            color: #16A34A;
-        }
-
-        .reveal-badge-icon.wrong {
-            background: #FEE2E2;
-            color: #DC2626;
-        }
-
-        .reveal-status-title {
-            font-family: var(--font-heading);
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-
-        .reveal-status-title.correct {
-            color: #16A34A;
-        }
-
-        .reveal-status-title.wrong {
-            color: #DC2626;
-        }
-
-        .reveal-verdict-chip {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-        }
-
-        .chip-is-real {
-            background: #ECFDF5;
-            color: #059669;
-            border: 1px solid #A7F3D0;
-        }
-
-        .chip-is-fake {
-            background: #FEF2F2;
-            color: #DC2626;
-            border: 1px solid #FECACA;
-        }
-
-        .reveal-explanation-box {
-            background: var(--bg-canvas);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            text-align: left;
-            font-size: 0.88rem;
-            color: var(--text-body);
-            line-height: 1.55;
-            margin-bottom: 22px;
-        }
-
-        .reveal-explanation-box strong {
-            display: block;
-            color: var(--brand-primary);
-            font-family: var(--font-heading);
-            margin-bottom: 4px;
-        }
-
-        .btn-next-claim {
-            width: 100%;
-            background: var(--brand-primary);
-            color: #FFFFFF;
-            border: none;
-            padding: 13px 20px;
-            border-radius: var(--radius-sm);
-            font-family: var(--font-ui);
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-next-claim:hover {
-            background: var(--brand-blue);
-            transform: translateY(-1px);
+            color: var(--text-title);
         }
 
         /* Results Screen */
         .results-container {
             display: none;
             background: #FFFFFF;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
+            border: 1px solid var(--border-clean);
+            border-radius: 20px;
             padding: 36px 28px;
-            box-shadow: var(--shadow-card);
+            box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08);
             text-align: center;
-            animation: fadeIn 0.4s ease;
+            animation: fadeInResults 0.3s ease;
+        }
+
+        @keyframes fadeInResults {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .results-trophy-wrap {
-            width: 76px;
-            height: 76px;
-            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            width: 72px;
+            height: 72px;
+            background: #EFF6FF;
+            color: var(--brand-blue);
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #B45309;
             margin-bottom: 16px;
         }
 
         .results-headline {
             font-family: var(--font-heading);
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 6px;
+            color: var(--text-title);
+            margin-bottom: 8px;
         }
 
         .results-tier-badge {
             display: inline-block;
             font-family: var(--font-mono);
-            font-size: 0.84rem;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: var(--radius-full);
-            background: var(--brand-blue-light);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            background: #F1F5F9;
             color: var(--brand-blue);
-            border: 1px solid #BFDBFE;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
         }
 
         .results-score-big {
             font-family: var(--font-heading);
             font-size: 3.5rem;
             font-weight: 800;
-            color: var(--brand-primary);
+            color: var(--text-title);
             line-height: 1;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
 
         .results-score-sub {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 26px;
+            font-size: 0.96rem;
+            color: var(--text-sub);
+            max-width: 440px;
+            margin: 0 auto 26px;
+            line-height: 1.55;
         }
 
         .results-actions-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 28px;
-        }
-
-        @media (max-width: 520px) {
-            .results-actions-grid {
-                grid-template-columns: 1fr;
-            }
+            margin-bottom: 32px;
         }
 
         .btn-share-whatsapp {
             background: #25D366;
             color: #FFFFFF;
-            border: none;
+            text-decoration: none;
             padding: 12px 18px;
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             font-weight: 700;
             font-size: 0.9rem;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.2s ease;
         }
 
         .btn-share-whatsapp:hover {
@@ -709,11 +719,11 @@
         }
 
         .btn-play-again {
-            background: var(--brand-primary);
+            background: #0F172A;
             color: #FFFFFF;
             border: none;
             padding: 12px 18px;
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
@@ -721,50 +731,48 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: var(--transition);
+            transition: all 0.2s ease;
         }
 
         .btn-play-again:hover {
-            background: var(--brand-blue);
+            background: #1E293B;
             transform: translateY(-1px);
         }
 
-        /* Review List */
         .results-review-title {
+            text-align: left;
             font-family: var(--font-heading);
             font-size: 1.15rem;
-            font-weight: 700;
-            text-align: left;
+            font-weight: 800;
+            color: var(--text-title);
             margin-bottom: 14px;
-            color: var(--text-primary);
-            border-top: 1px solid var(--border-subtle);
-            padding-top: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-clean);
         }
 
         .results-review-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             text-align: left;
         }
 
         .review-row-item {
+            background: #F8FAFC;
+            border: 1px solid var(--border-clean);
+            border-radius: 12px;
+            padding: 14px 16px;
             display: flex;
-            align-items: flex-start;
             gap: 12px;
-            padding: 12px;
-            border-radius: var(--radius-xs);
-            background: var(--bg-canvas);
-            border: 1px solid var(--border-subtle);
-            font-size: 0.85rem;
+            align-items: flex-start;
         }
 
         .review-row-item.was-correct {
-            border-left: 3px solid #10B981;
+            border-left: 4px solid #10B981;
         }
 
         .review-row-item.was-wrong {
-            border-left: 3px solid #EF4444;
+            border-left: 4px solid #EF4444;
         }
 
         .review-icon {
@@ -774,48 +782,22 @@
 
         .review-content strong {
             display: block;
-            color: var(--text-primary);
-            font-size: 0.88rem;
-            margin-bottom: 3px;
+            font-size: 0.92rem;
+            color: var(--text-title);
+            margin-bottom: 4px;
+            line-height: 1.4;
         }
 
         .review-content p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            line-height: 1.45;
+            font-size: 0.82rem;
+            color: var(--text-sub);
+            line-height: 1.5;
             margin: 0;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
 
 <body class="game-page-body">
-
-    <!-- Top Live Ticker -->
-    <div class="top-status-bar">
-        <div class="top-status-inner">
-            <div class="status-indicator">
-                <span class="live-pulse-dot"></span>
-                <span class="status-label">RADAR TRAINING</span>
-            </div>
-            <div class="status-message">
-                <span>Information Verification Simulator · Can you spot what's real and what's fake?</span>
-            </div>
-            <div class="status-meta">
-                <span><a href="index.html" style="color: inherit; text-decoration: underline;">Return to Verification Desk</a></span>
-            </div>
-        </div>
-    </div>
 
     <!-- Navigation Header -->
     <header class="site-header">
@@ -843,32 +825,42 @@
             </nav>
 
             <div class="header-actions">
+                <a href="https://t.me/Verifyitprobot" target="_blank" rel="noopener noreferrer" class="btn-subtle" title="Chat with VerifyIt Assistant on Telegram">
+                    🤖 Telegram Bot
+                </a>
+                <button type="button" class="btn-subtle" id="btnToggleSound" onclick="toggleSound()" title="Toggle audio chimes">
+                    🔊 Sound: ON
+                </button>
                 <button type="button" class="btn-subtle" onclick="resetGameStats()" title="Reset saved scores in browser">
-                    Reset Stats
+                    Reset
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Banner with Stats -->
+    <!-- Clean Editorial Hero Banner -->
     <section class="game-hero-banner">
-        <div class="game-hero-badge">Interactive Truth Radar Challenge</div>
-        <h1 class="game-hero-title">Swipe <span>The Fake</span></h1>
+        <div class="game-hero-badge">Misinformation Detection Arena</div>
+        <h1 class="game-hero-title">Swipe The Fake</h1>
         <p class="game-hero-sub">
-            10 viral claims circulating on WhatsApp, X, and Instagram. Swipe <strong>Right (or Click Real)</strong> if it is verified true, or swipe <strong>Left (or Click Fake)</strong> if it's fabricated.
+            10 viral claims. Test your critical instincts: Swipe <strong>Left for Fake</strong>, <strong>Right for Real</strong>. Fast, fluid, and non-stop.
         </p>
 
-        <!-- Stored User Stats Ribbon (from localStorage) -->
+        <!-- Stats Ribbon -->
         <div class="user-stats-ribbon" id="userStatsRibbon">
             <div class="stat-item">
                 <span class="stat-dot"></span>
-                <span>Best Score: <strong id="statBestScore">0/10</strong></span>
+                <span>Best: <strong id="statBestScore">0/10</strong></span>
             </div>
             <div class="stat-item">
-                <span>Games Completed: <strong id="statGamesPlayed">0</strong></span>
+                <span>Rounds: <strong id="statGamesPlayed">0</strong></span>
             </div>
             <div class="stat-item">
-                <span>All-Time Accuracy: <strong id="statAccuracy">0%</strong></span>
+                <span>Accuracy: <strong id="statAccuracy">0%</strong></span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-dot" style="background:#2563EB;"></span>
+                <span>Library: <strong>105 Verified Claims</strong></span>
             </div>
         </div>
     </section>
@@ -887,8 +879,41 @@
                 <div class="progress-bar-track">
                     <div class="progress-bar-fill" id="progressBarFill" style="width: 10%;"></div>
                 </div>
-                <div class="score-pill-tag">
-                    Score: <span id="currentScoreCount">0</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <button type="button" class="btn-fresh-deck" onclick="reshuffleDeck()" title="Draw a fresh set of 10 claims from the 105+ pool">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                        </svg>
+                        <span>Fresh 10</span>
+                    </button>
+                    <div class="score-pill-tag">
+                        Score: <span id="currentScoreCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Non-blocking Live Feedback Toast Pill -->
+            <div class="swipe-feedback-bar" id="swipeFeedbackBar" style="display: none;">
+                <div class="feedback-pill" id="feedbackPill">
+                    <span class="feedback-status-dot" id="feedbackDot"></span>
+                    <span class="feedback-status-text" id="feedbackText">Correct! (+1)</span>
+                    <button type="button" class="btn-feedback-expand" id="btnFeedbackExpand" onclick="toggleFeedbackDetail(event)" title="View fact-check summary">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>Why?</span>
+                    </button>
+                </div>
+                <div class="feedback-drawer" id="feedbackDetailDrawer" style="display: none;">
+                    <div class="feedback-drawer-header">
+                        <span class="feedback-drawer-verdict" id="drawerVerdictBadge">DEBUNKED</span>
+                        <button type="button" class="btn-drawer-close" onclick="closeFeedbackDetail(event)">✕</button>
+                    </div>
+                    <p class="feedback-drawer-explanation" id="drawerExplanationText"></p>
                 </div>
             </div>
 
@@ -897,8 +922,8 @@
                 <!-- Top Card (Active) -->
                 <div class="swipe-card card-top" id="topCard">
                     <!-- Stamps -->
-                    <div class="card-stamp stamp-fake" id="stampFake">FAKE</div>
-                    <div class="card-stamp stamp-real" id="stampReal">REAL</div>
+                    <div class="card-stamp stamp-fake" id="stampFake">FAKE ✕</div>
+                    <div class="card-stamp stamp-real" id="stampReal">REAL ✓</div>
 
                     <div class="card-top-meta">
                         <span class="card-origin-tag" id="cardOrigin">
@@ -909,38 +934,37 @@
                             </svg>
                             <span id="cardOriginText">WhatsApp Forward</span>
                         </span>
-                        <span class="card-category-tag" id="cardCategory">Culture / National</span>
+                        <span class="card-category-tag" id="cardCategory">Culture & National</span>
                     </div>
 
                     <div class="card-claim-quote">
-                        <div class="card-quote-mark">&ldquo;</div>
                         <p class="card-claim-text" id="cardClaimText">
                             UNESCO officially declared India's National Anthem ("Jana Gana Mana") the best anthem in the world.
                         </p>
                     </div>
 
                     <div class="card-hint-drawer" id="cardHintDrawer">
-                        <strong>Forensic Clue:</strong>
-                        <span id="cardHintText">Does UNESCO actually hold global song competitions? Check official UN charters.</span>
+                        <strong style="color: var(--text-title); display: block; margin-bottom: 2px;">Fact-Check Clue:</strong>
+                        <span id="cardHintText">Does UNESCO actually hold competitive rankings for national anthems?</span>
                     </div>
 
                     <div class="card-bottom-actions">
                         <button type="button" class="btn-hint-toggle" onclick="toggleHint()">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <line x1="12" y1="16" x2="12" y2="12"></line>
                                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
                             </svg>
-                            <span>Show Hint / Clue</span>
+                            <span>Need Clue?</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Behind Card (Visual Depth) -->
-                <div class="swipe-card card-behind" id="behindCard">
+                <!-- Behind Card 1 (Visual Depth) -->
+                <div class="swipe-card card-behind card-behind-1" id="behindCard">
                     <div class="card-top-meta">
-                        <span class="card-origin-tag">Viral Wire</span>
-                        <span class="card-category-tag">Next Claim</span>
+                        <span class="card-origin-tag">Incoming Claim</span>
+                        <span class="card-category-tag">Next in Deck</span>
                     </div>
                     <div class="card-claim-quote">
                         <p class="card-claim-text" style="color: #94A3B8;">
@@ -948,42 +972,45 @@
                         </p>
                     </div>
                 </div>
+
+                <!-- Behind Card 2 (Bottom Deck Depth) -->
+                <div class="swipe-card card-behind card-behind-2" id="behindCard2"></div>
             </div>
 
-            <!-- Big Swipe Buttons -->
+            <!-- Tactile Swipe Buttons -->
             <div class="swipe-controls-bar">
                 <button type="button" class="btn-swipe-action btn-swipe-fake" onclick="triggerDecision(false)" id="btnFake">
                     <span class="action-main-text">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                         <span>FAKE</span>
                     </span>
-                    <span class="action-sub-hint">Swipe Left &larr;</span>
+                    <span class="action-sub-hint">Swipe Left ←</span>
                 </button>
 
                 <button type="button" class="btn-swipe-action btn-swipe-real" onclick="triggerDecision(true)" id="btnReal">
                     <span class="action-main-text">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                         <span>REAL</span>
                     </span>
-                    <span class="action-sub-hint">Swipe Right &rarr;</span>
+                    <span class="action-sub-hint">Swipe Right →</span>
                 </button>
             </div>
 
             <!-- Keyboard Guide -->
             <div class="keyboard-shortcuts-pill">
-                Use <span class="key-cap">&larr; Left Arrow</span> for Fake &nbsp;&bull;&nbsp; <span class="key-cap">&rarr; Right Arrow</span> for Real
+                Press <span class="key-cap">← Left Arrow</span> for Fake &nbsp;&bull;&nbsp; <span class="key-cap">→ Right Arrow</span> for Real
             </div>
         </div>
 
-        <!-- End of Game Results Screen -->
+        <!-- End of Game Results Screen (Full Details Shown ONLY Here) -->
         <div class="results-container" id="resultsScreen">
             <div class="results-trophy-wrap">
-                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
                     <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
                     <path d="M4 22h16"></path>
@@ -1011,42 +1038,16 @@
                         <polyline points="23 20 23 14 17 14"></polyline>
                         <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
                     </svg>
-                    <span>Play Again</span>
+                    <span>Play Again (Fresh 10)</span>
                 </button>
             </div>
 
-            <!-- Review breakdown -->
-            <h3 class="results-review-title">Detailed Claim Review</h3>
+            <!-- Detailed Review breakdown (Shown ONLY at end of 10 cards) -->
+            <h3 class="results-review-title">Detailed Claim Fact-Check Dossier</h3>
             <div class="results-review-list" id="reviewListContainer"></div>
         </div>
 
     </main>
-
-    <!-- Instant Verdict Reveal Overlay -->
-    <div class="reveal-overlay" id="revealOverlay">
-        <div class="reveal-modal-card">
-            <div class="reveal-badge-icon" id="revealIconWrap">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.5" id="revealIconSvg">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-            </div>
-            <h3 class="reveal-status-title" id="revealTitle">You Were Correct!</h3>
-            <span class="reveal-verdict-chip" id="revealChip">VERIFIED FACT</span>
-
-            <div class="reveal-explanation-box">
-                <strong id="revealClaimTitle">Claim Summary</strong>
-                <p id="revealExplanation">Detailed fact-check debunk explanation appears here.</p>
-            </div>
-
-            <button type="button" class="btn-next-claim" id="btnNextClaim" onclick="advanceToNextQuestion()">
-                <span>Next Claim</span>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </button>
-        </div>
-    </div>
 
     <!-- Professional Footer -->
     <footer class="portal-footer-block">
@@ -1082,107 +1083,1013 @@
         </div>
     </footer>
 
-    <!-- Game Logic & Swipe Physics Script -->
+    <!-- Game Logic & High-Speed Swipe Physics Script -->
     <script>
-        // Curated Pool of 10 Realistic Viral Claims
-        const VIRAL_CLAIMS = [
-            {
-                id: 1,
-                claim: "UNESCO officially declared India's National Anthem ('Jana Gana Mana') as the 'Best Anthem in the World'.",
-                isReal: false,
-                category: "Culture & National",
-                origin: "WhatsApp Viral Forward",
-                hint: "UNESCO is an educational and cultural organization, but does it ever hold competitive contests for national anthems?",
-                explanation: "UNESCO has repeatedly confirmed that it does not rank, vote on, or declare 'best national anthems.' This viral forward has circulated on SMS and WhatsApp since 2008."
-            },
-            {
-                id: 2,
-                claim: "ISRO successfully landed the Chandrayaan-3 Vikram Lander near the Lunar South Pole on August 23, 2023.",
-                isReal: true,
-                category: "Science & Space",
-                origin: "Official Space Agency",
-                hint: "Think back to the live ISRO broadcast verified by NASA and ESA.",
-                explanation: "Verified Fact: India became the first country to soft-land near the Moon's South Pole on August 23, 2023, celebrated globally and scientifically verified."
-            },
-            {
-                id: 3,
-                claim: "Photo shows Pope Francis walking outdoors wearing a luxury white Balenciaga puffer jacket.",
-                isReal: false,
-                category: "AI Imagery & Deepfakes",
-                origin: "Social Media Viral",
-                hint: "Inspect the fingers, glasses frames, and pectoral cross edges for AI artifacting.",
-                explanation: "Debunked: This viral photo was created using the Midjourney v5 generative AI tool by a construction worker in Chicago. The Vatican confirmed it was synthetic."
-            },
-            {
-                id: 4,
-                claim: "Drinking boiled hot water with sliced lemons and turmeric destroys all stomach viruses and cures COVID-19.",
-                isReal: false,
-                category: "Health & Medicine",
-                origin: "TikTok / Reels",
-                hint: "Can stomach temperature kill respiratory viruses that multiply in the bronchial airways?",
-                explanation: "Debunked: Warm water and turmeric offer mild hydration and soothing effects, but the WHO clarified hot water cannot prevent or cure respiratory viruses."
-            },
-            {
-                id: 5,
-                claim: "The Reserve Bank of India (RBI) is issuing new ₹1,000 currency notes embedded with GPS nano-chips for satellite tracking.",
-                isReal: false,
-                category: "Economy & Banking",
-                origin: "WhatsApp Rumor",
-                hint: "Could a passive paper bill hold power and antenna hardware to communicate with orbit satellites?",
-                explanation: "Debunked: The RBI confirmed no ₹1,000 notes are being reintroduced and banknotes do not contain GPS micro-transmitters or tracking chips."
-            },
-            {
-                id: 6,
-                claim: "NASA's James Webb Space Telescope spotted the most distant known galaxy, JADES-GS-z14-0, formed just 290 million years after the Big Bang.",
-                isReal: true,
-                category: "Astronomy & Research",
-                origin: "NASA & ESA Press Release",
-                hint: "Astronomers published this major cosmic milestone in Nature and astronomical journals in 2024.",
-                explanation: "Verified Fact: In May 2024, international researchers confirmed the detection of JADES-GS-z14-0, breaking the cosmic distance record using JWST spectroscopy."
-            },
-            {
-                id: 7,
-                claim: "Ukrainian President Volodymyr Zelensky appeared in an official broadcast video ordering all Ukrainian troops to surrender their weapons.",
-                isReal: false,
-                category: "Deepfake & Cyberwarfare",
-                origin: "Hacked News Broadcast",
-                hint: "Notice the mismatch between the neck tone, lighting angle, and unnatural mouth movements.",
-                explanation: "Debunked: The video was an AI deepfake broadcast during a cyberattack on Ukrainian TV news in March 2022. President Zelensky immediately released a real video refuting it."
-            },
-            {
-                id: 8,
-                claim: "Eating raw crushed garlic on an empty stomach completely cures Type 2 diabetes permanently within 7 days.",
-                isReal: false,
-                category: "Dietary Hoax",
-                origin: "YouTube Shorts / Viral Video",
-                hint: "Type 2 diabetes is a chronic endocrine condition involving insulin resistance.",
-                explanation: "Debunked: While garlic has antioxidants, medical endocrinologists emphasize that no food permanently cures diabetes, and stopping medication is hazardous."
-            },
-            {
-                id: 9,
-                claim: "In August 2024, the World Health Organization (WHO) declared the mpox outbreak in Africa a Public Health Emergency of International Concern (PHEIC).",
-                isReal: true,
-                category: "Public Health",
-                origin: "WHO Official Bulletin",
-                hint: "This occurred following the spread of the new clade Ib strain across African nations.",
-                explanation: "Verified Fact: On August 14, 2024, WHO Director-General Tedros Adhanom Ghebreyesus officially declared mpox a global public health emergency to coordinate aid."
-            },
-            {
-                id: 10,
-                claim: "The Indian Ministry of Railways announced that all general train fares will become completely free for all citizens starting next month.",
-                isReal: false,
-                category: "Governance & Policy",
-                origin: "Viral Social Media Post",
-                hint: "Check official Press Information Bureau (PIB Fact Check) handles.",
-                explanation: "Debunked: PIB Fact Check confirmed this claim is fabricated. Indian Railways never issued any notification granting universal free train travel."
-            }
-        ];
+        // Master Curated Library of 105+ Realistic Viral Claims
+        const ALL_VIRAL_CLAIMS_POOL = [
+        {
+                "id": 1,
+                "claim": "UNESCO officially declared India's National Anthem ('Jana Gana Mana') as the 'Best Anthem in the World'.",
+                "isReal": false,
+                "category": "Culture & National",
+                "origin": "WhatsApp Viral Forward",
+                "hint": "Does UNESCO ever hold competitive voting or rank national anthems?",
+                "explanation": "Debunked: UNESCO has clarified repeatedly that it does not rank or award 'best national anthems.' This viral forward has circulated on SMS and WhatsApp since 2008."
+        },
+        {
+                "id": 2,
+                "claim": "The Reserve Bank of India (RBI) is introducing new ₹1,000 currency notes embedded with GPS nano-chips for satellite tracking.",
+                "isReal": false,
+                "category": "Economy & Banking",
+                "origin": "WhatsApp Rumor",
+                "hint": "Could passive paper hold a satellite transmitter, power cell, and antenna?",
+                "explanation": "Debunked: The RBI confirmed no ₹1,000 notes are being reintroduced and banknotes do not contain micro-transmitters or GPS tracking chips."
+        },
+        {
+                "id": 3,
+                "claim": "UNESCO officially declared Narendra Modi as the 'Best Prime Minister in the World'.",
+                "isReal": false,
+                "category": "Politics & Governance",
+                "origin": "WhatsApp Forward",
+                "hint": "Does UNESCO evaluate or rank world leaders?",
+                "explanation": "Debunked: UNESCO has never ranked political leaders or awarded a 'best prime minister' title. The claim is a fabricated viral hoax."
+        },
+        {
+                "id": 4,
+                "claim": "If you forward this message to 20 WhatsApp contacts, your checkmark will turn green and WhatsApp remains free.",
+                "isReal": false,
+                "category": "Social Media Hoax",
+                "origin": "Chain Message",
+                "hint": "Do messaging platforms use message chains to control account billing status?",
+                "explanation": "Debunked: Meta/WhatsApp never conditions service availability or checkmark colors on forwarding chain messages."
+        },
+        {
+                "id": 5,
+                "claim": "NASA satellite cameras captured India shining as the brightest country on Earth during Diwali night.",
+                "isReal": false,
+                "category": "Culture & National",
+                "origin": "Viral Facebook Image",
+                "hint": "Is the widely shared multi-colored map an actual photograph or a population composite?",
+                "explanation": "Debunked: The multi-colored map is a graphic composite created by NOAA in 2003 illustrating population growth over time, not a live Diwali photo."
+        },
+        {
+                "id": 6,
+                "claim": "Typing 'BFF' in the comments of a Facebook post checks if your account has been hacked; green text means safe.",
+                "isReal": false,
+                "category": "Cybersecurity Myth",
+                "origin": "Facebook Viral Post",
+                "hint": "Does Facebook text color animation have anything to do with password or account security?",
+                "explanation": "Debunked: 'BFF' turned green due to Facebook's Text Delights animation feature (like 'Congrats'), completely unrelated to account security."
+        },
+        {
+                "id": 7,
+                "claim": "Putting sliced red onions in your socks overnight absorbs toxic impurities and cures the flu through reflexology points.",
+                "isReal": false,
+                "category": "Health Hoax",
+                "origin": "TikTok / WhatsApp",
+                "hint": "Can food placed on outer skin draw viruses out of the respiratory bloodstream?",
+                "explanation": "Debunked: Medical science confirms viruses multiply within cellular respiratory tissue. Onions outside the body cannot draw toxins out of internal organs."
+        },
+        {
+                "id": 8,
+                "claim": "Dialing *#06# on any mobile phone displays the device's unique 15-digit IMEI number.",
+                "isReal": true,
+                "category": "Technology & Telecom",
+                "origin": "Telecom Standard",
+                "hint": "Is this a universal GSM USSD command recognized across smartphones?",
+                "explanation": "Verified Fact: Dialing *#06# is a standardized GSM protocol command that displays the International Mobile Equipment Identity (IMEI) number on any phone."
+        },
+        {
+                "id": 9,
+                "claim": "Three blue checkmarks on WhatsApp mean the government is actively monitoring your chat messages.",
+                "isReal": false,
+                "category": "Privacy & Surveillance",
+                "origin": "WhatsApp Forward",
+                "hint": "Does WhatsApp even have a three-checkmark UI state?",
+                "explanation": "Debunked: WhatsApp uses single grey (sent), double grey (delivered), and double blue (read). Chats have end-to-end encryption; three checkmarks do not exist."
+        },
+        {
+                "id": 10,
+                "claim": "A backward-spinning hurricane causes toilet water to flush clockwise in the northern hemisphere and counterclockwise in the south.",
+                "isReal": false,
+                "category": "Science Myth",
+                "origin": "Common Folklore",
+                "hint": "Is the Coriolis force strong enough on small household bowl volumes?",
+                "explanation": "Debunked: While Coriolis affects massive storms like cyclones, household toilet swirl direction is determined entirely by the angle of the plumbing jets."
+        },
+        {
+                "id": 11,
+                "claim": "The Reserve Bank of India (RBI) confirmed that currency notes with writing on them remain legal tender and can be deposited in banks.",
+                "isReal": true,
+                "category": "Banking & Economy",
+                "origin": "RBI Official Circular",
+                "hint": "Did the RBI clarify its Clean Note Policy regarding scribbled banknotes?",
+                "explanation": "Verified Fact: The RBI clarified under its Clean Note Policy that banknotes with writing or scribbles remain valid legal tender and are fully acceptable at banks."
+        },
+        {
+                "id": 12,
+                "claim": "Drinking water stored in copper vessels overnight imparts micro trace amounts of copper with mild antimicrobial properties.",
+                "isReal": true,
+                "category": "Health & Chemistry",
+                "origin": "Peer-Reviewed Studies",
+                "hint": "Does the oligodynamic effect of copper show antibacterial activity in laboratory tests?",
+                "explanation": "Verified Fact: Copper exhibits the oligodynamic effect, where trace copper ions dissolve into stored water and inhibit bacteria like E. coli within safe daily dietary limits."
+        },
+        {
+                "id": 13,
+                "claim": "Leaving your phone charger plugged into the wall without a phone connected consumes active electricity and spikes electric bills significantly.",
+                "isReal": false,
+                "category": "Energy & Tech",
+                "origin": "Viral Advice",
+                "hint": "How many milliwatts does an idle modern switched-mode transformer actually draw?",
+                "explanation": "Debunked: Modern certified phone chargers draw less than 0.1 to 0.2 watts in standby vampire mode, costing less than a few cents per year if left plugged."
+        },
+        {
+                "id": 14,
+                "claim": "A viral circular claims the Indian government is deducting ₹2,500 from every citizen's bank account for national disaster relief.",
+                "isReal": false,
+                "category": "Government Scheme",
+                "origin": "Fake Circular",
+                "hint": "Check official PIB Fact Check notices on unauthorized bank debits.",
+                "explanation": "Debunked: PIB Fact Check declared this circular completely fabricated. The government does not deduct disaster tax directly from private savings accounts."
+        },
+        {
+                "id": 15,
+                "claim": "Honey found in ancient Egyptian tombs dating back over 3,000 years remains completely edible and unspotted by bacteria.",
+                "isReal": true,
+                "category": "Food Science & History",
+                "origin": "Archaeological Research",
+                "hint": "Does honey's low moisture content and high acidity prevent microbial bacterial growth indefinitely?",
+                "explanation": "Verified Fact: Archaeologists excavating Egyptian tombs found 3,000-year-old pots of honey still preserved, because low water activity and hydrogen peroxide prevent bacterial decay."
+        },
+        {
+                "id": 16,
+                "claim": "A viral photo shows Pope Francis walking outdoors wearing a stylish white Balenciaga designer puffer jacket.",
+                "isReal": false,
+                "category": "AI Deepfakes & Media",
+                "origin": "Midjourney AI Creation",
+                "hint": "Examine the fingers, glasses bridge, and crucifix chain for blurring.",
+                "explanation": "Debunked: This viral image was generated using Midjourney v5 by a construction worker in Chicago. The Vatican confirmed the photograph is synthetic."
+        },
+        {
+                "id": 17,
+                "claim": "A video shows Ukrainian President Volodymyr Zelensky ordering soldiers to lay down arms and surrender to Russian forces.",
+                "isReal": false,
+                "category": "Deepfakes & War",
+                "origin": "Hacked TV Broadcast",
+                "hint": "Inspect the unnatural head tilt, neck seam, and static facial muscle expressions.",
+                "explanation": "Debunked: This video was an AI deepfake broadcast during a cyberattack on Ukrainian TV news in March 2022. President Zelensky immediately released a real rebuttal video."
+        },
+        {
+                "id": 18,
+                "claim": "A photo showing a large plume of black smoke near the Pentagon in May 2023 caused a brief 500-point dip in the US S&P 500 stock index.",
+                "isReal": false,
+                "category": "AI Hoax & Financial Impact",
+                "origin": "AI Generated Twitter Post",
+                "hint": "Did the Arlington Fire Department or DoD confirm any explosion on site?",
+                "explanation": "Debunked: Arlington Police and the Pentagon confirmed no explosion occurred. The image was an AI-generated fake posted by verified rogue social media accounts."
+        },
+        {
+                "id": 19,
+                "claim": "Viral photos showed former US President Donald Trump being physically tackled and arrested by NYPD officers in March 2023.",
+                "isReal": false,
+                "category": "AI Deepfakes",
+                "origin": "Midjourney Generated",
+                "hint": "Look at the unnatural hands, distorted badges, and inconsistent officer uniforms.",
+                "explanation": "Debunked: The images were generated using Midjourney by journalist Eliot Higgins to demonstrate how easily AI images can spread false news narratives."
+        },
+        {
+                "id": 20,
+                "claim": "An audio clip circulated of US President Joe Biden calling voters in New Hampshire telling them to stay home during the primary election.",
+                "isReal": false,
+                "category": "Voice Clones & Elections",
+                "origin": "AI Robocall",
+                "hint": "Did federal regulators fine a political consultant for deploying synthetic voice robocalls?",
+                "explanation": "Debunked: The FCC investigated and confirmed this was an AI-cloned audio robocall created using ElevenLabs software. The consultant responsible was fined millions by the FCC."
+        },
+        {
+                "id": 21,
+                "claim": "A photo shows a giant shark swimming down a flooded highway in Florida during Hurricane Ian.",
+                "isReal": false,
+                "category": "Digital Photomontage",
+                "origin": "Repeated Urban Legend",
+                "hint": "Has this exact same cutout shark photo appeared after Hurricane Irene, Sandy, and Harvey?",
+                "explanation": "Debunked: The 'highway shark' is a recurring photoshop hoax created by overlaying a 2005 photo of a great white shark originally published in Africa Geographic."
+        },
+        {
+                "id": 22,
+                "claim": "A video circulated showing billionaire Elon Musk promoting a quantum trading platform that guarantees ₹2,00,000 daily returns.",
+                "isReal": false,
+                "category": "AI Deepfakes & Scams",
+                "origin": "YouTube Scam Ad",
+                "hint": "Watch the lip synchronization against the spoken audio syllables.",
+                "explanation": "Debunked: Scammers took real archival interviews of Elon Musk and used neural audio/lip dubbing to promote fraudulent crypto investment schemes."
+        },
+        {
+                "id": 23,
+                "claim": "Researchers at Stanford and Google developed AI models that can generate 3D video scenes from 2D photos using Neural Radiance Fields (NeRFs).",
+                "isReal": true,
+                "category": "AI Research & Graphics",
+                "origin": "Computer Vision Science",
+                "hint": "Is NeRF a recognized breakthrough in computer graphics published at major conferences?",
+                "explanation": "Verified Fact: Neural Radiance Fields (NeRF) represents a legitimate AI breakthrough in synthesizing novel photorealistic viewpoints of complex 3D scenes from 2D images."
+        },
+        {
+                "id": 24,
+                "claim": "A viral photo showed Russian President Vladimir Putin kneeling and kissing the hand of Chinese President Xi Jinping during a state visit.",
+                "isReal": false,
+                "category": "AI Imagery",
+                "origin": "Social Media Viral",
+                "hint": "Inspect the hands, elongated ears, and blurred heads of diplomats in the background.",
+                "explanation": "Debunked: The image is an AI-generated synthetic picture. In the image, the kneeling figure's hand appears disproportionately large and background figures are distorted."
+        },
+        {
+                "id": 25,
+                "claim": "In 2024, the US Federal Communications Commission (FCC) officially outlawed robocalls using AI-generated voices.",
+                "isReal": true,
+                "category": "AI Policy & Regulation",
+                "origin": "FCC Official Ruling",
+                "hint": "Did the FCC issue a unanimous ruling targeting synthetic voice telemarketing?",
+                "explanation": "Verified Fact: On February 8, 2024, the FCC declared voice cloning in robocalls illegal under the Telephone Consumer Protection Act to protect citizens from scams."
+        },
+        {
+                "id": 26,
+                "claim": "A viral video shows French President Emmanuel Macron dancing wildly in a nightclub during nationwide pension protests.",
+                "isReal": false,
+                "category": "Deepfake Video",
+                "origin": "TikTok Viral",
+                "hint": "Compare the body proportions and face-swapping seam near the hairline.",
+                "explanation": "Debunked: The video was created using a deepfake face-swap tool over an Instagram influencer's dancing video. Agence France-Presse (AFP) debunked it."
+        },
+        {
+                "id": 27,
+                "claim": "Viral photos showed Taylor Swift endorsing a specific political candidate on social media with customized merchandise.",
+                "isReal": false,
+                "category": "AI Disinformation",
+                "origin": "Synthetic Campaign Posts",
+                "hint": "Were these synthetic fans wearing 'Swifties for Trump' AI-generated images?",
+                "explanation": "Debunked: Multiple images featuring AI-generated women wearing campaign merchandise were circulated online. Swift later issued a statement clarifying her actual stance."
+        },
+        {
+                "id": 28,
+                "claim": "A viral photo claims to show a new species of glowing purple owl discovered in the Amazon rainforest.",
+                "isReal": false,
+                "category": "Synthetic Fauna",
+                "origin": "Facebook Wildlife Group",
+                "hint": "Do any known avian species possess bioluminescent purple plumage across their entire body?",
+                "explanation": "Debunked: Biologists confirmed no such purple owl exists. The image was generated using Midjourney and shared by AI image farming pages."
+        },
+        {
+                "id": 29,
+                "claim": "In 2023, Deepfake audio imitating the CEO of an energy firm tricked a UK managing director into wiring €220,000 to an offshore account.",
+                "isReal": true,
+                "category": "Cybercrime & AI",
+                "origin": "The Wall Street Journal",
+                "hint": "Did insurance investigators report one of the earliest executive voice-clone wire frauds?",
+                "explanation": "Verified Fact: Criminals used commercial AI voice-generating software to mimic the German CEO's exact vocal timbre and German accent to siphon €220,000."
+        },
+        {
+                "id": 30,
+                "claim": "Viral video shows Will Smith aggressively eating spaghetti in an ultra-bizarre, glitchy, unnatural way.",
+                "isReal": false,
+                "category": "Early Generative Video",
+                "origin": "ModelScope AI Demo",
+                "hint": "Was this real footage or an early text-to-video AI demonstration created in 2023?",
+                "explanation": "Debunked: This viral video was an early AI text-to-video test created on Reddit using the open-source ModelScope AI model in March 2023, not real camera footage."
+        },
+        {
+                "id": 31,
+                "claim": "Drinking hot water with boiled lemon slices and baking soda cures 100% of cancer cases without chemotherapy.",
+                "isReal": false,
+                "category": "Health & Oncology",
+                "origin": "Viral Forward",
+                "hint": "Can dietary alkalinity alter human cellular pH to destroy genetic tumors?",
+                "explanation": "Debunked: Oncologists and the American Cancer Society confirm cancer cannot be cured by lemon water or baking soda. Human blood pH is strictly regulated by lungs and kidneys."
+        },
+        {
+                "id": 32,
+                "claim": "Eating raw crushed garlic on an empty stomach permanently cures Type 2 diabetes within 7 days.",
+                "isReal": false,
+                "category": "Dietary Hoax",
+                "origin": "YouTube Shorts",
+                "hint": "Is Type 2 diabetes a chronic endocrine disorder involving cellular insulin resistance?",
+                "explanation": "Debunked: While garlic contains allicin and antioxidants, endocrinologists state that no food permanently cures diabetes, and halting insulin medication can be fatal."
+        },
+        {
+                "id": 33,
+                "claim": "Holding your breath for 10 seconds without coughing or discomfort proves your lungs are 100% free of COVID-19 or pneumonia.",
+                "isReal": false,
+                "category": "Medical Diagnostic Myth",
+                "origin": "Early Pandemic WhatsApp",
+                "hint": "Can lung capacity tests diagnose the presence of microscopic viral pathogens?",
+                "explanation": "Debunked: The World Health Organization (WHO) clarified that holding breath cannot detect respiratory virus infection. Only molecular RT-PCR or antigen tests can confirm."
+        },
+        {
+                "id": 34,
+                "claim": "The World Health Organization (WHO) declared the mpox outbreak in Africa a Public Health Emergency of International Concern (PHEIC) in August 2024.",
+                "isReal": true,
+                "category": "Public Health",
+                "origin": "WHO Official Bulletin",
+                "hint": "Did WHO Director-General Tedros trigger emergency response protocols following clade Ib transmission?",
+                "explanation": "Verified Fact: On August 14, 2024, WHO declared mpox a Public Health Emergency of International Concern due to the rapid spread of the clade Ib strain."
+        },
+        {
+                "id": 35,
+                "claim": "Consuming colloidal silver liquid turns human skin permanently blue-gray (a condition called argyria).",
+                "isReal": true,
+                "category": "Dermatology & Toxicology",
+                "origin": "National Institutes of Health",
+                "hint": "Does metallic silver accumulate in deep dermis tissue when ingested?",
+                "explanation": "Verified Fact: Ingesting colloidal silver causes silver particles to deposit in organs and skin, where light reduces them to metallic silver, resulting in permanent blue argyria."
+        },
+        {
+                "id": 36,
+                "claim": "COVID-19 vaccines contain microscopic 5G tracking microchips designed to monitor citizens' GPS locations.",
+                "isReal": false,
+                "category": "Vaccine Conspiracy",
+                "origin": "Viral Conspiracy",
+                "hint": "Can a microchip with antenna, processor, and power supply fit through a 25-gauge vaccine syringe needle?",
+                "explanation": "Debunked: Vaccine ingredients are publicly published and verified by regulatory authorities worldwide. Microchips cannot be suspended in aqueous vaccine fluids."
+        },
+        {
+                "id": 37,
+                "claim": "Human blood inside veins is naturally blue and only turns red when exposed to oxygen outside the body.",
+                "isReal": false,
+                "category": "Human Biology",
+                "origin": "Common Schoolyard Myth",
+                "hint": "What is the true color of deoxygenated hemoglobin inside your veins?",
+                "explanation": "Debunked: Human blood is always red. Deoxygenated venous blood is dark burgundy red. Veins appear blue through skin due to how subcutaneous fat absorbs and scatters red light."
+        },
+        {
+                "id": 38,
+                "claim": "Octopuses have three hearts and their blood is naturally light blue in color.",
+                "isReal": true,
+                "category": "Marine Biology",
+                "origin": "Marine Research",
+                "hint": "Do cephalopods use copper-based hemocyanin rather than iron-based hemoglobin?",
+                "explanation": "Verified Fact: Octopuses possess three distinct hearts (two branchial, one systemic) and blue blood because oxygen is transported by copper-rich hemocyanin."
+        },
+        {
+                "id": 39,
+                "claim": "Cracking your knuckles causes arthritis and permanent joint cartilage damage over time.",
+                "isReal": false,
+                "category": "Orthopedics Myth",
+                "origin": "Parental Warning",
+                "hint": "What actually creates the popping sound inside synovial fluid?",
+                "explanation": "Debunked: The cracking sound is caused by nitrogen gas bubbles bursting within synovial joint fluid. Decades of clinical studies show no link to arthritis."
+        },
+        {
+                "id": 40,
+                "claim": "Swallowing chewing gum takes seven years for the human digestive tract to digest and pass.",
+                "isReal": false,
+                "category": "Digestive Science",
+                "origin": "Folklore",
+                "hint": "Does indigestible matter get trapped in the stomach or pass through the gastrointestinal tract in days?",
+                "explanation": "Debunked: While gum base cannot be chemically broken down by enzymes, gut peristalsis moves it along and expels it in stool within 24 to 48 hours."
+        },
+        {
+                "id": 41,
+                "claim": "Drinking alkaline water with a pH above 8.5 neutralizes all body acidity and prevents chronic diseases.",
+                "isReal": false,
+                "category": "Dietary Myth",
+                "origin": "Commercial Wellness",
+                "hint": "What happens when alkaline fluid hits stomach hydrochloric acid (pH 1.5 - 3.5)?",
+                "explanation": "Debunked: The stomach contains strong hydrochloric acid which immediately neutralizes alkaline water. Blood pH is strictly maintained at 7.35–7.45 by kidneys and lungs."
+        },
+        {
+                "id": 42,
+                "claim": "In 2023, the FDA and UK regulators approved Casgevy, the world's first CRISPR-based gene therapy for sickle cell disease.",
+                "isReal": true,
+                "category": "Biotechnology",
+                "origin": "FDA & MHRA Announcements",
+                "hint": "Did scientists win Nobel prizes for CRISPR technology that entered clinical reality in 2023?",
+                "explanation": "Verified Fact: In late 2023, UK MHRA and US FDA approved Vertex and CRISPR Therapeutics' Casgevy, a landmark cure using CRISPR-Cas9 gene editing."
+        },
+        {
+                "id": 43,
+                "claim": "Sleeping with your mobile phone next to your head on the pillow emits ionizing radiation that causes brain tumors.",
+                "isReal": false,
+                "category": "Radiation Science",
+                "origin": "Viral Health Warnings",
+                "hint": "Do cell phones emit ionizing radiation (like X-rays) or non-ionizing RF radio waves?",
+                "explanation": "Debunked: Cell phones emit non-ionizing radiofrequency radiation, which lacks the photon energy to break DNA bonds or cause cellular cancer mutations."
+        },
+        {
+                "id": 44,
+                "claim": "Eating carrots gives humans night vision, allowing people to see clearly in pitch-black conditions.",
+                "isReal": false,
+                "category": "Military WWII Propaganda",
+                "origin": "British Air Ministry WWII",
+                "hint": "Did the British military invent this story to hide airborne radar technology during WWII?",
+                "explanation": "Debunked: In WWII, the British Royal Air Force claimed pilots ate carrots to conceal their secret airborne radar interceptions. Vitamin A supports eye health, but doesn't grant night vision."
+        },
+        {
+                "id": 45,
+                "claim": "Bananas are naturally slightly radioactive because they contain the potassium-40 isotope.",
+                "isReal": true,
+                "category": "Nuclear Physics & Chemistry",
+                "origin": "Physics Fact Sheet",
+                "hint": "Is there a playful measurement unit known as the 'Banana Equivalent Dose' (BED)?",
+                "explanation": "Verified Fact: Bananas are rich in potassium, of which ~0.012% is naturally occurring radioactive Potassium-40 (K-40). The radiation dose is completely harmless to humans."
+        },
+        {
+                "id": 46,
+                "claim": "A viral post claims drinking raw silver liquid cures malaria, dengue, and snake bites instantly.",
+                "isReal": false,
+                "category": "Dangerous Cure Myth",
+                "origin": "Alternative Medicine Group",
+                "hint": "Is silver recognized as an anti-venom or anti-parasitic cure by pharmacology?",
+                "explanation": "Debunked: Silver ingestion does not neutralize snake venom or cure blood parasites. Ingesting it risks kidney toxicity and permanent tissue discoloration."
+        },
+        {
+                "id": 47,
+                "claim": "Vaccines administered to children cause autism spectrum disorders.",
+                "isReal": false,
+                "category": "Debunked Medical Fraud",
+                "origin": "Retracted 1998 Paper",
+                "hint": "Was Andrew Wakefield's 1998 Lancet paper formally retracted for ethical fraud and data falsification?",
+                "explanation": "Debunked: The Lancet formally retracted the 1998 paper after the British General Medical Council found Wakefield guilty of ethical violations and data fabrication."
+        },
+        {
+                "id": 48,
+                "claim": "Taking mega-doses of Vitamin C (10,000 mg/day) guarantees you will never catch the common cold.",
+                "isReal": false,
+                "category": "Vitamin Myth",
+                "origin": "Linus Pauling Hypothesis",
+                "hint": "What does human renal biology do with excess water-soluble Vitamin C?",
+                "explanation": "Debunked: Excess water-soluble Vitamin C is excreted in urine. Comprehensive Cochrane reviews show high doses do not prevent cold infection and can cause kidney stones."
+        },
+        {
+                "id": 49,
+                "claim": "Antibiotics are effective at curing the viral common cold and seasonal influenza.",
+                "isReal": false,
+                "category": "Pharmacology",
+                "origin": "Over-the-Counter Misuse",
+                "hint": "Do antibiotics target bacterial cell walls or viral replication cycles?",
+                "explanation": "Debunked: Antibiotics only kill bacteria. Colds and flu are caused by viruses (rhinoviruses and influenza), making antibiotics completely useless against them."
+        },
+        {
+                "id": 50,
+                "claim": "A real human heart beats over 100,000 times in a single day and pumps around 7,500 liters of blood.",
+                "isReal": true,
+                "category": "Cardiovascular Physiology",
+                "origin": "American Heart Association",
+                "hint": "At an average rate of 70–75 bpm, do daily cycles calculate to ~100k beats?",
+                "explanation": "Verified Fact: An adult heart beating ~72 times per minute beats roughly 103,680 times per day, pumping approximately 2,000 gallons (7,500 liters) of blood."
+        },
+        {
+                "id": 51,
+                "claim": "ISRO successfully landed the Chandrayaan-3 Vikram lander near the Moon's South Pole on August 23, 2023.",
+                "isReal": true,
+                "category": "Space Exploration",
+                "origin": "ISRO & NASA Announcements",
+                "hint": "Did India become the first nation to achieve a soft-landing in the lunar southern polar zone?",
+                "explanation": "Verified Fact: India made history on August 23, 2023, when ISRO's Chandrayaan-3 successfully touched down near the Lunar South Pole."
+        },
+        {
+                "id": 52,
+                "claim": "The Great Wall of China is clearly visible from the Moon with the naked human eye.",
+                "isReal": false,
+                "category": "Astronomy & Geography",
+                "origin": "Common Legend",
+                "hint": "Can human optical resolution see a structure less than 10 meters wide from 384,000 km away?",
+                "explanation": "Debunked: NASA astronauts confirm the Great Wall is not visible from low Earth orbit without camera zoom, let alone from the Moon (384,000 km away)."
+        },
+        {
+                "id": 53,
+                "claim": "NASA's James Webb Space Telescope detected the most distant known galaxy, JADES-GS-z14-0, formed just 290 million years after the Big Bang.",
+                "isReal": true,
+                "category": "Astrophysics",
+                "origin": "Nature & NASA Releases",
+                "hint": "Did international astronomers confirm a cosmic redshift distance record in May 2024?",
+                "explanation": "Verified Fact: In May 2024, astronomers confirmed galaxy JADES-GS-z14-0 at redshift z=14.32, setting a new cosmic record for the earliest observable galaxy."
+        },
+        {
+                "id": 54,
+                "claim": "NASA warned that Earth will experience 3 consecutive days of complete darkness due to an alignment of planets.",
+                "isReal": false,
+                "category": "Space Hoax",
+                "origin": "Repeated Doomsday Chain",
+                "hint": "Can planetary orbital alignments block sunlight across the entire globe?",
+                "explanation": "Debunked: NASA has repeatedly debunked this recurring internet hoax. No planetary alignment can physically obstruct sunlight reaching planet Earth."
+        },
+        {
+                "id": 55,
+                "claim": "Trees in a forest communicate and share nutrients through an underground mycorrhizal network of fungi.",
+                "isReal": true,
+                "category": "Botany & Ecology",
+                "origin": "Nature Journal",
+                "hint": "Is the 'Wood Wide Web' a validated biological discovery documented by forest ecologists?",
+                "explanation": "Verified Fact: Ecologist Suzanne Simard and researchers proved trees share carbon, nitrogen, and warning signals through subterranean fungal mycorrhizal networks."
+        },
+        {
+                "id": 56,
+                "claim": "5G cell towers emit millimeter radiation waves that directly cause COVID-19 viral replication.",
+                "isReal": false,
+                "category": "Telecom Conspiracy",
+                "origin": "Early Pandemic Conspiracies",
+                "hint": "Can electromagnetic radio waves create biological viral ribonucleic acid (RNA)?",
+                "explanation": "Debunked: 5G uses non-ionizing radio waves. Viruses are biological microorganisms that transmit through respiratory droplets, not telecom frequencies."
+        },
+        {
+                "id": 57,
+                "claim": "Lightning never strikes the same place twice.",
+                "isReal": false,
+                "category": "Meteorology",
+                "origin": "Old Adage",
+                "hint": "How many times per year is the Empire State Building struck by lightning?",
+                "explanation": "Debunked: Lightning frequently strikes the same location multiple times. Tall structures like the Empire State Building and CN Tower are struck dozens of times annually."
+        },
+        {
+                "id": 58,
+                "claim": "NASA's Voyager 1 spacecraft, launched in 1977, is currently over 24 billion kilometers from Earth in interstellar space.",
+                "isReal": true,
+                "category": "Deep Space Exploration",
+                "origin": "NASA JPL",
+                "hint": "Did Voyager 1 cross the heliopause boundary in 2012?",
+                "explanation": "Verified Fact: Voyager 1 is the farthest human-made object in history, operating in interstellar space beyond the Sun's heliosphere over 24 billion km away."
+        },
+        {
+                "id": 59,
+                "claim": "Humans only use 10 percent of their brain capacity at any given time.",
+                "isReal": false,
+                "category": "Neuroscience Myth",
+                "origin": "Pop Psychology / Movies",
+                "hint": "Do modern fMRI scans reveal neural activity throughout all brain lobes?",
+                "explanation": "Debunked: Functional neuroimaging (fMRI and PET) shows virtually all parts of the brain are active even during sleep. Damage to even small areas causes severe deficits."
+        },
+        {
+                "id": 60,
+                "claim": "Water spirals down drains in opposite directions in Australia versus Canada due to the Coriolis effect.",
+                "isReal": false,
+                "category": "Physics Myth",
+                "origin": "Folklore & TV Shows",
+                "hint": "Is the rotational force of the Earth noticeable in small household sinks?",
+                "explanation": "Debunked: The Coriolis force is far too minuscule to affect small volumes of sink or toilet water. Basin geometry and initial momentum dictate the swirl."
+        },
+        {
+                "id": 61,
+                "claim": "One day on the planet Venus is longer than one full year on Venus.",
+                "isReal": true,
+                "category": "Planetary Science",
+                "origin": "Astronomical Catalog",
+                "hint": "Does Venus take 243 Earth days to rotate on its axis but only 225 Earth days to orbit the Sun?",
+                "explanation": "Verified Fact: Venus has an extremely slow retrograde rotation: one sidereal day takes 243 Earth days, while its orbit around the Sun takes only 224.7 Earth days."
+        },
+        {
+                "id": 62,
+                "claim": "A coin dropped from the top of the Empire State Building will accelerate and kill a pedestrian on the sidewalk.",
+                "isReal": false,
+                "category": "Terminal Velocity Physics",
+                "origin": "Urban Legend",
+                "hint": "Does aerodynamic drag create a low terminal velocity for small tumbling flat coins?",
+                "explanation": "Debunked: A small coin's terminal velocity in air is capped at ~40–50 km/h due to air resistance. It would sting or hurt, but cannot penetrate human skull bone."
+        },
+        {
+                "id": 63,
+                "claim": "A full moon causes emergency rooms and police stations to experience massive statistical surges in criminal madness.",
+                "isReal": false,
+                "category": "Psychology Myth",
+                "origin": "Lunar Effect Legend",
+                "hint": "Do statistical hospital admission studies corroborate the lunar crime hypothesis?",
+                "explanation": "Debunked: Extensive meta-analyses of police reports, psychiatric admissions, and hospital visits show zero statistically significant correlation with lunar phases."
+        },
+        {
+                "id": 64,
+                "claim": "Glass is a slow-flowing liquid at room temperature, which is why old antique cathedral windows are thicker at the bottom.",
+                "isReal": false,
+                "category": "Materials Science",
+                "origin": "Schoolroom Myth",
+                "hint": "Is glass an amorphous solid, and were historic window panes made via crown glass spinning?",
+                "explanation": "Debunked: Glass is an amorphous solid. Historical crown glass blowing produced uneven glass discs, and glaziers simply installed the heavier, thicker rim at the bottom."
+        },
+        {
+                "id": 65,
+                "claim": "Gravitational waves from colliding black holes billions of light-years away were physically detected by LIGO in 2015.",
+                "isReal": true,
+                "category": "General Relativity",
+                "origin": "LIGO / Nobel Prize in Physics",
+                "hint": "Did laser interferometry measure spacetime ripples smaller than the width of a proton?",
+                "explanation": "Verified Fact: On September 14, 2015, the LIGO detectors observed gravitational waves predicted by Einstein, earning the 2017 Nobel Prize in Physics."
+        },
+        {
+                "id": 66,
+                "claim": "A viral photo claims scientists in Antarctica discovered a perfectly preserved woolly mammoth with liquid blood flowing in its veins.",
+                "isReal": false,
+                "category": "Paleontology Hoax",
+                "origin": "Tabloid Viral",
+                "hint": "Did woolly mammoths live in the Arctic hemisphere (Siberia/Alaska) or in Antarctica?",
+                "explanation": "Debunked: Woolly mammoths inhabited the Northern Hemisphere (Eurasia and North America), never Antarctica. The photo was an edited museum replica."
+        },
+        {
+                "id": 67,
+                "claim": "There are more trees on planet Earth than there are stars in the Milky Way galaxy.",
+                "isReal": true,
+                "category": "Astrophysics & Ecology",
+                "origin": "Nature 2015 Study",
+                "hint": "Are there ~3 trillion trees on Earth compared to ~100–400 billion stars in the Milky Way?",
+                "explanation": "Verified Fact: A 2015 study published in Nature estimated Earth has approximately 3.04 trillion trees, whereas the Milky Way contains roughly 100 to 400 billion stars."
+        },
+        {
+                "id": 68,
+                "claim": "A viral claim states that a secret US military weather machine called HAARP intentionally caused the 2023 Turkey-Syria earthquake.",
+                "isReal": false,
+                "category": "Geophysics Conspiracy",
+                "origin": "Conspiracy Channels",
+                "hint": "Can ionospheric radio wave heating trigger tectonic plate subduction 15 km deep underground?",
+                "explanation": "Debunked: Seismologists confirmed the earthquake was caused by the natural rupture of the East Anatolian Fault. HAARP studies the upper ionosphere and has zero effect on tectonic geology."
+        },
+        {
+                "id": 69,
+                "claim": "Sharks existed on Earth before trees evolved.",
+                "isReal": true,
+                "category": "Evolutionary Biology",
+                "origin": "Paleontology Records",
+                "hint": "Did early shark fossil scales appear ~450 million years ago versus earliest wood trees ~350 million years ago?",
+                "explanation": "Verified Fact: Fossil evidence shows early shark-like scales date back ~450 million years, whereas the earliest tree-like plants (Archaeopteris) evolved around 350 million years ago."
+        },
+        {
+                "id": 70,
+                "claim": "A viral video shows a working perpetual motion engine powered entirely by magnets running indefinitely without external energy.",
+                "isReal": false,
+                "category": "Thermodynamics Hoax",
+                "origin": "YouTube Viral Video",
+                "hint": "Does this violate the First and Second Laws of Thermodynamics?",
+                "explanation": "Debunked: Perpetual motion machines violate basic thermodynamics (conservation of energy and friction losses). Such viral videos always conceal hidden wires or batteries."
+        },
+        {
+                "id": 71,
+                "claim": "The Reserve Bank of India (RBI) announced that all ₹500 currency notes will be completely demonetized and cancelled starting this month.",
+                "isReal": false,
+                "category": "Banking & Economy",
+                "origin": "Viral WhatsApp Forward",
+                "hint": "Did the RBI or Press Information Bureau confirm any demonetization of the current ₹500 note?",
+                "explanation": "Debunked: The RBI and PIB Fact Check confirmed ₹500 currency notes remain valid legal tender. No circular was issued demonetizing ₹500 notes."
+        },
+        {
+                "id": 72,
+                "claim": "A WhatsApp message claiming to be from State Bank of India (SBI) asks users to update their PAN to avoid account freezing.",
+                "isReal": false,
+                "category": "Phishing & Cybersecurity",
+                "origin": "Phishing SMS / WhatsApp",
+                "hint": "Do official banks ever request credential or PAN uploads through unsolicited third-party APK links?",
+                "explanation": "Debunked: This is a known smishing/phishing fraud. SBI clarified it never sends APK download links or asks for sensitive credentials over SMS/WhatsApp."
+        },
+        {
+                "id": 73,
+                "claim": "The central government is distributing free ₹50,000 cash to all smartphone owners under the 'Pradhan Mantri Smartphone Digital Scheme'.",
+                "isReal": false,
+                "category": "Government Scheme Hoax",
+                "origin": "YouTube Clickbait",
+                "hint": "Check official government portals for any scheme named 'Pradhan Mantri Smartphone Digital Scheme'.",
+                "explanation": "Debunked: PIB Fact Check confirmed no such scheme exists. The viral YouTube video used deceptive thumbnails to collect personal registration data."
+        },
+        {
+                "id": 74,
+                "claim": "In 2024, the Indian Ministry of Finance confirmed that UPI transactions remain 100% free for normal person-to-person and merchant payments.",
+                "isReal": true,
+                "category": "Digital Payments",
+                "origin": "Ministry of Finance Statement",
+                "hint": "Did the Finance Ministry clarify that standard consumer UPI transfers incur zero transaction fees?",
+                "explanation": "Verified Fact: The Ministry of Finance clarified that UPI is a public digital good and consumer person-to-person (P2P) and person-to-merchant (P2M) payments remain free."
+        },
+        {
+                "id": 75,
+                "claim": "The Income Tax Department is offering a lottery prize of ₹10,00,000 to random taxpayers who click a viral link to verify their Aadhaar.",
+                "isReal": false,
+                "category": "Phishing Scam",
+                "origin": "Viral SMS / Telegram",
+                "hint": "Does the tax department run lottery prize promotions for taxpayers?",
+                "explanation": "Debunked: The Income Tax Department does not conduct prize lotteries. The link is a malicious phishing campaign designed to steal identity credentials."
+        },
+        {
+                "id": 76,
+                "claim": "A YouTube live stream featuring Elon Musk claims to double any Bitcoin, Ethereum, or Dogecoin sent to a displayed QR code address.",
+                "isReal": false,
+                "category": "Cryptocurrency Scam",
+                "origin": "Hacked YouTube Channels",
+                "hint": "Has any legitimate billionaire or company ever run a 'send 1 BTC get 2 BTC back' giveaway?",
+                "explanation": "Debunked: This is a classic crypto doubling scam using hijacked YouTube channels and looped interview footage. Sent cryptocurrency is permanently stolen."
+        },
+        {
+                "id": 77,
+                "claim": "Under the PM Suryaghar Muft Bijli Yojana, eligible households can receive government subsidies up to ₹78,000 for installing rooftop solar systems.",
+                "isReal": true,
+                "category": "Government Schemes",
+                "origin": "Official Scheme Guidelines",
+                "hint": "Did Prime Minister Modi launch the PM-Surya Ghar solar rooftop subsidy initiative in 2024?",
+                "explanation": "Verified Fact: The PM Surya Ghar scheme provides legitimate central financial assistance up to ₹78,000 for residential rooftop solar installations up to 3kW."
+        },
+        {
+                "id": 78,
+                "claim": "Typing your ATM PIN backwards at a bank cash machine automatically sends a secret silent panic distress alert to local police.",
+                "isReal": false,
+                "category": "Banking Urban Legend",
+                "origin": "Social Media Chain Mail",
+                "hint": "What happens if a user's legitimate PIN is already a palindrome (e.g. 1221 or 4554)?",
+                "explanation": "Debunked: ATM networks have never implemented reversed-PIN emergency triggers. Typing your PIN backwards will simply result in an 'Incorrect PIN' error."
+        },
+        {
+                "id": 79,
+                "claim": "The Reserve Bank of India launched the Digital Rupee (e₹), an official central bank digital currency (CBDC) backed by sovereign guarantee.",
+                "isReal": true,
+                "category": "Fintech & Currency",
+                "origin": "RBI Official Launch",
+                "hint": "Did RBI begin retail pilot tests for the digital rupee across Indian cities in 2022-2023?",
+                "explanation": "Verified Fact: The RBI rolled out the Central Bank Digital Currency (CBDC), known as the Digital Rupee (e₹), piloted for retail and wholesale banking transactions."
+        },
+        {
+                "id": 80,
+                "claim": "A viral SMS states that your electricity connection will be disconnected tonight at 9:30 PM unless you call a personal mobile number immediately.",
+                "isReal": false,
+                "category": "Utility Scam",
+                "origin": "Fraudulent SMS Campaign",
+                "hint": "Do state electricity boards instruct consumers to call 10-digit personal mobile numbers?",
+                "explanation": "Debunked: This is a widespread utility scam. State power distribution companies warn citizens that disconnection notices are never sent with personal phone numbers."
+        },
+        {
+                "id": 81,
+                "claim": "Deposits in all scheduled commercial banks in India are insured up to ₹5,00,000 per depositor by the DICGC (an RBI subsidiary).",
+                "isReal": true,
+                "category": "Banking Security",
+                "origin": "DICGC Official Act",
+                "hint": "Was the bank deposit insurance limit increased from ₹1 lakh to ₹5 lakh in 2020?",
+                "explanation": "Verified Fact: The Deposit Insurance and Credit Guarantee Corporation (DICGC) guarantees bank deposits up to ₹5,00,000 per depositor in each commercial bank."
+        },
+        {
+                "id": 82,
+                "claim": "An audio clip claims the government has authorized banks to confiscate all citizen gold jewelry kept in safety locker vaults.",
+                "isReal": false,
+                "category": "Financial Panic Hoax",
+                "origin": "Voice Note Forward",
+                "hint": "Did the Finance Ministry issue any notice permitting confiscation of private bank locker gold?",
+                "explanation": "Debunked: The Ministry of Finance dismissed this audio forward as baseless rumor. Locker contents remain private property and cannot be seized arbitrarily."
+        },
+        {
+                "id": 83,
+                "claim": "The National Cyber Crime Reporting Portal (cybercrime.gov.in) and helpline 1930 allow citizens to report digital financial cyber fraud in India.",
+                "isReal": true,
+                "category": "Cyber Safety",
+                "origin": "Ministry of Home Affairs",
+                "hint": "Is 1930 the official Indian helpline for reporting online financial cybercrime?",
+                "explanation": "Verified Fact: Helpline 1930 and cybercrime.gov.in are official Indian government platforms operated by the Ministry of Home Affairs to freeze defrauded funds."
+        },
+        {
+                "id": 84,
+                "claim": "A viral message claims you can claim a free electric scooter simply by paying a ₹499 registration fee via UPI.",
+                "isReal": false,
+                "category": "UPI Advance Fee Fraud",
+                "origin": "Telegram Forward",
+                "hint": "Is this a classic advance-fee scam asking for small upfront processing charges?",
+                "explanation": "Debunked: Police cyber cells have arrested multiple fraudulent gangs running fake EV subsidy portals. No legitimate company gives away scooters for ₹499."
+        },
+        {
+                "id": 85,
+                "claim": "The Reserve Bank of India does not contact individual citizens through email or WhatsApp demanding payments for lottery or fund clearances.",
+                "isReal": true,
+                "category": "RBI Public Advisory",
+                "origin": "RBI Kehta Hai Advisory",
+                "hint": "Does the RBI maintain individual retail consumer accounts or solicit processing fees?",
+                "explanation": "Verified Fact: The RBI's official awareness campaign ('RBI Kehta Hai') emphasizes that the central bank never asks for fees, OTPs, or handles personal funds."
+        },
+        {
+                "id": 86,
+                "claim": "A viral notification claims that the government is imposing a 50% GST tax on all UPI transactions above ₹500.",
+                "isReal": false,
+                "category": "Taxation Hoax",
+                "origin": "Fake News Card",
+                "hint": "Check official PIB Fact Check notices on GST on UPI.",
+                "explanation": "Debunked: PIB Fact Check confirmed no such tax has been proposed or enacted. Normal UPI fund transfers do not attract Goods and Services Tax."
+        },
+        {
+                "id": 87,
+                "claim": "A digital message claims a high court judge issued an urgent warrant on your Aadhaar card and orders you to pay fine money via digital court link.",
+                "isReal": false,
+                "category": "Digital Arrest Fraud",
+                "origin": "Digital Arrest Scam",
+                "hint": "Do law enforcement agencies conduct 'digital arrests' or trials over Skype/WhatsApp video calls?",
+                "explanation": "Debunked: Law enforcement and the Prime Minister warned the nation against 'digital arrest' scams. Genuine police and courts never arrest or demand fines via video calls."
+        },
+        {
+                "id": 88,
+                "claim": "The Bureau of Indian Standards (BIS) Hallmark on gold jewelry consists of a BIS logo, purity grade, and a 6-digit alphanumeric HUID code.",
+                "isReal": true,
+                "category": "Consumer Rights",
+                "origin": "BIS Official Standards",
+                "hint": "Did mandatory hallmarking introduce the 6-digit Hallmark Unique Identification (HUID) in India?",
+                "explanation": "Verified Fact: Genuine hallmarked gold jewelry carries three marks: the BIS logo, the gold purity mark (e.g., 22K916), and a laser-engraved 6-digit HUID code."
+        },
+        {
+                "id": 89,
+                "claim": "The Ministry of Railways announced that all senior citizens aged 60 and above will receive free 100% concession on all trains starting next week.",
+                "isReal": false,
+                "category": "Railway Concession Hoax",
+                "origin": "Viral WhatsApp Forward",
+                "hint": "Did the Ministry of Railways restore pre-pandemic general senior citizen concessions?",
+                "explanation": "Debunked: Indian Railways has not announced universal free travel for senior citizens. Concessions remain limited to specific medical and disabled categories."
+        },
+        {
+                "id": 90,
+                "claim": "In 2024, the Supreme Court of India declared the Electoral Bonds scheme unconstitutional and violative of the right to information.",
+                "isReal": true,
+                "category": "Constitutional Law",
+                "origin": "Supreme Court Ruling",
+                "hint": "Did a five-judge Constitution bench strike down anonymous political funding bonds?",
+                "explanation": "Verified Fact: On February 15, 2024, a unanimous 5-judge Supreme Court bench headed by the Chief Justice struck down the Electoral Bonds scheme as unconstitutional."
+        },
+        {
+                "id": 91,
+                "claim": "A viral gazette circular claims the government has made it mandatory for all citizens to undergo 2 years of compulsory military service.",
+                "isReal": false,
+                "category": "Defense Hoax",
+                "origin": "Fabricated Circular",
+                "hint": "Has India ever instituted compulsory universal military conscription?",
+                "explanation": "Debunked: India maintains an entirely volunteer armed force. PIB Fact Check confirmed the notification was fabricated and no draft conscription exists."
+        },
+        {
+                "id": 92,
+                "claim": "India's DigiLocker platform is legally recognized as equivalent to original physical documents under the Information Technology Rules, 2016.",
+                "isReal": true,
+                "category": "Digital Governance",
+                "origin": "IT Act & Ministry of Transport",
+                "hint": "Are driving licenses and vehicle registration documents in DigiLocker legally valid for police inspection?",
+                "explanation": "Verified Fact: Under Rule 9A of the IT Rules 2016 and Ministry of Transport advisories, electronic documents in DigiLocker have the same legal standing as original certificates."
+        },
+        {
+                "id": 93,
+                "claim": "A viral WhatsApp post claims the Election Commission of India postponed the national election dates due to extreme summer heatwaves.",
+                "isReal": false,
+                "category": "Election Misinformation",
+                "origin": "Social Media Forward",
+                "hint": "Check official Election Commission of India (ECI) press releases.",
+                "explanation": "Debunked: The Election Commission of India confirmed the viral claim was completely false. Election schedules are strictly governed by formal Gazette notifications."
+        },
+        {
+                "id": 94,
+                "claim": "India's first solar space observatory, Aditya-L1, successfully entered its halo orbit around the Sun-Earth Lagrange point 1 (L1) in January 2024.",
+                "isReal": true,
+                "category": "Space Exploration",
+                "origin": "ISRO Press Release",
+                "hint": "Did ISRO place Aditya-L1 into orbit 1.5 million kilometers from Earth?",
+                "explanation": "Verified Fact: On January 6, 2024, ISRO successfully placed the Aditya-L1 spacecraft into its halo orbit around L1 to continuously monitor solar activity."
+        },
+        {
+                "id": 95,
+                "claim": "The government announced that starting next month, WhatsApp calls will be charged at ₹1 per minute by telecom operators.",
+                "isReal": false,
+                "category": "Telecom Rumor",
+                "origin": "Repeated Forward",
+                "hint": "Are VoIP calls governed by existing internet data usage rather than per-minute charges?",
+                "explanation": "Debunked: Cellular operators and the Department of Telecommunications (DoT) confirmed there is no fee for WhatsApp voice calls beyond standard mobile data consumption."
+        },
+        {
+                "id": 96,
+                "claim": "The Indian passport is issued by the Ministry of External Affairs and all newly printed Indian passports have an embedded RFID biometric chip.",
+                "isReal": true,
+                "category": "Passport Governance",
+                "origin": "Ministry of External Affairs",
+                "hint": "Did India begin rolling out e-Passports with embedded microchips for citizens?",
+                "explanation": "Verified Fact: The Ministry of External Affairs introduced next-generation e-Passports featuring embedded biometric chips storing demographic and biometric data securely."
+        },
+        {
+                "id": 97,
+                "claim": "A viral post claims that the government is offering ₹5,000 to every citizen who fills out a survey link celebrating national independence.",
+                "isReal": false,
+                "category": "Survey Clickbait Scam",
+                "origin": "Phishing Link",
+                "hint": "Are cash giveaway surveys legitimate government channels?",
+                "explanation": "Debunked: PIB Fact Check confirmed the survey link is a data-stealing phishing scam. The Indian government does not distribute survey prize money on WhatsApp."
+        },
+        {
+                "id": 98,
+                "claim": "The Preamble to the Constitution of India was amended once in 1976 by the 42nd Constitutional Amendment.",
+                "isReal": true,
+                "category": "Constitutional History",
+                "origin": "Constitution of India",
+                "hint": "Were the words 'Socialist', 'Secular', and 'Integrity' added in 1976?",
+                "explanation": "Verified Fact: The Preamble has been amended only once: in 1976 by the 42nd Amendment, which added the words 'Socialist', 'Secular', and 'and Integrity'."
+        },
+        {
+                "id": 99,
+                "claim": "A viral circular claims that clicking a link allows you to bypass the Aadhaar-PAN linking requirement without paying the government penalty.",
+                "isReal": false,
+                "category": "Cybersecurity & Tax",
+                "origin": "Phishing Post",
+                "hint": "Is PAN-Aadhaar linkage managed exclusively on the official incometax.gov.in portal?",
+                "explanation": "Debunked: Statutory linkage is exclusively processed on the official e-Filing portal. Third-party links offering fee exemptions are malicious credential theft attempts."
+        },
+        {
+                "id": 100,
+                "claim": "The Right to Information (RTI) Act in India was enacted by Parliament in 2005 to empower citizens with access to public records.",
+                "isReal": true,
+                "category": "Indian Law",
+                "origin": "RTI Act 2005",
+                "hint": "Did Parliament pass the landmark freedom of information law in 2005?",
+                "explanation": "Verified Fact: The Right to Information Act came into force on October 12, 2005, giving Indian citizens the legal right to inspect public authority records."
+        },
+        {
+                "id": 101,
+                "claim": "A viral photo claims that archaeological excavations in Kurukshetra unearthed a giant human skeleton 80 feet in length confirming Mahabharata giants.",
+                "isReal": false,
+                "category": "Archaeological Hoax",
+                "origin": "Photoshopped Viral Forward",
+                "hint": "Was this image created for a digital photoshop artist competition on Worth1000?",
+                "explanation": "Debunked: The image was a digital creation submitted to an online Worth1000 design competition titled 'Archaeological Anomalies', not a real excavation."
+        },
+        {
+                "id": 102,
+                "claim": "Under the Consumer Protection Act 2019, consumers can file complaints against misleading advertisements and defective goods online through the e-Daakhil portal.",
+                "isReal": true,
+                "category": "Consumer Rights",
+                "origin": "Ministry of Consumer Affairs",
+                "hint": "Did the 2019 Consumer Protection Act introduce e-filing for consumer disputes?",
+                "explanation": "Verified Fact: The Consumer Protection Act 2019 modernized consumer courts and established e-Daakhil, allowing citizens to file grievances electronically from home."
+        },
+        {
+                "id": 103,
+                "claim": "A viral message claims that all schools and colleges will be closed nationwide for three months due to an impending planetary solar flare.",
+                "isReal": false,
+                "category": "School Closure Rumor",
+                "origin": "WhatsApp Hoax",
+                "hint": "Do education ministries declare nationwide 3-month shutdowns based on solar weather rumors?",
+                "explanation": "Debunked: Education departments clarified that this is an unsubstantiated recurring rumor. No nationwide closures were mandated."
+        },
+        {
+                "id": 104,
+                "claim": "The Indian National Anthem ('Jana Gana Mana') was originally composed in Bengali by Rabindranath Tagore.",
+                "isReal": true,
+                "category": "National History",
+                "origin": "Historical Fact",
+                "hint": "Did Nobel laureate Rabindranath Tagore compose the song in 1911 in Sadhu Bengali?",
+                "explanation": "Verified Fact: Rabindranath Tagore composed the song in December 1911 in literary Bengali (Brahmo hymn 'Bharoto Bhagyo Bidhata'). The first stanza was adopted as the Anthem in 1950."
+        },
+        {
+                "id": 105,
+                "claim": "A viral post claims that the Reserve Bank of India has banned all cash transactions over ₹2,000 across all retail grocery stores.",
+                "isReal": false,
+                "category": "Currency Myth",
+                "origin": "Social Media Rumor",
+                "hint": "Does the RBI or Income Tax law ban paying ₹2,000 cash for groceries?",
+                "explanation": "Debunked: There is no prohibition against paying ₹2,000 cash for retail grocery purchases. Income tax regulations restrict single cash transactions above ₹2,00,000, not ₹2,000."
+        }
+];
 
-        // State
+        // Deck State & Session Randomizer
+        let activeDeck = [];
         let currentIdx = 0;
         let score = 0;
         let userAnswers = []; // Records { claimId, userChoice, isCorrect, claim }
         const LOCAL_STORAGE_KEY = 'verifyit_swipe_game_stats';
+        const SEEN_CARDS_KEY = 'verifyit_swipe_seen_cards';
+
+        function getSeenCardsSet() {
+            try {
+                const raw = sessionStorage.getItem(SEEN_CARDS_KEY);
+                return raw ? new Set(JSON.parse(raw)) : new Set();
+            } catch (e) {
+                return new Set();
+            }
+        }
+
+        function saveSeenCardsSet(seenSet) {
+            try {
+                sessionStorage.setItem(SEEN_CARDS_KEY, JSON.stringify(Array.from(seenSet)));
+            } catch (e) {}
+        }
+
+        // Draws 10 completely fresh unplayed cards from the 105+ pool
+        function drawFreshDeck(count = 10) {
+            let seen = getSeenCardsSet();
+            let unseen = ALL_VIRAL_CLAIMS_POOL.filter(c => !seen.has(c.id));
+
+            // If fewer than 10 unplayed cards remain, recycle pool cleanly
+            if (unseen.length < count) {
+                seen.clear();
+                unseen = [...ALL_VIRAL_CLAIMS_POOL];
+            }
+
+            // Shuffle unseen cards randomly
+            const shuffled = [...unseen].sort(() => Math.random() - 0.5);
+            activeDeck = shuffled.slice(0, count);
+
+            // Register these 10 cards as seen
+            activeDeck.forEach(c => seen.add(c.id));
+            saveSeenCardsSet(seen);
+
+            currentIdx = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Hide feedback bar
+            const fbBar = document.getElementById("swipeFeedbackBar");
+            if (fbBar) fbBar.style.display = "none";
+            
+            renderQuestion(0);
+        }
+
+        function reshuffleDeck() {
+            drawFreshDeck(10);
+        }
 
         // DOM Elements
         const topCard = document.getElementById("topCard");
@@ -1198,7 +2105,6 @@
         const currentScoreCount = document.getElementById("currentScoreCount");
         const gamePlayScreen = document.getElementById("gamePlayScreen");
         const resultsScreen = document.getElementById("resultsScreen");
-        const revealOverlay = document.getElementById("revealOverlay");
 
         // Physics & Drag Tracking
         let isDragging = false;
@@ -1206,12 +2112,12 @@
         let startY = 0;
         let currentX = 0;
         let currentY = 0;
-        const SWIPE_THRESHOLD = 95;
+        const SWIPE_THRESHOLD = 90;
 
         // Init
         document.addEventListener("DOMContentLoaded", () => {
             loadUserStats();
-            renderQuestion(currentIdx);
+            drawFreshDeck(10);
             initTouchAndMouseEvents();
             initKeyboardShortcuts();
         });
@@ -1253,7 +2159,7 @@
         }
 
         function resetGameStats() {
-            if (confirm("Reset all your recorded swipe scores and accuracy stats?")) {
+            if (confirm("Reset your recorded swipe game score and accuracy stats?")) {
                 localStorage.removeItem(LOCAL_STORAGE_KEY);
                 loadUserStats();
             }
@@ -1261,16 +2167,17 @@
 
         // 2. Render Card
         function renderQuestion(idx) {
-            if (idx >= VIRAL_CLAIMS.length) {
+            if (idx >= activeDeck.length) {
                 showResults();
                 return;
             }
 
-            const q = VIRAL_CLAIMS[idx];
+            const q = activeDeck[idx];
 
             // Reset Card Transform & Position
             topCard.style.transition = 'none';
             topCard.style.transform = 'translate(0px, 0px) rotate(0deg)';
+            topCard.style.opacity = '1';
             stampFake.style.opacity = '0';
             stampReal.style.opacity = '0';
             cardHintDrawer.style.display = 'none';
@@ -1283,7 +2190,7 @@
 
             // Update Progress Bar & Counter
             currentQuestionNum.textContent = idx + 1;
-            const pct = ((idx + 1) / VIRAL_CLAIMS.length) * 100;
+            const pct = ((idx + 1) / activeDeck.length) * 100;
             progressBarFill.style.width = `${pct}%`;
             currentScoreCount.textContent = score;
         }
@@ -1296,12 +2203,78 @@
             }
         }
 
-        // 3. Swipe Decision Logic
+        // Web Audio Synthesizer
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function playSound(isCorrect) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === "suspended") {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                if (isCorrect) {
+                    const osc1 = audioCtx.createOscillator();
+                    const osc2 = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc1.type = "sine";
+                    osc2.type = "sine";
+                    osc1.frequency.setValueAtTime(659.25, now);
+                    osc2.frequency.setValueAtTime(830.61, now + 0.08);
+
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc1.start(now);
+                    osc1.stop(now + 0.09);
+                    osc2.start(now + 0.08);
+                    osc2.stop(now + 0.3);
+                } else {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.exponentialRampToValueAtTime(65, now + 0.18);
+
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                }
+            } catch (e) {}
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById("btnToggleSound");
+            if (btn) {
+                btn.textContent = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+            }
+        }
+
+        // 3. Fluid Non-blocking Decision Logic
         function triggerDecision(userAnswerIsReal) {
-            const q = VIRAL_CLAIMS[currentIdx];
+            if (currentIdx >= activeDeck.length) return;
+
+            const q = activeDeck[currentIdx];
             const isCorrect = (userAnswerIsReal === q.isReal);
 
             if (isCorrect) score++;
+
+            playSound(isCorrect);
 
             userAnswers.push({
                 claim: q,
@@ -1309,57 +2282,76 @@
                 isCorrect: isCorrect
             });
 
-            // Animate card throw
-            topCard.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
+            // Show immediate lightweight feedback pill on top without stopping gameplay!
+            showInstantFeedbackPill(q, isCorrect);
+
+            // Animate card flyout smoothly
+            topCard.style.transition = 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease';
             if (userAnswerIsReal) {
-                topCard.style.transform = 'translate(140%, -20px) rotate(25deg)';
+                topCard.style.transform = 'translate(130%, -15px) rotate(18deg)';
                 stampReal.style.opacity = '1';
             } else {
-                topCard.style.transform = 'translate(-140%, -20px) rotate(-25deg)';
+                topCard.style.transform = 'translate(-130%, -15px) rotate(-18deg)';
                 stampFake.style.opacity = '1';
             }
+            topCard.style.opacity = '0';
 
-            // Show feedback reveal modal after card flyout
+            // Immediately advance to next card after brief flyout
             setTimeout(() => {
-                showFeedbackModal(q, userAnswerIsReal, isCorrect);
-            }, 260);
+                currentIdx++;
+                if (currentIdx >= activeDeck.length) {
+                    showResults();
+                } else {
+                    renderQuestion(currentIdx);
+                }
+            }, 180);
         }
 
-        function showFeedbackModal(q, userChoice, isCorrect) {
-            const revealIconWrap = document.getElementById("revealIconWrap");
-            const revealTitle = document.getElementById("revealTitle");
-            const revealChip = document.getElementById("revealChip");
-            const revealClaimTitle = document.getElementById("revealClaimTitle");
-            const revealExplanation = document.getElementById("revealExplanation");
+        // Non-blocking Feedback Toast Pill & Expandable Detail Drawer
+        function showInstantFeedbackPill(q, isCorrect) {
+            const bar = document.getElementById("swipeFeedbackBar");
+            const pill = document.getElementById("feedbackPill");
+            const text = document.getElementById("feedbackText");
+            const drawer = document.getElementById("feedbackDetailDrawer");
+            const drawerVerdict = document.getElementById("drawerVerdictBadge");
+            const drawerText = document.getElementById("drawerExplanationText");
 
-            if (isCorrect) {
-                revealIconWrap.className = "reveal-badge-icon correct";
-                revealTitle.className = "reveal-status-title correct";
-                revealTitle.textContent = "Spot On! You Were Right.";
-            } else {
-                revealIconWrap.className = "reveal-badge-icon wrong";
-                revealTitle.className = "reveal-status-title wrong";
-                revealTitle.textContent = "Oops! Caught by the Viral Radar.";
+            // Close open drawer
+            if (drawer) drawer.style.display = "none";
+
+            if (bar) bar.style.display = "flex";
+            if (pill) {
+                pill.className = isCorrect ? "feedback-pill pill-correct" : "feedback-pill pill-wrong";
             }
-
-            if (q.isReal) {
-                revealChip.className = "reveal-verdict-chip chip-is-real";
-                revealChip.textContent = "VERIFIED FACT";
-            } else {
-                revealChip.className = "reveal-verdict-chip chip-is-fake";
-                revealChip.textContent = "DEBUNKED MISINFORMATION";
+            if (text) {
+                text.textContent = isCorrect 
+                    ? "✓ Spot on! (+1)" 
+                    : `✕ Missed — Actually ${q.isReal ? "REAL" : "FAKE"}`;
             }
-
-            revealClaimTitle.textContent = `Claim: "${q.claim}"`;
-            revealExplanation.textContent = q.explanation;
-
-            revealOverlay.classList.add("active");
+            if (drawerVerdict) {
+                drawerVerdict.textContent = q.isReal ? "VERIFIED FACT" : "DEBUNKED HOAX";
+                drawerVerdict.className = `feedback-drawer-verdict ${q.isReal ? 'verdict-real' : 'verdict-fake'}`;
+            }
+            if (drawerText) {
+                drawerText.textContent = q.explanation;
+            }
         }
 
-        function advanceToNextQuestion() {
-            revealOverlay.classList.remove("active");
-            currentIdx++;
-            renderQuestion(currentIdx);
+        function toggleFeedbackDetail(e) {
+            if (e) e.stopPropagation();
+            const drawer = document.getElementById("feedbackDetailDrawer");
+            if (!drawer) return;
+            if (drawer.style.display === "none" || !drawer.style.display) {
+                drawer.style.display = "block";
+            } else {
+                drawer.style.display = "none";
+            }
+        }
+
+        function closeFeedbackDetail(e) {
+            if (e) e.stopPropagation();
+            const drawer = document.getElementById("feedbackDetailDrawer");
+            if (drawer) drawer.style.display = "none";
         }
 
         // 4. Drag & Touch Physics
@@ -1408,55 +2400,43 @@
         }
 
         function applyCardPhysics(x, y) {
-            const rot = x * 0.08;
-            topCard.style.transform = `translate(${x}px, ${y * 0.4}px) rotate(${rot}deg)`;
+            const rot = x * 0.07;
+            topCard.style.transform = `translate(${x}px, ${y * 0.35}px) rotate(${rot}deg)`;
 
             // Fade stamps based on drag direction
             if (x > 25) {
-                const ratio = Math.min(1, (x - 25) / 80);
+                const ratio = Math.min(1, (x - 25) / 75);
                 stampReal.style.opacity = ratio;
                 stampFake.style.opacity = 0;
             } else if (x < -25) {
-                const ratio = Math.min(1, (-x - 25) / 80);
+                const ratio = Math.min(1, (-x - 25) / 75);
                 stampFake.style.opacity = ratio;
                 stampReal.style.opacity = 0;
             } else {
-                stampReal.style.opacity = 0;
                 stampFake.style.opacity = 0;
+                stampReal.style.opacity = 0;
             }
         }
 
         function handleDragEnd() {
-            if (currentX > SWIPE_THRESHOLD) {
-                // Swiped Right -> User says REAL
-                currentX = 0; currentY = 0;
-                triggerDecision(true);
-            } else if (currentX < -SWIPE_THRESHOLD) {
-                // Swiped Left -> User says FAKE
-                currentX = 0; currentY = 0;
-                triggerDecision(false);
+            if (Math.abs(currentX) > SWIPE_THRESHOLD) {
+                const isReal = currentX > 0;
+                triggerDecision(isReal);
             } else {
-                // Snap back
+                // Snap card back
                 topCard.style.transition = 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)';
                 topCard.style.transform = 'translate(0px, 0px) rotate(0deg)';
-                stampReal.style.opacity = 0;
-                stampFake.style.opacity = 0;
-                currentX = 0; currentY = 0;
+                stampFake.style.opacity = '0';
+                stampReal.style.opacity = '0';
             }
+            currentX = 0;
+            currentY = 0;
         }
 
-        // 5. Keyboard Navigation
+        // 5. Keyboard Shortcuts
         function initKeyboardShortcuts() {
             window.addEventListener("keydown", (e) => {
-                if (revealOverlay.classList.contains("active")) {
-                    if (e.key === "Enter" || e.key === " " || e.key === "ArrowRight") {
-                        e.preventDefault();
-                        advanceToNextQuestion();
-                    }
-                    return;
-                }
-
-                if (resultsScreen.style.display === "block") return;
+                if (gamePlayScreen.style.display === "none") return;
 
                 if (e.key === "ArrowLeft") {
                     triggerDecision(false);
@@ -1468,7 +2448,7 @@
             });
         }
 
-        // 6. Results Display & WhatsApp Share
+        // 6. Results Display (Full Details Shown ONLY Here After 10 Cards)
         function showResults() {
             gamePlayScreen.style.display = "none";
             resultsScreen.style.display = "block";
@@ -1501,7 +2481,7 @@
             );
             document.getElementById("btnShareWhatsapp").href = `https://api.whatsapp.com/send?text=${shareText}`;
 
-            // Render detailed question review
+            // Render detailed question review (Full details shown after all 10 cards)
             reviewList.innerHTML = "";
             userAnswers.forEach((ans, i) => {
                 const item = document.createElement("div");
@@ -1522,7 +2502,7 @@
                             Actual Truth: <strong style="display:inline; color:${ans.claim.isReal ? '#10B981' : '#EF4444'}">${verdictLabel}</strong> · 
                             Your Answer: <strong>${userChoiceLabel}</strong>
                         </p>
-                        <p style="margin-top:4px;">${ans.claim.explanation}</p>
+                        <p style="margin-top:6px; color: #475569;">${ans.claim.explanation}</p>
                     </div>
                 `;
                 reviewList.appendChild(item);
@@ -1530,14 +2510,10 @@
         }
 
         function restartGame() {
-            currentIdx = 0;
-            score = 0;
-            userAnswers = [];
             resultsScreen.style.display = "none";
             gamePlayScreen.style.display = "block";
-            // Shuffle questions slightly for replayability
-            VIRAL_CLAIMS.sort(() => Math.random() - 0.5);
-            renderQuestion(0);
+            // Draw a completely fresh, unplayed 10-card deck from our 105+ pool
+            drawFreshDeck(10);
         }
     </script>
 </body>

@@ -574,20 +574,51 @@ function displayVerdictResult(data) {
         }
     }
 
+    // Save to Recent Verifications History
+    const checkedClaim = (document.getElementById("inputText")?.value || "").trim();
+    if (checkedClaim) {
+        saveRecentVerification(checkedClaim, data.verdict, data.truth_score);
+    }
+
     resultCard.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Safe Clipboard Copy Helper with Legacy Fallback
+function safeCopyText(text, successMsg = "Copied to clipboard.") {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast(successMsg);
+        }).catch(() => fallbackCopy(text, successMsg));
+    } else {
+        fallbackCopy(text, successMsg);
+    }
+}
+
+function fallbackCopy(text, successMsg) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showToast(successMsg);
+    } catch (err) {
+        showToast("Could not access clipboard.", true);
+    }
+    document.body.removeChild(textArea);
 }
 
 function copyWhatsAppDebunkCard() {
     if (!currentWhatsAppCard) {
         const summary = document.getElementById("englishSummaryText").textContent;
         const verdict = document.getElementById("verdictTitle").textContent;
-        currentWhatsAppCard = `[VERIFYIT FACT-CHECK REPORT]\nVerdict: ${verdict}\nSummary: ${summary}\n\nAction: Please do not forward unverified claims.\nVerified with VerifyIt Portal`;
+        currentWhatsAppCard = `🚨 *VERIFYIT FACT-CHECK REPORT* 🚨\n\n📌 *Verdict:* ${verdict}\n📝 *Summary:* ${summary}\n\n🛡️ *Action:* Do not forward unverified claims. Help stop rumors!\n🔍 Verified with VerifyIt Portal`;
     }
-    navigator.clipboard.writeText(currentWhatsAppCard).then(() => {
-        showToast("WhatsApp Debunk Card copied to clipboard.");
-    }).catch(() => {
-        showToast("Could not access clipboard.", true);
-    });
+    safeCopyText(currentWhatsAppCard, "WhatsApp Debunk Card copied to clipboard.");
 }
 
 function openWhatsAppDirect() {
@@ -599,12 +630,243 @@ function copyResultText() {
     const summary = document.getElementById("englishSummaryText").textContent;
     const telugu = document.getElementById("resultText").textContent;
     const textToCopy = `[VerifyIt Fact-Check]\nSummary: ${summary}\n\nTelugu Explanation: ${telugu}\nVerified by VerifyIt Portal`;
+    safeCopyText(textToCopy, "Fact-check verdict copied to clipboard.");
+}
 
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        showToast("Fact-check verdict copied to clipboard.");
-    }).catch(() => {
-        showToast("Could not access clipboard.", true);
-    });
+// ============================================================================
+// 6B. Recent Verifications (Local Storage Persistence)
+// ============================================================================
+const RECENT_VERIFICATIONS_KEY = "verifyit_recent_verifications";
+
+function saveRecentVerification(claimText, verdict, truthScore) {
+    if (!claimText || !claimText.trim()) return;
+    try {
+        let history = JSON.parse(localStorage.getItem(RECENT_VERIFICATIONS_KEY) || "[]");
+        // Avoid duplicate top item
+        if (history.length > 0 && history[0].claim.toLowerCase() === claimText.trim().toLowerCase()) return;
+        
+        history.unshift({
+            claim: claimText.trim(),
+            verdict: verdict || "UNVERIFIED",
+            truthScore: truthScore !== undefined ? truthScore : 0,
+            date: Date.now()
+        });
+        history = history.slice(0, 5); // Keep last 5
+        localStorage.setItem(RECENT_VERIFICATIONS_KEY, JSON.stringify(history));
+        renderRecentVerifications();
+    } catch (e) {
+        console.warn("Could not save recent verification", e);
+    }
+}
+
+function loadRecentVerifications() {
+    renderRecentVerifications();
+}
+
+function renderRecentVerifications() {
+    const row = document.getElementById("recentVerificationsRow");
+    const container = document.getElementById("recentChipsList");
+    if (!row || !container) return;
+
+    try {
+        const history = JSON.parse(localStorage.getItem(RECENT_VERIFICATIONS_KEY) || "[]");
+        if (!history || history.length === 0) {
+            row.style.display = "none";
+            return;
+        }
+
+        container.innerHTML = "";
+        history.forEach(item => {
+            const chip = document.createElement("button");
+            const isFalse = (item.verdict || "").includes("FALSE");
+            const isTrue = (item.verdict || "").includes("TRUE");
+            const chipClass = isFalse ? "recent-false" : isTrue ? "recent-true" : "recent-mislead";
+            
+            chip.className = `recent-check-chip ${chipClass}`;
+            chip.title = `Click to re-verify: ${item.claim}`;
+            chip.innerHTML = `
+                <span class="recent-dot"></span>
+                <span class="recent-text">${escapeHtml(item.claim.length > 36 ? item.claim.slice(0, 34) + "..." : item.claim)}</span>
+            `;
+            chip.onclick = () => fillSample(item.claim);
+            container.appendChild(chip);
+        });
+
+        row.style.display = "flex";
+    } catch (e) {
+        console.warn("Error rendering recent checks:", e);
+        row.style.display = "none";
+    }
+}
+
+// ============================================================================
+// 6C. Certified High-Resolution Debunk Badge Generator (HTML5 Canvas)
+// ============================================================================
+function generateAndDownloadBadge() {
+    const verdictTitle = (document.getElementById("verdictTitle")?.textContent || "FACT-CHECK REPORT").trim();
+    const truthScore = (document.getElementById("truthScore")?.textContent || "0%").trim();
+    const englishSummary = (document.getElementById("englishSummaryText")?.textContent || "Verification completed.").trim();
+    const claimInput = (document.getElementById("inputText")?.value || "Viral Claim").trim();
+
+    // Setup High-Res 1200x630 Canvas (Standard 1.91:1 Social / WhatsApp Card Aspect Ratio)
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext("2d");
+
+    const isFalse = verdictTitle.includes("FALSE") || verdictTitle.includes("MISINFORMATION");
+    const isTrue = verdictTitle.includes("TRUE") || verdictTitle.includes("VERIFIED");
+    const primaryColor = isFalse ? "#EF4444" : isTrue ? "#10B981" : "#F59E0B";
+
+    // 1. Dark Gradient Background
+    const bgGrad = ctx.createLinearGradient(0, 0, 1200, 630);
+    bgGrad.addColorStop(0, "#0B1120");
+    bgGrad.addColorStop(0.5, "#0F172A");
+    bgGrad.addColorStop(1, "#1E293B");
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // 2. Outer Accent Border
+    ctx.strokeStyle = primaryColor;
+    ctx.lineWidth = 6;
+    ctx.strokeRect(18, 18, 1164, 594);
+
+    // 3. Inner Decorative Border
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(32, 32, 1136, 566);
+
+    // 4. Header Bar
+    ctx.font = "bold 20px 'JetBrains Mono', monospace";
+    ctx.fillStyle = primaryColor;
+    ctx.fillText("🛡️ VERIFYIT INTELLIGENCE DOSSIER", 54, 75);
+
+    ctx.font = "500 16px 'JetBrains Mono', monospace";
+    ctx.fillStyle = "#94A3B8";
+    const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    ctx.fillText(`AUTHENTICATED REPORT • ${dateStr.toUpperCase()}`, 750, 75);
+
+    // Divider Line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(54, 96);
+    ctx.lineTo(1146, 96);
+    ctx.stroke();
+
+    // 5. Claim Box
+    ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
+    ctx.fillRect(54, 120, 1092, 130);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.strokeRect(54, 120, 1092, 130);
+
+    ctx.font = "bold 15px 'JetBrains Mono', monospace";
+    ctx.fillStyle = "#60A5FA";
+    ctx.fillText("EXAMINED VIRAL CLAIM:", 78, 150);
+
+    ctx.font = "bold 24px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillStyle = "#FFFFFF";
+    wrapText(ctx, `"${claimInput}"`, 78, 186, 1040, 32);
+
+    // 6. Verdict Badge Pill
+    ctx.fillStyle = primaryColor;
+    roundRect(ctx, 54, 275, 420, 68, 8);
+    ctx.fill();
+
+    ctx.font = "900 26px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillText(verdictTitle, 78, 318);
+
+    // Truth Score Pill
+    ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+    roundRect(ctx, 490, 275, 260, 68, 8);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+    ctx.stroke();
+
+    ctx.font = "bold 14px 'JetBrains Mono', monospace";
+    ctx.fillStyle = "#94A3B8";
+    ctx.fillText("TRUTH SCORE:", 510, 302);
+
+    ctx.font = "900 28px 'JetBrains Mono', monospace";
+    ctx.fillStyle = primaryColor;
+    ctx.fillText(truthScore, 510, 332);
+
+    // 7. Executive Summary Box
+    ctx.font = "bold 16px 'JetBrains Mono', monospace";
+    ctx.fillStyle = "#38BDF8";
+    ctx.fillText("GROUND-TRUTH FINDINGS:", 54, 385);
+
+    ctx.font = "400 22px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillStyle = "#E2E8F0";
+    wrapText(ctx, englishSummary, 54, 424, 1080, 32);
+
+    // 8. Footer Citations Strip
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.beginPath();
+    ctx.moveTo(54, 535);
+    ctx.lineTo(1146, 535);
+    ctx.stroke();
+
+    ctx.font = "500 16px 'Plus Jakarta Sans', sans-serif";
+    ctx.fillStyle = "#94A3B8";
+    ctx.fillText("Verified with independent fact-checking bureaus (BOOM Live, Alt News, Snopes, Vishvas News)", 54, 570);
+
+    ctx.font = "bold 16px 'JetBrains Mono', monospace";
+    ctx.fillStyle = "#60A5FA";
+    ctx.fillText("verifyit.portal", 990, 570);
+
+    // Helper functions for canvas
+    function roundRect(context, x, y, width, height, radius) {
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.quadraticCurveTo(x + width, y, x + width, y + radius);
+        context.lineTo(x + width, y + height - radius);
+        context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        context.lineTo(x + radius, y + height);
+        context.quadraticCurveTo(x, y + height, x, y + height - radius);
+        context.lineTo(x, y + radius);
+        context.quadraticCurveTo(x, y, x + radius, y);
+        context.closePath();
+    }
+
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(" ");
+        let line = "";
+        let currentY = y;
+        for (let n = 0; n < words.length; n++) {
+            const testLine = line + words[n] + " ";
+            const metrics = context.measureText(testLine);
+            if (metrics.width > maxWidth && n > 0) {
+                context.fillText(line, x, currentY);
+                line = words[n] + " ";
+                currentY += lineHeight;
+                if (currentY > y + lineHeight * 2) {
+                    context.fillText(line + "...", x, currentY);
+                    return;
+                }
+            } else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, currentY);
+    }
+
+    // Trigger instant PNG download
+    try {
+        const dataUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `VerifyIt_FactCheck_${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast("Debunk Badge image generated and downloaded!");
+    } catch (e) {
+        console.error("Canvas export error:", e);
+        showToast("Could not generate image on this device.", true);
+    }
 }
 
 function setLoading(isLoading, message = "Analyzing claim...") {
@@ -617,8 +879,11 @@ function setLoading(isLoading, message = "Analyzing claim...") {
 }
 
 // ============================================================================
-// 7. Trending Debunks Section & Radar Filtering
+// 7. Trending Debunks Section, Live Search & Category Filtering
 // ============================================================================
+let currentCategoryFilter = "All";
+let currentSearchQuery = "";
+
 async function loadTrendingDebunks() {
     let debunks = [];
 
@@ -639,26 +904,45 @@ async function loadTrendingDebunks() {
     }
 
     allLoadedDebunks = debunks;
-    renderDebunkCards(allLoadedDebunks);
+    applyDebunkFilters();
+}
+
+function handleDebunkSearch(query) {
+    currentSearchQuery = (query || "").trim().toLowerCase();
+    applyDebunkFilters();
 }
 
 function filterRadarDebunks(category, btnElement) {
     document.querySelectorAll(".radar-pill").forEach(p => p.classList.remove("active"));
     if (btnElement) btnElement.classList.add("active");
+    currentCategoryFilter = category;
+    applyDebunkFilters();
+}
 
-    if (category === "All") {
-        renderDebunkCards(allLoadedDebunks);
-        return;
+function applyDebunkFilters() {
+    let filtered = allLoadedDebunks;
+
+    // 1. Category Filter
+    if (currentCategoryFilter !== "All") {
+        filtered = filtered.filter(item => {
+            const cat = (item.category || "").toLowerCase();
+            if (currentCategoryFilter === "AI") return cat.includes("ai") || cat.includes("deepfake");
+            if (currentCategoryFilter === "Health") return cat.includes("health") || cat.includes("medicine");
+            if (currentCategoryFilter === "Economy") return cat.includes("economy") || cat.includes("bank") || cat.includes("rbi");
+            if (currentCategoryFilter === "National") return cat.includes("gov") || cat.includes("national") || cat.includes("scheme") || cat.includes("culture");
+            return true;
+        });
     }
 
-    const filtered = allLoadedDebunks.filter(item => {
-        const cat = (item.category || "").toLowerCase();
-        if (category === "AI") return cat.includes("ai") || cat.includes("deepfake");
-        if (category === "Health") return cat.includes("health") || cat.includes("medicine");
-        if (category === "Economy") return cat.includes("economy") || cat.includes("bank") || cat.includes("rbi");
-        if (category === "National") return cat.includes("gov") || cat.includes("national") || cat.includes("scheme") || cat.includes("culture");
-        return true;
-    });
+    // 2. Keyword Search
+    if (currentSearchQuery) {
+        filtered = filtered.filter(item => {
+            const claim = (item.claim || "").toLowerCase();
+            const summary = (item.summary || "").toLowerCase();
+            const cat = (item.category || "").toLowerCase();
+            return claim.includes(currentSearchQuery) || summary.includes(currentSearchQuery) || cat.includes(currentSearchQuery);
+        });
+    }
 
     renderDebunkCards(filtered);
 }
@@ -670,23 +954,36 @@ function renderDebunkCards(debunks) {
     container.innerHTML = "";
 
     if (!debunks.length) {
-        container.innerHTML = `<div class="empty-wire-state">No debunks found in this category. Showing all items.</div>`;
+        container.innerHTML = `
+            <div class="empty-wire-state">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:8px; opacity:0.6;">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <p>No debunked claims matched your search query. Try clearing the filter.</p>
+            </div>`;
         return;
     }
 
     debunks.forEach(item => {
         const card = document.createElement("div");
-        card.className = "debunk-card";
-
+        
         let badgeClass = "badge-false";
         let dotClass = "dot-false";
+        let cardBorderClass = "border-false";
+        let confidencePct = item.confidence || 95;
+
         if (item.verdict === "TRUE") {
             badgeClass = "badge-true";
             dotClass = "dot-true";
+            cardBorderClass = "border-true";
         } else if (item.verdict === "MISLEADING") {
             badgeClass = "badge-mislead";
             dotClass = "dot-mislead";
+            cardBorderClass = "border-mislead";
         }
+
+        card.className = "debunk-card";
 
         card.innerHTML = `
             <div class="debunk-meta-row">
@@ -694,30 +991,46 @@ function renderDebunkCards(debunks) {
                     <span class="status-dot ${dotClass}"></span>
                     <span>${escapeHtml(item.verdict_badge || item.verdict)}</span>
                 </span>
-                <span class="debunk-origin">${escapeHtml(item.origin || "Viral")}</span>
+                <span class="debunk-origin-pill">${escapeHtml(item.origin || "Viral Wire")}</span>
             </div>
+            
             <h4 class="debunk-claim-text">${escapeHtml(item.claim)}</h4>
             <p class="debunk-summary-text">${escapeHtml(item.summary)}</p>
+
             <div class="debunk-footer">
                 <span class="debunk-category">${escapeHtml(item.category || "General")}</span>
-                <button class="btn-verify-chip" onclick="loadDebunkIntoMeter('${escapeHtml(item.claim)}')">
-                    <span>Verify Claim</span>
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </button>
+                <div class="debunk-card-actions">
+                    <button class="btn-card-copy-debunk" onclick="quickShareDebunk('${escapeHtml(item.claim)}', '${escapeHtml(item.verdict_badge || item.verdict)}', '${escapeHtml(item.summary)}')" title="Copy debunk statement for WhatsApp">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Share</span>
+                    </button>
+                    <button class="btn-verify-chip" onclick="loadDebunkIntoMeter('${escapeHtml(item.claim)}')">
+                        <span>Inspect</span>
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
             </div>
         `;
         container.appendChild(card);
     });
 }
 
+function quickShareDebunk(claim, verdict, summary) {
+    const text = `🚨 *FACT CHECK ALERT* 🚨\nClaim: "${claim}"\nVerdict: *${verdict}*\nSummary: ${summary}\n\nVerified via VerifyIt Intelligence Portal.`;
+    safeCopyText(text, "Debunk card copied to clipboard for sharing.");
+}
+
 function loadDebunkIntoMeter(claimText) {
     fillSample(claimText);
     const verifier = document.getElementById("verifier-section");
     if (verifier) verifier.scrollIntoView({ behavior: "smooth" });
-    submitText();
+    // Note: fillSample already called submitOmnibar, no duplicate call needed!
 }
 
 // ============================================================================
@@ -873,30 +1186,83 @@ async function loadArticles(reset = false) {
         hasMore = false;
     }
 
+// Helper: Human-Friendly Relative Timestamp
+function getRelativeTime(dateInput) {
+    if (!dateInput) return "Recently";
+    try {
+        const d = new Date(dateInput);
+        if (isNaN(d.getTime())) return "Recently";
+        const diffMs = Date.now() - d.getTime();
+        const diffSecs = Math.floor(diffMs / 1000);
+        const diffMins = Math.floor(diffSecs / 60);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
+
+        if (diffDays > 30) return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        if (diffDays > 0) return `${diffDays}d ago`;
+        if (diffHours > 0) return `${diffHours}h ago`;
+        if (diffMins > 0) return `${diffMins}m ago`;
+        return "Just now";
+    } catch (e) {
+        return "Recently";
+    }
+}
+
+// Helper: Determine Bureau Tag Class
+function getBureauClass(sourceName) {
+    const s = (sourceName || "").toLowerCase();
+    if (s.includes("boom")) return "bureau-boom";
+    if (s.includes("alt")) return "bureau-alt";
+    if (s.includes("snopes")) return "bureau-snopes";
+    if (s.includes("vishvas")) return "bureau-vishvas";
+    if (s.includes("factcheck")) return "bureau-factcheck";
+    return "bureau-default";
+}
+
     if (articles.length > 0) {
         articles.forEach(article => {
             const card = document.createElement("div");
             card.className = "article-grid-card";
-            const dateStr = article.pubDate ? new Date(article.pubDate).toLocaleDateString() : "Recent";
-            const hasImage = Boolean(article.imageUrl);
-            const imgMarkup = hasImage ? `
-                <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-thumb-link" tabindex="-1">
-                    <div class="article-thumb-wrap">
-                        <img src="${escapeHtml(article.imageUrl)}" alt="${escapeHtml(article.title)}" loading="lazy" onerror="this.closest('.article-thumb-link').style.display='none'">
-                    </div>
-                </a>
-            ` : '';
+            const relativeTime = getRelativeTime(article.pubDate);
+            const bureauClass = getBureauClass(article.source);
+            const sourceName = escapeHtml(article.source || "Fact Check Bureau");
+
+            let imgMarkup = "";
+            if (article.imageUrl) {
+                imgMarkup = `
+                    <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-thumb-link" tabindex="-1">
+                        <div class="article-thumb-wrap">
+                            <img src="${escapeHtml(article.imageUrl)}" alt="${escapeHtml(article.title)}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'article-thumb-fallback ${bureauClass}\\'><span>${sourceName}</span><small>VERIFIED REPORT</small></div>';">
+                        </div>
+                    </a>
+                `;
+            } else {
+                imgMarkup = `
+                    <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-thumb-link" tabindex="-1">
+                        <div class="article-thumb-fallback ${bureauClass}">
+                            <span>${sourceName}</span>
+                            <small>VERIFIED FACT CHECK</small>
+                        </div>
+                    </a>
+                `;
+            }
 
             card.innerHTML = `
                 ${imgMarkup}
                 <div class="article-grid-body">
                     <div class="article-grid-meta">
-                        <span class="article-source-tag">${escapeHtml(article.source || "Fact Check")}</span>
-                        <span class="article-date-stamp">${dateStr}</span>
+                        <span class="article-source-tag ${bureauClass}">${sourceName}</span>
+                        <span class="article-date-stamp">${relativeTime}</span>
                     </div>
                     <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-headline-link">
                         ${escapeHtml(article.title)}
                     </a>
+                    <div class="article-card-footer">
+                        <span class="read-source-hint">Read Fact-Check ↗</span>
+                        <button class="btn-check-similar" onclick="fillSample('${escapeHtml(article.title.replace(/'/g, "\\'"))}')" title="Inspect this claim in the Truth-O-Meter">
+                            Test Claim
+                        </button>
+                    </div>
                 </div>
             `;
             list.appendChild(card);
@@ -928,6 +1294,7 @@ function escapeHtml(str) {
 // 9. Page Initialization
 // ============================================================================
 document.addEventListener("DOMContentLoaded", () => {
+    loadRecentVerifications();
     loadTrendingDebunks();
     loadSources();
     loadArticles(true);

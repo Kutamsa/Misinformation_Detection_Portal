@@ -473,22 +473,87 @@ body {
     width: 100%;
 }
 
+.omnibar-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .omnibar-textarea {
     width: 100%;
     border: none;
     outline: none;
     resize: none;
     font-family: var(--font-ui);
-    font-size: 1.05rem;
-    line-height: 1.5;
+    font-size: 1.18rem;
+    line-height: 1.55;
     color: var(--text-primary);
     background: transparent;
-    padding: 4px 0 10px 0;
+    padding: 6px 46px 10px 4px;
+    min-height: 84px;
+    box-sizing: border-box;
 }
 
 .omnibar-textarea::placeholder {
     color: var(--text-muted);
-    font-size: 0.98rem;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+/* Embedded Mic Button Inside Text Box */
+.btn-mic-inside {
+    position: absolute;
+    right: 6px;
+    bottom: 8px;
+    background: #F1F5F9;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    height: 34px;
+    min-width: 34px;
+    padding: 0 8px;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
+}
+
+.btn-mic-inside:hover {
+    background: #FFFFFF;
+    color: var(--brand-blue);
+    border-color: var(--brand-blue);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+    transform: scale(1.05);
+}
+
+.btn-mic-inside.recording {
+    background: #FEE2E2;
+    border-color: #F87171;
+    color: #DC2626;
+    animation: livePulse 1.4s infinite ease-in-out;
+}
+
+.mic-inside-timer {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #DC2626;
+    letter-spacing: 0.5px;
+}
+
+.omnibar-voice-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    padding: 4px 8px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-xs);
+    border: 1px dashed var(--border-subtle);
 }
 
 /* Staged Attachments Tray */
@@ -649,6 +714,70 @@ body {
     letter-spacing: 0.8px;
     text-transform: uppercase;
 }
+
+/* Recent Checks Strip */
+.recent-verifications-row {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: #F8FAFC;
+    border: 1px dashed var(--border-strong);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    animation: fadeIn 0.3s ease;
+}
+
+.recent-meta-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.recent-chips-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.recent-check-chip {
+    background: #FFFFFF;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    padding: 4px 11px;
+    font-family: var(--font-ui);
+    font-size: 0.76rem;
+    color: var(--text-body);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.recent-check-chip:hover {
+    border-color: var(--brand-blue);
+    color: var(--brand-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.recent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.recent-false .recent-dot { background: #EF4444; }
+.recent-true .recent-dot { background: #10B981; }
+.recent-mislead .recent-dot { background: #F59E0B; }
 
 /* Voice Console Deck */
 .voice-deck {
@@ -1696,9 +1825,78 @@ body {
     color: #FFFFFF;
 }
 
+/* Download Shareable Debunk Badge Button */
+.btn-download-badge {
+    background: #0F172A;
+    color: #FFFFFF;
+    border: 1px solid #334155;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+}
+
+.btn-download-badge:hover {
+    background: #1E293B;
+    border-color: #60A5FA;
+    color: #93C5FD;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
 /* ==========================================================================
-   6. Trending Debunks Grid
+   6. Trending Debunks Grid & Search Toolbar
    ========================================================================== */
+.trending-filter-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.debunk-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 260px;
+    max-width: 440px;
+}
+
+.debunk-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.debunk-search-field {
+    width: 100%;
+    padding: 9px 14px 9px 36px;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: #FFFFFF;
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.debunk-search-field:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
 .debunks-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -1710,16 +1908,24 @@ body {
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-card);
-    padding: 20px;
+    padding: 22px 20px 20px;
     display: flex;
     flex-direction: column;
-    transition: var(--transition);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
 }
 
 .debunk-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px -6px rgba(15, 23, 42, 0.12);
     border-color: var(--border-strong);
+}
+
+/* Clean, neutral card without harsh colored top borders or progress bar lines */
+.debunk-card.border-false,
+.debunk-card.border-true,
+.debunk-card.border-mislead {
+    border-top: 1px solid var(--border-subtle);
 }
 
 .debunk-meta-row {
@@ -1727,6 +1933,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    gap: 8px;
 }
 
 .badge-verdict {
@@ -1765,10 +1972,14 @@ body {
     border: 1px solid var(--status-true-border);
 }
 
-.debunk-origin {
-    font-size: 0.72rem;
-    color: var(--text-faint);
+.debunk-origin-pill {
+    font-size: 0.7rem;
+    color: var(--text-muted);
     font-family: var(--font-mono);
+    background: var(--bg-subtle);
+    padding: 2px 7px;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-subtle);
 }
 
 .debunk-claim-text {
@@ -1777,15 +1988,19 @@ body {
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.35;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .debunk-summary-text {
     font-size: 0.88rem;
     color: var(--text-body);
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     flex: 1;
+}
+
+.debunk-meter-wrap {
+    display: none; /* Removed harsh colored accent bar per user feedback */
 }
 
 .debunk-footer {
@@ -1803,13 +2018,40 @@ body {
     font-family: var(--font-mono);
 }
 
+.debunk-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-card-copy-debunk {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-body);
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: var(--transition);
+}
+
+.btn-card-copy-debunk:hover {
+    border-color: var(--brand-blue);
+    color: var(--brand-blue);
+    background: #FFFFFF;
+}
+
 .btn-verify-chip {
     background: var(--bg-canvas);
     border: 1px solid var(--border-subtle);
     color: var(--brand-primary);
     font-size: 0.78rem;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 5px 12px;
     border-radius: var(--radius-xs);
     cursor: pointer;
     display: inline-flex;
@@ -2383,6 +2625,90 @@ body {
     color: var(--text-faint);
 }
 
+.article-thumb-fallback {
+    width: 100%;
+    height: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.article-thumb-fallback.bureau-boom {
+    background: linear-gradient(135deg, #3730A3 0%, #1E1B4B 100%);
+}
+.article-thumb-fallback.bureau-alt {
+    background: linear-gradient(135deg, #0284C7 0%, #082F49 100%);
+}
+.article-thumb-fallback.bureau-snopes {
+    background: linear-gradient(135deg, #059669 0%, #064E3B 100%);
+}
+.article-thumb-fallback.bureau-vishvas {
+    background: linear-gradient(135deg, #D97706 0%, #78350F 100%);
+}
+.article-thumb-fallback.bureau-factcheck {
+    background: linear-gradient(135deg, #7C3AED 0%, #4C1D95 100%);
+}
+
+.article-thumb-fallback span {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.3px;
+}
+
+.article-thumb-fallback small {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+}
+
+.article-source-tag.bureau-boom { background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; }
+.article-source-tag.bureau-alt { background: #F0F9FF; color: #0284C7; border: 1px solid #BAE6FD; }
+.article-source-tag.bureau-snopes { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+.article-source-tag.bureau-vishvas { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+.article-source-tag.bureau-factcheck { background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE; }
+
+.article-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.75rem;
+}
+
+.read-source-hint {
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+}
+
+.btn-check-similar {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-subtle);
+    color: var(--brand-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-check-similar:hover {
+    background: var(--brand-primary);
+    color: #FFFFFF;
+}
+
 .empty-wire-state {
     text-align: center;
     color: var(--text-muted);
@@ -2528,7 +2854,7 @@ body {
     border-left-color: var(--status-false);
 }
 
-/* Compatibility styles for Forensics Academy page */
+/* Compatibility styles for Spot The Fake page */
 .forensic-card {
     background: #FFFFFF;
     border: 1px solid var(--border-subtle);
@@ -2574,4 +2900,58 @@ body {
     border-radius: var(--radius-sm);
     padding: 20px;
     box-shadow: var(--shadow-card);
+}
+
+/* Mobile Responsive Typography & Polish */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.1rem;
+        line-height: 1.2;
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+        line-height: 1.62;
+    }
+
+    .omnibar-card {
+        padding: 16px 18px 14px;
+    }
+
+    .omnibar-textarea {
+        font-size: 1.16rem;
+        line-height: 1.6;
+        padding-right: 48px;
+        min-height: 85px;
+    }
+
+    .omnibar-textarea::placeholder {
+        font-size: 1.05rem;
+        line-height: 1.5;
+    }
+
+    .btn-mic-inside {
+        height: 38px;
+        min-width: 38px;
+        right: 4px;
+        bottom: 6px;
+    }
+
+    .omnibar-action-bar {
+        gap: 10px;
+    }
+
+    .omnibar-tools-left {
+        gap: 8px;
+    }
+
+    .debunk-claim-text {
+        font-size: 1.15rem;
+        line-height: 1.4;
+    }
+
+    .debunk-summary-text {
+        font-size: 0.94rem;
+        line-height: 1.55;
+    }
 }

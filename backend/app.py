@@ -980,6 +980,8 @@ async def lifespan(app: FastAPI):
                 authorized_ids=AUTHORIZED_TELEGRAM_USER_IDS,
                 perform_image_factcheck_func=perform_image_factcheck,
                 transcribe_audio_func=transcribe_audio,
+                perform_text_factcheck_func=perform_factcheck,
+                gemini_api_key=GEMINI_API_KEY,
             )
             print("[Telegram] Bot initialized.")
         except Exception as e:

@@ -15,6 +15,8 @@ _tts_function = None
 _authorized_user_ids = []
 _perform_image_factcheck_function = None
 _transcribe_audio_function = None
+_perform_text_factcheck_function = None
+_gemini_api_key = None
 
 
 def detect_image_mime(image_bytes: bytes) -> str:
@@ -36,16 +38,21 @@ def initialize_bot_components(
     authorized_ids,
     perform_image_factcheck_func,
     transcribe_audio_func,
+    perform_text_factcheck_func=None,
+    gemini_api_key: str = None,
 ):
     """Initializes handlers with dependencies injected from app.py."""
     global _openai_client, _tts_function, _authorized_user_ids
     global _perform_image_factcheck_function, _transcribe_audio_function
+    global _perform_text_factcheck_function, _gemini_api_key
 
     _openai_client = openai_client_instance
     _tts_function = tts_func
     _authorized_user_ids = authorized_ids
     _perform_image_factcheck_function = perform_image_factcheck_func
     _transcribe_audio_function = transcribe_audio_func
+    _perform_text_factcheck_function = perform_text_factcheck_func
+    _gemini_api_key = gemini_api_key
 
 
 def is_authorized(user_id: int) -> bool:
@@ -56,30 +63,93 @@ def is_authorized(user_id: int) -> bool:
 
 
 async def _perform_text_factcheck(text: str) -> str:
-    """Fact checks text statement using OpenAI."""
-    if not _openai_client:
-        return "Error: OpenAI client is not configured."
-    try:
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "You are a friendly and honest fact checker. You speak naturally in Telugu "
-                    "with minimal English only where necessary. Be accurate, clear, and real (under 100 words)."
-                ),
-            },
-            {
-                "role": "user",
-                "content": f"Fact-check this statement and answer directly:\n\"{text}\"",
-            },
-        ]
-        completion = _openai_client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-        )
-        return completion.choices[0].message.content
-    except Exception as e:
-        return f"Error fact-checking: {e}"
+    """Fact checks text statement with robust multi-tier fallback (RAG pipeline -> Gemini -> OpenAI)."""
+    # Tier 1: Try unified perform_factcheck pipeline (RAG + Gemini / OpenAI)
+    if _perform_text_factcheck_function:
+        try:
+            res = await _perform_text_factcheck_function(text)
+            if isinstance(res, dict):
+                verdict = res.get("verdict", "UNVERIFIED")
+                score = res.get("truth_score", 0)
+                summary = res.get("english_summary", "")
+                telugu = res.get("result", "")
+                citations = res.get("citations", [])
+
+                verdict_emoji = "✅" if verdict == "TRUE" else "❌" if verdict in ("FALSE", "FABRICATED") else "⚠️"
+
+                msg_parts = [
+                    f"{verdict_emoji} *Verdict:* *{verdict}* (Truth Score: {score}/100)",
+                    "",
+                    f"📝 *Summary:*\n{summary}",
+                    "",
+                    f"🗣️ *వివరణ (Telugu):*\n{telugu}",
+                ]
+
+                if citations and len(citations) > 0:
+                    top_cit = citations[0]
+                    src = top_cit.get("source", "Fact-Checking Network")
+                    title = top_cit.get("title", "")
+                    link = top_cit.get("link", "")
+                    if link:
+                        msg_parts.append(f"\n🔗 *Source:* {src}\n_{title}_\n{link}")
+
+                return "\n".join(msg_parts)
+            elif isinstance(res, str) and res.strip():
+                return res
+        except Exception as pipe_err:
+            print(f"[Telegram Text Pipeline Error] {pipe_err}")
+
+    # Tier 2: Try Gemini directly if GEMINI_API_KEY is configured
+    if _gemini_api_key:
+        try:
+            import httpx
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_gemini_api_key}"
+            prompt = (
+                "You are an authoritative fact checker. Fact-check this statement in under 120 words. "
+                "Include a clear VERDICT (TRUE, FALSE, or MISLEADING), a concise English summary, "
+                "and an explanation in natural spoken Telugu.\n\n"
+                f"Claim: \"{text}\""
+            )
+            payload = {
+                "contents": [{"parts": [{"text": prompt}]}]
+            }
+            async with httpx.AsyncClient() as client:
+                resp = await client.post(url, json=payload, timeout=25.0)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    candidates = data.get("candidates", [])
+                    if candidates and "content" in candidates[0]:
+                        parts = candidates[0]["content"].get("parts", [])
+                        if parts and "text" in parts[0]:
+                            return parts[0]["text"]
+        except Exception as gemini_err:
+            print(f"[Telegram Gemini Direct Error] {gemini_err}")
+
+    # Tier 3: Try OpenAI if configured, gracefully catching quota errors
+    if _openai_client:
+        try:
+            messages = [
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a friendly and honest fact checker. You speak naturally in Telugu "
+                        "with minimal English only where necessary. Be accurate, clear, and real (under 100 words)."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": f"Fact-check this statement and answer directly:\n\"{text}\"",
+                },
+            ]
+            completion = _openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages,
+            )
+            return completion.choices[0].message.content
+        except Exception as oai_err:
+            print(f"[Telegram OpenAI Quota/RateLimit Error] {oai_err}")
+
+    return "⚠️ మా సర్వర్ ప్రస్తుతం బిజీగా ఉంది. దయచేసి 30 సెకన్ల తర్వాత మళ్లీ ప్రయత్నించండి. (Fact check service cooling down, please retry shortly.)"
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
