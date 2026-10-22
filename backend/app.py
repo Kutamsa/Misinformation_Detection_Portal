@@ -131,23 +131,38 @@ def get_image_mime(image_bytes: bytes) -> str:
 # --- Database Connection (PostgreSQL when DATABASE_URL is set, SQLite as local fallback) ---
 SQLITE_DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "factcheck_news.db"))
 
+def is_postgres(conn) -> bool:
+    """Checks whether the active database connection is PostgreSQL."""
+    return bool(psycopg2 and not isinstance(conn, sqlite3.Connection))
+
+
 @contextmanager
 def get_db():
-    """Provides a database connection. Uses PostgreSQL if DATABASE_URL is set; otherwise SQLite."""
+    """Provides a database connection. Uses PostgreSQL if DATABASE_URL is set and reachable; otherwise falls back to SQLite."""
     conn = None
-    is_postgres = bool(DATABASE_URL and psycopg2)
+    use_pg = bool(DATABASE_URL and psycopg2)
 
     try:
-        if is_postgres:
-            parsed = urlparse(DATABASE_URL)
-            conn = psycopg2.connect(
-                database=parsed.path[1:],
-                user=parsed.username,
-                password=parsed.password,
-                host=parsed.hostname,
-                port=parsed.port,
-                sslmode="require",
-            )
+        if use_pg:
+            try:
+                # Direct URI connection (works seamlessly for Neon, Supabase, Render)
+                conn = psycopg2.connect(DATABASE_URL)
+            except Exception as direct_err:
+                # Fallback to parsed URL components
+                try:
+                    parsed = urlparse(DATABASE_URL)
+                    conn = psycopg2.connect(
+                        database=parsed.path[1:],
+                        user=parsed.username,
+                        password=parsed.password,
+                        host=parsed.hostname,
+                        port=parsed.port or 5432,
+                        sslmode="require",
+                    )
+                except Exception as parse_err:
+                    print(f"[DB Warning] Could not connect to PostgreSQL ({parse_err}). Falling back to local SQLite.")
+                    conn = sqlite3.connect(SQLITE_DB_PATH)
+                    conn.row_factory = sqlite3.Row
         else:
             conn = sqlite3.connect(SQLITE_DB_PATH)
             conn.row_factory = sqlite3.Row
@@ -156,12 +171,18 @@ def get_db():
         conn.commit()
     except Exception as e:
         if conn:
-            conn.rollback()
+            try:
+                conn.rollback()
+            except Exception:
+                pass
         print(f"[DB Error] {e}")
         raise e
     finally:
         if conn:
-            conn.close()
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 
 def init_db():
@@ -169,9 +190,9 @@ def init_db():
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
 
-            if is_postgres:
+            if is_pg:
                 cur.execute("""
                     CREATE TABLE IF NOT EXISTS sources (
                         id SERIAL PRIMARY KEY,
@@ -215,7 +236,7 @@ def init_db():
             for src in DEFAULT_SOURCES:
                 try:
                     cur.execute(
-                        "INSERT INTO sources (name, url) VALUES (%s, %s) ON CONFLICT (name) DO NOTHING;" if is_postgres else
+                        "INSERT INTO sources (name, url) VALUES (%s, %s) ON CONFLICT (name) DO NOTHING;" if is_pg else
                         "INSERT OR IGNORE INTO sources (name, url) VALUES (?, ?);",
                         (src["name"], src["url"])
                     )
@@ -462,12 +483,12 @@ def retrieve_relevant_factchecks(query: str, limit: int = 3) -> list:
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
 
             clauses = []
             params = []
             for kw in keywords[:5]:
-                clauses.append("LOWER(a.title) LIKE %s" if is_postgres else "LOWER(a.title) LIKE ?")
+                clauses.append("LOWER(a.title) LIKE %s" if is_pg else "LOWER(a.title) LIKE ?")
                 params.append(f"%{kw}%")
 
             if not clauses:
@@ -487,10 +508,10 @@ def retrieve_relevant_factchecks(query: str, limit: int = 3) -> list:
 
             results = []
             for r in rows:
-                title = r[0] if is_postgres else r["title"]
-                link = r[1] if is_postgres else r["link"]
-                pub_date = r[2] if is_postgres else r["pub_date"]
-                source = r[3] if is_postgres else r["source"]
+                title = r[0] if is_pg else r["title"]
+                link = r[1] if is_pg else r["link"]
+                pub_date = r[2] if is_pg else r["pub_date"]
+                source = r[3] if is_pg else r["source"]
                 results.append({
                     "title": title,
                     "link": link,
@@ -788,10 +809,10 @@ def sync_news_articles(source_id: int) -> int:
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
 
             cur.execute(
-                "SELECT id, url, name FROM sources WHERE id = %s;" if is_postgres else
+                "SELECT id, url, name FROM sources WHERE id = %s;" if is_pg else
                 "SELECT id, url, name FROM sources WHERE id = ?;",
                 (source_id,)
             )
@@ -799,27 +820,34 @@ def sync_news_articles(source_id: int) -> int:
             if not row:
                 return 0
 
-            s_id = row[0] if is_postgres else row["id"]
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            }
+            s_id = row[0] if is_pg else row["id"]
+            s_url = row[1] if is_pg else row["url"]
+            s_name = row[2] if is_pg else row["name"]
+            cur.close()
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        try:
+            with httpx.Client(timeout=15.0, headers=headers, follow_redirects=True) as client:
+                resp = client.get(s_url)
+                feed = feedparser.parse(resp.text)
+        except Exception as fetch_err:
+            print(f"[RSS Fetch Error for {s_url}]: {fetch_err}")
+            feed = feedparser.parse(s_url)
+
+        added_count = 0
+
+        for entry in feed.entries[:25]:
+            pub_date = None
+            if hasattr(entry, "published_parsed") and entry.published_parsed:
+                pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
+
             try:
-                with httpx.Client(timeout=15.0, headers=headers, follow_redirects=True) as client:
-                    resp = client.get(s_url)
-                    feed = feedparser.parse(resp.text)
-            except Exception as fetch_err:
-                print(f"[RSS Fetch Error for {s_url}]: {fetch_err}")
-                feed = feedparser.parse(s_url)
-
-            added_count = 0
-
-            for entry in feed.entries[:25]:
-                pub_date = None
-                if hasattr(entry, "published_parsed") and entry.published_parsed:
-                    pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
-
-                try:
-                    if is_postgres:
+                with get_db() as conn:
+                    cur = conn.cursor()
+                    is_pg = is_postgres(conn)
+                    if is_pg:
                         cur.execute(
                             "INSERT INTO articles (source_id, title, link, pub_date) VALUES (%s, %s, %s, %s) ON CONFLICT (link) DO NOTHING;",
                             (s_id, entry.title, entry.link, pub_date),
@@ -830,17 +858,24 @@ def sync_news_articles(source_id: int) -> int:
                             (s_id, entry.title, entry.link, pub_date.isoformat() if pub_date else None),
                         )
                     added_count += 1
-                except Exception:
-                    pass
+            except Exception:
+                pass
 
-            # Update last fetched
-            cur.execute(
-                "UPDATE sources SET last_fetched = CURRENT_TIMESTAMP WHERE id = %s;" if is_postgres else
-                "UPDATE sources SET last_fetched = CURRENT_TIMESTAMP WHERE id = ?;",
-                (s_id,)
-            )
-            cur.close()
-            return added_count
+        # Update last fetched
+        try:
+            with get_db() as conn:
+                cur = conn.cursor()
+                is_pg = is_postgres(conn)
+                cur.execute(
+                    "UPDATE sources SET last_fetched = CURRENT_TIMESTAMP WHERE id = %s;" if is_pg else
+                    "UPDATE sources SET last_fetched = CURRENT_TIMESTAMP WHERE id = ?;",
+                    (s_id,)
+                )
+                cur.close()
+        except Exception:
+            pass
+
+        return added_count
     except Exception as e:
         print(f"[Sync Error] {e}")
         return 0
@@ -1048,13 +1083,13 @@ def get_sources():
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
             cur.execute("SELECT id, name, url FROM sources ORDER BY id ASC;")
             rows = cur.fetchall()
             cur.close()
 
             sources = [
-                {"id": r[0] if is_postgres else r["id"], "name": r[1] if is_postgres else r["name"], "url": r[2] if is_postgres else r["url"]}
+                {"id": r[0] if is_pg else r["id"], "name": r[1] if is_pg else r["name"], "url": r[2] if is_pg else r["url"]}
                 for r in rows
             ]
             return JSONResponse(content={"sources": sources})
@@ -1067,9 +1102,9 @@ def add_source(source_url: str = Form(...), source_name: str = Form(...)):
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
 
-            if is_postgres:
+            if is_pg:
                 cur.execute(
                     "INSERT INTO sources (name, url) VALUES (%s, %s) RETURNING id;",
                     (source_name.strip(), source_url.strip())
@@ -1094,9 +1129,9 @@ def remove_source(source_id: int = Form(...)):
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
             cur.execute(
-                "DELETE FROM sources WHERE id = %s;" if is_postgres else "DELETE FROM sources WHERE id = ?;",
+                "DELETE FROM sources WHERE id = %s;" if is_pg else "DELETE FROM sources WHERE id = ?;",
                 (source_id,)
             )
             cur.close()
@@ -1110,7 +1145,7 @@ def get_articles(source_id: int = Query(None), offset: int = Query(0, ge=0), lim
     try:
         with get_db() as conn:
             cur = conn.cursor()
-            is_postgres = bool(DATABASE_URL and psycopg2)
+            is_pg = is_postgres(conn)
 
             query = """
                 SELECT a.title, a.link, a.pub_date, s.name AS source
@@ -1119,27 +1154,27 @@ def get_articles(source_id: int = Query(None), offset: int = Query(0, ge=0), lim
             """
             params = []
             if source_id is not None:
-                query += " WHERE a.source_id = %s" if is_postgres else " WHERE a.source_id = ?"
+                query += " WHERE a.source_id = %s" if is_pg else " WHERE a.source_id = ?"
                 params.append(source_id)
 
-            query += " ORDER BY a.fetched_at DESC LIMIT %s OFFSET %s;" if is_postgres else " ORDER BY a.fetched_at DESC LIMIT ? OFFSET ?;"
+            query += " ORDER BY a.fetched_at DESC LIMIT %s OFFSET %s;" if is_pg else " ORDER BY a.fetched_at DESC LIMIT ? OFFSET ?;"
             params.extend([limit, offset])
 
             cur.execute(query, params)
             rows = cur.fetchall()
 
             # Total count
-            count_q = "SELECT COUNT(*) FROM articles" + (" WHERE source_id = " + ("%s" if is_postgres else "?") if source_id else "")
+            count_q = "SELECT COUNT(*) FROM articles" + (" WHERE source_id = " + ("%s" if is_pg else "?") if source_id else "")
             cur.execute(count_q, [source_id] if source_id else [])
             total = cur.fetchone()[0]
             cur.close()
 
             articles = []
             for r in rows:
-                title = r[0] if is_postgres else r["title"]
-                link = r[1] if is_postgres else r["link"]
-                pub_date = r[2] if is_postgres else r["pub_date"]
-                source = r[3] if is_postgres else r["source"]
+                title = r[0] if is_pg else r["title"]
+                link = r[1] if is_pg else r["link"]
+                pub_date = r[2] if is_pg else r["pub_date"]
+                source = r[3] if is_pg else r["source"]
 
                 articles.append({
                     "title": title,
