@@ -1,4 +1,4 @@
-# VerifyIt — Fact-Checking & Misinformation Detection Portal
+# VerifyIt - Fact-Checking Portal - [Website](https://proverify.onrender.com/)
 
 An open-source verification platform designed to detect disinformation, manipulated media, and viral rumors across text statements, voice notes, and images. Built with FastAPI, Google Gemini, and automated retrieval-augmented generation (RAG) across verified fact-checking bureaus.
 
@@ -111,14 +111,6 @@ TELEGRAM_BOT_TOKEN=
 ```bash
 python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
 ```
-
-Open your browser at:
-
-- **Verification Desk:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- **Swipe Game:** [http://127.0.0.1:8000/game.html](http://127.0.0.1:8000/game.html)
-- **Spot The Fake Guide:** [http://127.0.0.1:8000/forensics.html](http://127.0.0.1:8000/forensics.html)
-
----
 
 ## API Reference
 
