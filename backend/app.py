@@ -207,9 +207,14 @@ def init_db():
                         title VARCHAR(2048) NOT NULL,
                         link VARCHAR(2048) NOT NULL UNIQUE,
                         pub_date TIMESTAMP WITH TIME ZONE,
+                        image_url VARCHAR(2048),
                         fetched_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
                     );
                 """)
+                try:
+                    cur.execute("ALTER TABLE articles ADD COLUMN IF NOT EXISTS image_url VARCHAR(2048);")
+                except Exception:
+                    pass
             else:
                 cur.execute("""
                     CREATE TABLE IF NOT EXISTS sources (
@@ -227,10 +232,15 @@ def init_db():
                         title TEXT NOT NULL,
                         link TEXT NOT NULL UNIQUE,
                         pub_date TIMESTAMP,
+                        image_url TEXT,
                         fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         FOREIGN KEY (source_id) REFERENCES sources(id) ON DELETE CASCADE
                     );
                 """)
+                try:
+                    cur.execute("ALTER TABLE articles ADD COLUMN image_url TEXT;")
+                except Exception:
+                    pass
 
             # Pre-seed or ensure default fact-checking sources exist
             for src in DEFAULT_SOURCES:
@@ -836,6 +846,43 @@ def sync_news_articles(source_id: int) -> int:
             print(f"[RSS Fetch Error for {s_url}]: {fetch_err}")
             feed = feedparser.parse(s_url)
 
+        def extract_entry_image(entry, default_source_name=""):
+            if hasattr(entry, "media_content") and entry.media_content:
+                for mc in entry.media_content:
+                    if isinstance(mc, dict) and mc.get("url"):
+                        return mc["url"]
+            if hasattr(entry, "media_thumbnail") and entry.media_thumbnail:
+                for mt in entry.media_thumbnail:
+                    if isinstance(mt, dict) and mt.get("url"):
+                        return mt["url"]
+            if hasattr(entry, "enclosures") and entry.enclosures:
+                for enc in entry.enclosures:
+                    if isinstance(enc, dict) and enc.get("href"):
+                        return enc["href"]
+            html_text = ""
+            if hasattr(entry, "summary"):
+                html_text += str(entry.summary) + " "
+            if hasattr(entry, "content"):
+                for c in entry.content:
+                    if isinstance(c, dict) and c.get("value"):
+                        html_text += str(c["value"]) + " "
+            img_match = re.search(r'<img[^>]+(?:src|data-src)=["\']([^"\']+)["\']', html_text)
+            if img_match:
+                return img_match.group(1)
+
+            src_lower = (default_source_name or "").lower()
+            if "boom" in src_lower:
+                return "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=80"
+            elif "alt" in src_lower:
+                return "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&auto=format&fit=crop&q=80"
+            elif "snopes" in src_lower:
+                return "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?w=600&auto=format&fit=crop&q=80"
+            elif "factcheck" in src_lower:
+                return "https://images.unsplash.com/photo-1585241936939-be4099591252?w=600&auto=format&fit=crop&q=80"
+            elif "vishvas" in src_lower:
+                return "https://images.unsplash.com/photo-1508921340878-ba53e1f016ec?w=600&auto=format&fit=crop&q=80"
+            return "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=600&auto=format&fit=crop&q=80"
+
         added_count = 0
 
         for entry in feed.entries[:25]:
@@ -843,19 +890,23 @@ def sync_news_articles(source_id: int) -> int:
             if hasattr(entry, "published_parsed") and entry.published_parsed:
                 pub_date = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
 
+            img_url = extract_entry_image(entry, s_name)
+
             try:
                 with get_db() as conn:
                     cur = conn.cursor()
                     is_pg = is_postgres(conn)
                     if is_pg:
                         cur.execute(
-                            "INSERT INTO articles (source_id, title, link, pub_date) VALUES (%s, %s, %s, %s) ON CONFLICT (link) DO NOTHING;",
-                            (s_id, entry.title, entry.link, pub_date),
+                            """INSERT INTO articles (source_id, title, link, pub_date, image_url) 
+                               VALUES (%s, %s, %s, %s, %s) 
+                               ON CONFLICT (link) DO UPDATE SET image_url = COALESCE(articles.image_url, EXCLUDED.image_url);""",
+                            (s_id, entry.title, entry.link, pub_date, img_url),
                         )
                     else:
                         cur.execute(
-                            "INSERT OR IGNORE INTO articles (source_id, title, link, pub_date) VALUES (?, ?, ?, ?);",
-                            (s_id, entry.title, entry.link, pub_date.isoformat() if pub_date else None),
+                            "INSERT OR IGNORE INTO articles (source_id, title, link, pub_date, image_url) VALUES (?, ?, ?, ?, ?);",
+                            (s_id, entry.title, entry.link, pub_date.isoformat() if pub_date else None, img_url),
                         )
                     added_count += 1
             except Exception:
@@ -967,6 +1018,11 @@ def serve_home():
 @app.get("/forensics.html")
 def serve_forensics():
     return FileResponse(os.path.join(FRONTEND_DIR, "forensics.html"))
+
+@app.get("/game")
+@app.get("/game.html")
+def serve_game():
+    return FileResponse(os.path.join(FRONTEND_DIR, "game.html"))
 
 @app.get("/style.css")
 def serve_root_css():
@@ -1192,7 +1248,7 @@ def get_articles(
             is_pg = is_postgres(conn)
 
             query = """
-                SELECT a.title, a.link, a.pub_date, s.name AS source
+                SELECT a.title, a.link, a.pub_date, s.name AS source, a.image_url
                 FROM articles a
                 JOIN sources s ON a.source_id = s.id
             """
@@ -1219,12 +1275,14 @@ def get_articles(
                 link = r[1] if is_pg else r["link"]
                 pub_date = r[2] if is_pg else r["pub_date"]
                 source = r[3] if is_pg else r["source"]
+                image_url = r[4] if is_pg else r.get("image_url") if isinstance(r, dict) else r[4] if len(r) > 4 else None
 
                 articles.append({
                     "title": title,
                     "link": link,
                     "source": source,
                     "pubDate": pub_date.isoformat() if isinstance(pub_date, datetime) else str(pub_date) if pub_date else None,
+                    "imageUrl": image_url,
                 })
 
             return JSONResponse(content={"articles": articles, "hasMore": total > (offset + len(rows))})

@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerifyIt — Independent Truth Radar & Fact-Checking Portal</title>
-    <meta name="description" content="Cross-examine viral news, voice audio, and screenshots against authoritative truth databases with objective truth scoring and spoken Telugu explanations.">
-    
-    <!-- Modern Editorial Typography -->
+    <meta name="description"
+        content="Cross-examine viral news, voice audio, and screenshots against authoritative truth databases with objective truth scoring and spoken Telugu explanations.">
+
+    <!-- Modern Editorial Typography: Plus Jakarta Sans + Outfit + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Newsreader:ital,opsz,wght@0,6..72,500..800;1,6..72,500..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/frontend/style.css">
     <script src="script.js" defer></script>
 </head>
+
 <body>
 
     <!-- Minimal Announcement Bar -->
@@ -25,7 +30,8 @@
                 <span class="status-label">WIRE MONITOR</span>
             </div>
             <div class="status-message">
-                <span>Active 24/7 cross-referencing across certified fact-checking bureaus and open truth databases.</span>
+                <span>Active 24/7 cross-referencing across certified fact-checking bureaus and open truth
+                    databases.</span>
             </div>
             <div class="status-meta">
                 <span>Edition: English + Telugu</span>
@@ -38,9 +44,10 @@
         <div class="header-inner">
             <a href="#verifier-section" class="brand-logo">
                 <span class="brand-icon-wrap">
-                    <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        <path d="m9 12 2 2 4-4"/>
+                    <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="m9 12 2 2 4-4" />
                     </svg>
                 </span>
                 <div class="brand-text">
@@ -52,7 +59,8 @@
             <nav class="nav-links" id="mainNav">
                 <a href="#verifier-section" class="nav-link active">Verification Desk</a>
                 <a href="#trending-section" class="nav-link">Trending Debunks</a>
-                <a href="forensics.html" class="nav-link nav-highlight">Forensic Academy</a>
+                <a href="game.html" class="nav-link nav-highlight">Swipe Game</a>
+                <a href="forensics.html" class="nav-link">Spot The Fake</a>
                 <a href="#telegram-section" class="nav-link">Mobile Bot</a>
                 <a href="#news-section" class="nav-link">Live Wire</a>
             </nav>
@@ -60,11 +68,13 @@
             <div class="header-actions">
                 <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="btn-telegram-header">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z"/>
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z" />
                     </svg>
                     <span>Telegram Bot</span>
                 </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" onclick="toggleMobileMenu()">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu"
+                    onclick="toggleMobileMenu()">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
                         <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -81,9 +91,9 @@
         <!-- HERO & UNIFIED COMMAND CENTER -->
         <section id="verifier-section" class="section-anchor">
             <div class="hero-header-block">
-                <span class="hero-kicker">INDEPENDENT VERIFICATION ENGINE</span>
                 <h1 class="hero-title">Verify News, Audio & Photos in Seconds</h1>
-                <p class="hero-desc">Cross-examine viral forwards, voice notes, and photo circulars with objective truth scoring, verified citations, and clear spoken Telugu explanations.</p>
+                <p class="hero-desc">Cross-examine viral forwards, voice notes, and photo circulars with objective truth
+                    scoring, verified citations, and clear spoken Telugu explanations.</p>
             </div>
 
             <!-- Unified Omnibar Command Center -->
@@ -91,7 +101,9 @@
                 <div class="omnibar-card" id="omnibarCard">
                     <!-- Text / Claim Input Area -->
                     <div class="omnibar-input-row">
-                        <textarea id="inputText" class="omnibar-textarea" placeholder="Paste a viral WhatsApp forward, statement, speak a claim, or attach a screenshot..." rows="3"></textarea>
+                        <textarea id="inputText" class="omnibar-textarea"
+                            placeholder="Paste a viral WhatsApp forward, statement, speak a claim, or attach a screenshot..."
+                            rows="3"></textarea>
                     </div>
 
                     <!-- Staged Attachments Tray -->
@@ -100,8 +112,10 @@
                         <div id="imagePreviewContainer" class="staged-chip image-chip" style="display: none;">
                             <img id="imagePreview" alt="Attached photo thumbnail">
                             <span class="staged-chip-name" id="imageFileName">Photo Attached</span>
-                            <button type="button" class="btn-staged-remove" onclick="removeImageFile(event)" title="Remove image">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <button type="button" class="btn-staged-remove" onclick="removeImageFile(event)"
+                                title="Remove image">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                     <line x1="6" y1="6" x2="18" y2="18"></line>
                                 </svg>
@@ -111,15 +125,18 @@
                         <!-- Audio Recording Chip -->
                         <div id="audioPreviewContainer" class="staged-chip audio-chip" style="display: none;">
                             <div class="audio-chip-icon">
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                                 </svg>
                             </div>
                             <span class="staged-chip-name">Voice Recording</span>
                             <audio id="recordedAudioPlayer" controls class="chip-audio-player"></audio>
-                            <button type="button" class="btn-staged-remove" onclick="removeAudioFile(event)" title="Discard audio">
-                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <button type="button" class="btn-staged-remove" onclick="removeAudioFile(event)"
+                                title="Discard audio">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
                                     <line x1="18" y1="6" x2="6" y2="18"></line>
                                     <line x1="6" y1="6" x2="18" y2="18"></line>
                                 </svg>
@@ -131,36 +148,46 @@
                     <div class="omnibar-action-bar">
                         <div class="omnibar-tools-left">
                             <!-- Hidden Photo Input -->
-                            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif" style="display: none;" onchange="handleImageSelection(event)">
-                            <button type="button" class="btn-omni-tool" onclick="document.getElementById('imageInput').click()" title="Attach photo or circular screenshot">
-                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                    <circle cx="9" cy="9" r="2"/>
-                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif"
+                                style="display: none;" onchange="handleImageSelection(event)">
+                            <button type="button" class="btn-omni-tool"
+                                onclick="document.getElementById('imageInput').click()"
+                                title="Attach photo or circular screenshot">
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                    <circle cx="9" cy="9" r="2" />
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
                                 </svg>
                                 <span>Attach Photo</span>
                             </button>
 
                             <!-- Voice Dictation Button -->
-                            <button type="button" class="btn-omni-tool btn-voice-dictate" id="recordBtn" onclick="toggleRecording()" title="Speak in Telugu or English">
-                                <svg class="mic-icon-svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                    <line x1="12" x2="12" y1="19" y2="22"/>
+                            <button type="button" class="btn-omni-tool btn-voice-dictate" id="recordBtn"
+                                onclick="toggleRecording()" title="Speak in Telugu or English">
+                                <svg class="mic-icon-svg" viewBox="0 0 24 24" width="17" height="17" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                    <line x1="12" x2="12" y1="19" y2="22" />
                                 </svg>
                                 <span id="recordStatus">Speak</span>
                                 <span id="recordTimer" class="inline-timer" style="display: none;">00:00</span>
                             </button>
 
                             <!-- Clear Button -->
-                            <button type="button" class="btn-omni-clear" onclick="clearAllInputs()" title="Clear all fields">Clear</button>
+                            <button type="button" class="btn-omni-clear" onclick="clearAllInputs()"
+                                title="Clear all fields">Clear</button>
                         </div>
 
                         <!-- Submit Verification -->
                         <div class="omnibar-tools-right">
-                            <button type="button" class="btn-verify-primary" id="btnVerifyOmni" onclick="submitOmnibar()">
+                            <button type="button" class="btn-verify-primary" id="btnVerifyOmni"
+                                onclick="submitOmnibar()">
                                 <span>Verify Claim</span>
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
                                 </svg>
@@ -177,15 +204,18 @@
                             <span class="chip-dot dot-false"></span>
                             <span>మోదీ అమెరికా అధ్యక్షుడు</span>
                         </button>
-                        <button class="rumor-chip chip-false" onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
+                        <button class="rumor-chip chip-false"
+                            onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
                             <span class="chip-dot dot-false"></span>
                             <span>COVID-19 5G Chips</span>
                         </button>
-                        <button class="rumor-chip chip-mislead" onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
+                        <button class="rumor-chip chip-mislead"
+                            onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
                             <span class="chip-dot dot-mislead"></span>
                             <span>Boiled Water Cures Viruses</span>
                         </button>
-                        <button class="rumor-chip chip-true" onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
+                        <button class="rumor-chip chip-true"
+                            onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
                             <span class="chip-dot dot-true"></span>
                             <span>Chandrayaan-3 Moon Landing</span>
                         </button>
@@ -197,7 +227,8 @@
                     <div class="spinner-circle"></div>
                     <div class="loader-labels">
                         <strong id="loadingTitle">Cross-Checking Knowledge Bases...</strong>
-                        <span id="loadingMessage">Evaluating claims, computing truth score, and synthesizing Telugu audio...</span>
+                        <span id="loadingMessage">Evaluating claims, computing truth score, and synthesizing Telugu
+                            audio...</span>
                     </div>
                 </div>
             </div>
@@ -229,9 +260,10 @@
                 <!-- Transcribed Speech Snippet (if voice was used) -->
                 <div id="transcriptionSnippet" class="transcription-strip" style="display: none;">
                     <span class="strip-icon">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                         </svg>
                     </span>
                     <div>
@@ -243,16 +275,20 @@
                 <!-- Perspective Split Tabs: Telugu Citizen View vs. Investigative Evidence -->
                 <div class="dossier-perspectives">
                     <div class="dossier-tabs-nav" role="tablist">
-                        <button type="button" class="dossier-tab-btn active" id="tab-dossier-telugu" onclick="switchDossierTab('telugu')">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <button type="button" class="dossier-tab-btn active" id="tab-dossier-telugu"
+                            onclick="switchDossierTab('telugu')">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
                             </svg>
                             <span>తెలుగు సారాంశం & వాట్సాప్ కార్డ్</span>
                         </button>
-                        <button type="button" class="dossier-tab-btn" id="tab-dossier-evidence" onclick="switchDossierTab('evidence')">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <button type="button" class="dossier-tab-btn" id="tab-dossier-evidence"
+                            onclick="switchDossierTab('evidence')">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <line x1="12" y1="16" x2="12" y2="12"></line>
                                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -267,7 +303,8 @@
                         <div id="audioVerdictWrap" class="audio-verdict-player" style="display: none;">
                             <div class="audio-player-meta">
                                 <div class="audio-avatar">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                        stroke-width="2">
                                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                                         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
@@ -286,7 +323,8 @@
                             <div class="verdict-body-header">
                                 <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Telugu Analysis)</span>
                                 <button class="btn-copy-verdict" onclick="copyResultText()">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                        stroke-width="2">
                                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                                     </svg>
@@ -301,7 +339,8 @@
                             <div class="whatsapp-kit-header">
                                 <div class="whatsapp-kit-brand">
                                     <svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366">
-                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
+                                        <path
+                                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z" />
                                     </svg>
                                     <strong>1-Click WhatsApp Debunk Card</strong>
                                 </div>
@@ -315,13 +354,16 @@
                                 </div>
                             </div>
                             <div class="whatsapp-kit-actions">
-                                <button class="btn-whatsapp-debunk" id="btnWhatsappCopy" onclick="copyWhatsAppDebunkCard()">
+                                <button class="btn-whatsapp-debunk" id="btnWhatsappCopy"
+                                    onclick="copyWhatsAppDebunkCard()">
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
+                                        <path
+                                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z" />
                                     </svg>
                                     <span>Copy WhatsApp Debunk Card</span>
                                 </button>
-                                <button class="btn-clear" onclick="openWhatsAppDirect()" title="Open WhatsApp Web directly">
+                                <button class="btn-clear" onclick="openWhatsAppDirect()"
+                                    title="Open WhatsApp Web directly">
                                     <span>Open WhatsApp Web</span>
                                     <span>↗</span>
                                 </button>
@@ -341,7 +383,8 @@
                         <div class="actionable-defense-strip" id="actionableDefenseWrap">
                             <div class="defense-meta">
                                 <span class="defense-kicker">COMMUNITY DEFENSE ADVICE</span>
-                                <p class="defense-text" id="actionAdviceText">Do not forward unverified claims. Confirm reporting with independent news bureaus before sharing.</p>
+                                <p class="defense-text" id="actionAdviceText">Do not forward unverified claims. Confirm
+                                    reporting with independent news bureaus before sharing.</p>
                             </div>
                         </div>
 
@@ -367,11 +410,16 @@
                     <p class="section-sub">Viral stories investigated by independent fact-checking bureaus.</p>
                 </div>
                 <div class="radar-category-pills" id="radarCategoryPills">
-                    <button type="button" class="radar-pill active" onclick="filterRadarDebunks('All', this)">All Topics</button>
-                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('AI', this)">AI & Deepfakes</button>
-                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('Health', this)">Health</button>
-                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('Economy', this)">Economy & Banks</button>
-                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('National', this)">Gov Schemes</button>
+                    <button type="button" class="radar-pill active" onclick="filterRadarDebunks('All', this)">All
+                        Topics</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('AI', this)">AI &
+                        Deepfakes</button>
+                    <button type="button" class="radar-pill"
+                        onclick="filterRadarDebunks('Health', this)">Health</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('Economy', this)">Economy &
+                        Banks</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('National', this)">Gov
+                        Schemes</button>
                 </div>
             </div>
 
@@ -385,8 +433,9 @@
                 <div class="spotlight-content">
                     <span class="kicker-accent">AI LITERACY & DETECTION</span>
                     <h2 class="spotlight-title">Spot Synthetic Media & AI Deepfakes</h2>
-                    <p class="spotlight-desc">Inspect fine anatomy, optical pupil reflections, blurred background lettering, and reverse image history with our interactive forensic field manual.</p>
-                    
+                    <p class="spotlight-desc">Inspect fine anatomy, optical pupil reflections, blurred background
+                        lettering, and reverse image history with our interactive forensic field manual.</p>
+
                     <div class="spotlight-pills">
                         <div class="spotlight-pill">
                             <span class="pill-dot"></span>
@@ -408,7 +457,8 @@
 
                     <a href="forensics.html" class="btn-spotlight">
                         <span>Open Forensic Academy</span>
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
@@ -423,27 +473,32 @@
                 <div class="tg-info-content">
                     <span class="kicker-light">MOBILE VERIFICATION</span>
                     <h2 class="tg-title">Fact-Check Directly from Telegram</h2>
-                    <p class="tg-desc">Forward suspicious WhatsApp forwards, voice notes, or photo circulars to our <strong>VerifyIt Telegram Assistant</strong> for instant truth checks and audio debunks on your phone.</p>
+                    <p class="tg-desc">Forward suspicious WhatsApp forwards, voice notes, or photo circulars to our
+                        <strong>VerifyIt Telegram Assistant</strong> for instant truth checks and audio debunks on your
+                        phone.</p>
 
                     <div class="tg-features-list">
                         <div class="tg-feature-item">
                             <div class="tg-feat-icon">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
                                 </svg>
                             </div>
                             <div>
                                 <strong>Voice Note Transcription</strong>
-                                <span>Transcribes voice forwards with high accuracy and verifies the underlying claim.</span>
+                                <span>Transcribes voice forwards with high accuracy and verifies the underlying
+                                    claim.</span>
                             </div>
                         </div>
                         <div class="tg-feature-item">
                             <div class="tg-feat-icon">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                    <circle cx="9" cy="9" r="2"/>
-                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                                    <circle cx="9" cy="9" r="2" />
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
                                 </svg>
                             </div>
                             <div>
@@ -453,7 +508,8 @@
                         </div>
                         <div class="tg-feature-item">
                             <div class="tg-feat-icon">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="2">
                                     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                     <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                                 </svg>
@@ -468,7 +524,8 @@
                     <div class="tg-cta-row">
                         <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="btn-open-telegram">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z"/>
+                                <path
+                                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z" />
                             </svg>
                             <span>Connect on Telegram (@VerifyItFactCheckBot)</span>
                         </a>
@@ -484,9 +541,10 @@
                     <div class="phone-frame">
                         <div class="chat-header">
                             <div class="chat-bot-avatar">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                    <path d="m9 12 2 2 4-4"/>
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="m9 12 2 2 4-4" />
                                 </svg>
                             </div>
                             <div>
@@ -504,9 +562,11 @@
                                     <span class="tag-dot dot-false"></span>
                                     <span>FALSE / FABRICATED</span>
                                 </div>
-                                <p>The circular circulating on WhatsApp is unverified. State education authorities confirmed schools are operating as scheduled.</p>
+                                <p>The circular circulating on WhatsApp is unverified. State education authorities
+                                    confirmed schools are operating as scheduled.</p>
                                 <div class="bubble-audio-indicator">
-                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor"
+                                        stroke-width="2">
                                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                                         <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
                                     </svg>
@@ -526,7 +586,8 @@
                 <div>
                     <span class="kicker">REAL-TIME INTELLIGENCE</span>
                     <h2 class="section-heading">Verified Fact-Checking Wire</h2>
-                    <p class="section-sub">Curated and auto-synced feeds from certified bureaus: BOOM Live, Alt News, Snopes, Vishvas News, and FactCheck.org.</p>
+                    <p class="section-sub">Curated and auto-synced feeds from certified bureaus: BOOM Live, Alt News,
+                        Snopes, Vishvas News, and FactCheck.org.</p>
                 </div>
                 <button class="btn-outline-add" onclick="toggleAddSourceForm()">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -574,13 +635,15 @@
             <div class="footer-top">
                 <div class="footer-brand-info">
                     <div class="footer-brand-name">
-                        <svg class="footer-brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            <path d="m9 12 2 2 4-4"/>
+                        <svg class="footer-brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <path d="m9 12 2 2 4-4" />
                         </svg>
                         <span>Verify<span class="brand-accent">It</span> Portal</span>
                     </div>
-                    <p>An independent fact-checking intelligence platform combining speech transcription, computer vision, verified knowledge retrieval, and vernacular voice synthesis.</p>
+                    <p>An independent fact-checking intelligence platform combining speech transcription, computer
+                        vision, verified knowledge retrieval, and vernacular voice synthesis.</p>
                 </div>
                 <div class="footer-links-col">
                     <strong>Architecture</strong>
@@ -614,4 +677,5 @@
         }
     </script>
 </body>
+
 </html>

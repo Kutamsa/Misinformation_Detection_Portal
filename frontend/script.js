@@ -78,42 +78,48 @@ const FALLBACK_DEBUNKS = [
     }
 ];
 
-// Curated Fallback Wire Articles
+// Curated Fallback Wire Articles with High-Resolution Contextual Imagery
 const FALLBACK_ARTICLES = [
     {
         title: "Fact Check: No, Government is not distributing free laptops under digital literacy scheme",
         link: "https://www.boomlive.in/fast-check",
         source: "BOOM Live",
+        imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date().toISOString()
     },
     {
         title: "Altered video falsely shared as crowd protesting during recent state assembly elections",
         link: "https://www.altnews.in",
         source: "Alt News",
+        imageUrl: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date(Date.now() - 3600000 * 4).toISOString()
     },
     {
         title: "Did NASA announce 15 days of total worldwide darkness? Scientific debunk",
         link: "https://www.snopes.com",
         source: "Snopes",
+        imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date(Date.now() - 3600000 * 12).toISOString()
     },
     {
         title: "Viral notice claiming changes to banking transfer charges is fabricated",
         link: "https://www.vishvasnews.com",
         source: "Vishvas News",
+        imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date(Date.now() - 3600000 * 24).toISOString()
     },
     {
         title: "FactCheck: Examination of viral claims surrounding parliamentary debate transcript",
         link: "https://www.factcheck.org",
         source: "FactCheck.org",
+        imageUrl: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date(Date.now() - 3600000 * 36).toISOString()
     },
     {
         title: "AI generated audio clone of political leader fabricated using diffusion model",
         link: "https://www.boomlive.in",
         source: "BOOM Live",
+        imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=700&auto=format&fit=crop&q=80",
         pubDate: new Date(Date.now() - 3600000 * 48).toISOString()
     }
 ];
@@ -139,13 +145,7 @@ function showToast(message, isError = false) {
 // Backward-compatible switchMode stub in case called from legacy links
 function switchMode(mode) {
     const input = document.getElementById("inputText");
-    if (mode === "voice") {
-        toggleRecording();
-    } else if (mode === "image") {
-        document.getElementById("imageInput").click();
-    } else if (input) {
-        input.focus();
-    }
+    if (input) input.focus();
 }
 
 // ============================================================================
@@ -878,15 +878,26 @@ async function loadArticles(reset = false) {
             const card = document.createElement("div");
             card.className = "article-grid-card";
             const dateStr = article.pubDate ? new Date(article.pubDate).toLocaleDateString() : "Recent";
+            const hasImage = Boolean(article.imageUrl);
+            const imgMarkup = hasImage ? `
+                <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-thumb-link" tabindex="-1">
+                    <div class="article-thumb-wrap">
+                        <img src="${escapeHtml(article.imageUrl)}" alt="${escapeHtml(article.title)}" loading="lazy" onerror="this.closest('.article-thumb-link').style.display='none'">
+                    </div>
+                </a>
+            ` : '';
 
             card.innerHTML = `
-                <div class="article-grid-meta">
-                    <span class="article-source-tag">${escapeHtml(article.source || "Fact Check")}</span>
-                    <span class="article-date-stamp">${dateStr}</span>
+                ${imgMarkup}
+                <div class="article-grid-body">
+                    <div class="article-grid-meta">
+                        <span class="article-source-tag">${escapeHtml(article.source || "Fact Check")}</span>
+                        <span class="article-date-stamp">${dateStr}</span>
+                    </div>
+                    <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-headline-link">
+                        ${escapeHtml(article.title)}
+                    </a>
                 </div>
-                <a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer" class="article-headline-link">
-                    ${escapeHtml(article.title)}
-                </a>
             `;
             list.appendChild(card);
         });
@@ -917,7 +928,6 @@ function escapeHtml(str) {
 // 9. Page Initialization
 // ============================================================================
 document.addEventListener("DOMContentLoaded", () => {
-    switchMode("voice");
     loadTrendingDebunks();
     loadSources();
     loadArticles(true);

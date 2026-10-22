@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "Mobbin": {
+      "serverUrl": "https://api.mobbin.com/mcp"
+    }
+  }
+}
