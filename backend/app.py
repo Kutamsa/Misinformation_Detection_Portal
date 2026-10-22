@@ -918,6 +918,14 @@ def serve_home():
 def serve_forensics():
     return FileResponse(os.path.join(FRONTEND_DIR, "forensics.html"))
 
+@app.get("/style.css")
+def serve_root_css():
+    return FileResponse(os.path.join(FRONTEND_DIR, "style.css"))
+
+@app.get("/script.js")
+def serve_root_js():
+    return FileResponse(os.path.join(FRONTEND_DIR, "script.js"))
+
 @app.head("/")
 @app.get("/health")
 def health_check():

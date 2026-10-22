@@ -3,104 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VerifyIt — Independent AI Truth Radar & Fact-Checking Portal</title>
-    <!-- Editorial Fonts: Newsreader (Literary/Journalistic Serif) & DM Sans (Humanist Interface) -->
+    <title>VerifyIt — Independent Truth Radar & Fact-Checking Portal</title>
+    <meta name="description" content="Cross-examine viral news, voice audio, and screenshots against authoritative truth databases with objective truth scoring and spoken Telugu explanations.">
+    
+    <!-- Modern Editorial Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Newsreader:ital,opsz,wght@0,6..72,500..800;1,6..72,500..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/frontend/style.css">
-    <script src="/frontend/script.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Top Archival Bar with Live Alert Ticker -->
-    <div class="breaking-ticker-bar">
-        <div class="ticker-inner">
-            <span class="ticker-badge"><span class="live-dot"></span> WIRE ALERTS</span>
-            <div class="ticker-scroll">
-                <span>🔴 <strong>DEBUNKED:</strong> Viral claim of ₹1000 note with GPS satellite chip is FALSE</span>
-                <span class="ticker-sep">·</span>
-                <span>🔴 <strong>AI DEEPFAKE:</strong> Pope Francis white puffer jacket was generated in Midjourney</span>
-                <span class="ticker-sep">·</span>
-                <span>🟡 <strong>MISLEADING:</strong> Boiled garlic water does not cure chronic respiratory asthma</span>
-                <span class="ticker-sep">·</span>
-                <span>🟢 <strong>VERIFIED:</strong> ISRO Chandrayaan-3 Moon South Pole landing confirmed</span>
+
+    <!-- Minimal Announcement Bar -->
+    <div class="top-status-bar">
+        <div class="status-bar-container">
+            <div class="status-live-indicator">
+                <span class="pulse-indicator"></span>
+                <span class="status-label">WIRE MONITOR</span>
+            </div>
+            <div class="status-message">
+                <span>Active 24/7 cross-referencing across certified fact-checking bureaus and open truth databases.</span>
+            </div>
+            <div class="status-meta">
+                <span>Edition: English + Telugu</span>
             </div>
         </div>
     </div>
 
-    <!-- Editorial Masthead Header -->
-    <header class="editorial-masthead">
-        <div class="masthead-meta-row">
-            <span class="meta-item">📍 Bureau of Fact-Checking & Digital Forensics</span>
-            <span class="meta-item-center">TRUTH · EVIDENCE · ACCURACY</span>
-            <span class="meta-item">Edition: Multi-Lingual (Telugu + English)</span>
-        </div>
+    <!-- Professional Navigation Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#verifier-section" class="brand-logo">
+                <span class="brand-icon-wrap">
+                    <svg class="brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </span>
+                <div class="brand-text">
+                    <span class="brand-name">Verify<span class="brand-accent">It</span></span>
+                    <span class="brand-sub">Truth Radar</span>
+                </div>
+            </a>
 
-        <div class="masthead-main">
-            <div class="masthead-branding">
-                <div class="masthead-emblem">⚖️</div>
-                <div>
-                    <h1 class="masthead-title">Verify<span class="title-serif-accent">It</span></h1>
-                    <div class="masthead-tagline">THE INDEPENDENT MISINFORMATION & SYNTHETIC MEDIA RADAR</div>
-                </div>
-            </div>
+            <nav class="nav-links" id="mainNav">
+                <a href="#verifier-section" class="nav-link active">Verification Desk</a>
+                <a href="#trending-section" class="nav-link">Trending Debunks</a>
+                <a href="forensics.html" class="nav-link nav-highlight">Forensic Academy</a>
+                <a href="#telegram-section" class="nav-link">Mobile Bot</a>
+                <a href="#news-section" class="nav-link">Live Wire</a>
+            </nav>
 
-            <div class="masthead-badges">
-                <div class="bureau-stat">
-                    <span class="stat-num" id="statSourcesCount">5</span>
-                    <span class="stat-lbl">Active Wire Feeds</span>
-                </div>
-                <div class="bureau-stat">
-                    <span class="stat-num">AI+Human</span>
-                    <span class="stat-lbl">Verification Protocol</span>
-                </div>
-                <a href="#telegram-section" class="btn-telegram-masthead">
-                    <span>✈️ Telegram Bot</span>
+            <div class="header-actions">
+                <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="btn-telegram-header">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z"/>
+                    </svg>
+                    <span>Telegram Bot</span>
                 </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" onclick="toggleMobileMenu()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
             </div>
         </div>
-
-        <!-- Navigation Bar -->
-        <nav class="masthead-nav">
-            <a href="#verifier-section" class="nav-tab active">The Verification Desk</a>
-            <a href="#trending-section" class="nav-tab">Trending Debunks</a>
-            <a href="forensics.html" class="nav-tab nav-tab-highlight">🔬 Deepfake Academy & Forensics</a>
-            <a href="#telegram-section" class="nav-tab">Telegram Bot Assistant</a>
-            <a href="#news-section" class="nav-tab">Live Fact-Check Wire</a>
-        </nav>
     </header>
-    <!-- Main Content Container -->
+
+    <!-- Main Content -->
     <main class="portal-main-body">
 
-        <!-- HERO SECTION: Fact-Checking Engine & Quick Stats -->
+        <!-- HERO & FACT-CHECKING ENGINE WORKSPACE -->
         <section id="verifier-section" class="section-anchor">
-            <div class="section-hero-header">
-                <div>
-                    <span class="kicker">MULTI-MODAL VERIFICATION ENGINE</span>
-                    <h1 class="hero-title">Verify News, Audio & Screenshots in Seconds</h1>
-                    <p class="hero-desc">Cross-reference viral rumors against authoritative truth databases. Delivers an objective Truth-O-Meter rating, clear reasoning, and spoken Telugu explanation.</p>
-                </div>
-                <div class="tech-pills-row">
-                    <span class="tech-badge">🎙️ OpenAI Whisper</span>
-                    <span class="tech-badge">👁️ Gemini Vision</span>
-                    <span class="tech-badge">🧠 GPT-4o Mini</span>
-                    <span class="tech-badge">🔊 Google Cloud TTS</span>
-                    <span class="tech-badge">✈️ Telegram Bot</span>
-                </div>
+            <div class="hero-header-block">
+                <span class="hero-kicker">INDEPENDENT VERIFICATION ENGINE</span>
+                <h1 class="hero-title">Verify News, Audio & Photos in Seconds</h1>
+                <p class="hero-desc">Cross-reference viral claims, voice forwards, and photo uploads against verified databases. Delivers an objective Truth Score, verified evidence, and clear spoken Telugu explanation.</p>
             </div>
 
             <div class="engine-workspace-grid">
-                <!-- Left: Multi-Modal Ingestion Box -->
+                <!-- Left Column: Ingestion Desk -->
                 <div class="engine-card">
+                    <!-- Segmented Mode Tabs -->
                     <div class="engine-tabs-header" role="tablist">
                         <button type="button" class="tab-button active" id="tab-voice" onclick="switchMode('voice')">
-                            <span class="tab-icon">🎙️</span> Voice Audio
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" x2="12" y1="19" y2="22"/>
+                            </svg>
+                            <span>Voice Audio</span>
                         </button>
                         <button type="button" class="tab-button" id="tab-text" onclick="switchMode('text')">
-                            <span class="tab-icon">📝</span> Text Statement
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                            <span>Text Statement</span>
                         </button>
                         <button type="button" class="tab-button" id="tab-image" onclick="switchMode('image')">
-                            <span class="tab-icon">🖼️</span> Image / Poster
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                            </svg>
+                            <span>Photo</span>
                         </button>
                     </div>
 
@@ -109,7 +124,11 @@
                         <div class="voice-deck">
                             <div class="record-orb-wrap">
                                 <button id="recordBtn" class="record-orb-button" onclick="toggleRecording()" title="Click to start/stop speaking">
-                                    <span class="orb-icon">🎙️</span>
+                                    <svg class="mic-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                        <line x1="12" x2="12" y1="19" y2="22"/>
+                                    </svg>
                                 </button>
                                 <div class="audio-wave-anim" id="waveVisualizer">
                                     <span></span><span></span><span></span><span></span><span></span>
@@ -118,7 +137,7 @@
                             <div class="voice-meta">
                                 <h3 id="recordStatus" class="voice-status-title">Click Microphone to Speak</h3>
                                 <div id="recordTimer" class="voice-timer">00:00</div>
-                                <p class="voice-tip">Speak any claim in Telugu or English. OpenAI Whisper transcribes speech into text in real time.</p>
+                                <p class="voice-tip">Speak any rumor or claim in Telugu or English. Transcribes speech accurately and verifies against ground truth.</p>
                             </div>
                             <audio id="recordedAudioPlayer" controls class="audio-playback-bar" style="display: none;"></audio>
                         </div>
@@ -132,54 +151,75 @@
                                 <button class="btn-clear" onclick="clearTextInput()">Clear</button>
                                 <button class="btn-verify-primary" id="btnCheckText" onclick="submitText()">
                                     <span>Verify Statement</span>
-                                    <span class="btn-arrow">→</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
 
                         <!-- One-Click Instant Test Claims -->
                         <div class="instant-claims-box">
-                            <span class="instant-label">⚡ Test Famous Viral Rumors (1-Click Instant Analysis):</span>
+                            <span class="instant-label">SAMPLE CLAIMS (1-CLICK TEST)</span>
                             <div class="chips-grid">
                                 <button class="rumor-chip chip-false" onclick="fillSample('మోదీ అమెరికా అధ్యక్షుడు')">
-                                    <span class="chip-badge red">FALSE</span> మోదీ అమెరికా అధ్యక్షుడు
+                                    <span class="chip-dot dot-false"></span>
+                                    <span>మోదీ అమెరికా అధ్యక్షుడు</span>
                                 </button>
                                 <button class="rumor-chip chip-false" onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
-                                    <span class="chip-badge red">FALSE</span> COVID-19 5G chips
+                                    <span class="chip-dot dot-false"></span>
+                                    <span>COVID-19 5G Chips</span>
                                 </button>
                                 <button class="rumor-chip chip-mislead" onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
-                                    <span class="chip-badge amber">MISLEADING</span> Boiled water cures viruses
+                                    <span class="chip-dot dot-mislead"></span>
+                                    <span>Boiled Water Cures Viruses</span>
                                 </button>
                                 <button class="rumor-chip chip-true" onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
-                                    <span class="chip-badge green">TRUE</span> Chandrayaan-3 Moon landing
+                                    <span class="chip-dot dot-true"></span>
+                                    <span>Chandrayaan-3 Moon Landing</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- MODE 3: Image / Screenshot Upload -->
+                    <!-- MODE 3: Photo Upload -->
                     <div id="mode-image" class="mode-container" style="display: none;">
                         <div class="image-upload-dropzone" id="imageDropzone">
                             <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif" onchange="handleImageSelection(event)">
                             <div id="dropzonePrompt" class="dropzone-text-block">
-                                <div class="dropzone-circle-icon">📷</div>
-                                <h4>Drop social media screenshot or <span class="link-browse">Browse</span></h4>
-                                <p>Upload WhatsApp forwards, newspaper clippings, or AI-generated photos</p>
+                                <div class="dropzone-circle-icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="17 8 12 3 7 8"/>
+                                        <line x1="12" y1="3" x2="12" y2="15"/>
+                                    </svg>
+                                </div>
+                                <h4>Drop photo or <span class="link-browse">Browse file</span></h4>
+                                <p>Upload WhatsApp forwards, circulars, or photo graphics</p>
                                 <span class="format-note">Supports PNG, JPG, WebP</span>
                             </div>
                             <div id="imagePreviewContainer" class="image-preview-wrapper" style="display: none;">
                                 <img id="imagePreview" alt="Upload preview">
-                                <button class="btn-remove-thumb" onclick="removeImageFile(event)" title="Remove image">✕</button>
+                                <button class="btn-remove-thumb" onclick="removeImageFile(event)" title="Remove image">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
 
                         <div class="caption-input-box">
-                            <input type="text" id="captionInput" placeholder="Optional context or question (e.g. 'Is this circular from the Education Ministry real?')">
+                            <input type="text" id="captionInput" placeholder="Optional question or context (e.g. 'Is this circular genuine?')">
                         </div>
 
                         <button class="btn-verify-primary full-width" id="btnCheckImage" onclick="uploadImage()">
-                            <span>Analyze Image with Gemini Vision</span>
-                            <span class="btn-arrow">→</span>
+                            <span>Analyze Photo</span>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
                         </button>
                     </div>
 
@@ -188,28 +228,34 @@
                         <div class="spinner-circle"></div>
                         <div class="loader-labels">
                             <strong id="loadingTitle">Cross-Checking Knowledge Bases...</strong>
-                            <span id="loadingMessage">Cross-referencing claims, computing Truth-O-Meter score, and synthesizing Telugu audio...</span>
+                            <span id="loadingMessage">Evaluating claims, computing truth score, and synthesizing Telugu audio...</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: THE TRUTH-O-METER VERDICT CARD -->
+                <!-- Right Column: Truth-O-Meter Verdict Display -->
                 <div class="verdict-display-wrapper">
-                    <!-- Default State when no analysis has been run yet -->
+                    <!-- Standby State -->
                     <div id="resultPlaceholder" class="verdict-placeholder-card">
-                        <div class="meter-illustration">⚖️</div>
-                        <h3>Truth-O-Meter Standby</h3>
-                        <p>Submit a statement, voice recording, or screenshot on the left to see the instant fact-check verdict, truth score, and spoken Telugu explanation.</p>
-                        <div class="placeholder-sample-hint">Or click any of the <strong>One-Click Test Rumors</strong> to see a live demo!</div>
+                        <div class="meter-illustration-wrap">
+                            <svg class="standby-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m12 6 3 6-3 6-3-6z"/>
+                                <circle cx="12" cy="12" r="2"/>
+                            </svg>
+                        </div>
+                        <h3>Verification Desk Standby</h3>
+                        <p>Submit a voice clip, statement, or screenshot to view verified findings, truth rating, and spoken Telugu analysis.</p>
+                        <div class="placeholder-sample-hint">Tip: Click any <strong>Sample Claim</strong> on the left for a 1-click demonstration.</div>
                     </div>
 
                     <!-- Active Verdict Card -->
                     <div id="resultCard" class="verdict-active-card" style="display: none;">
-                        <!-- Dynamic Color-coded Banner -->
+                        <!-- Status Banner -->
                         <div class="verdict-header-banner" id="verdictBanner">
                             <div class="verdict-header-left">
-                                <span class="verdict-pre-tag" id="verdictTag">VERIFIED FINDING</span>
-                                <h2 class="verdict-headline" id="verdictTitle">🔴 FALSE / MISINFORMATION</h2>
+                                <span class="verdict-pre-tag" id="verdictTag">VERIFICATION FINDING</span>
+                                <h2 class="verdict-headline" id="verdictTitle">FALSE / MISINFORMATION</h2>
                                 <div class="truth-progress-bar-wrap">
                                     <div class="truth-progress-bar" id="truthProgressBar" style="width: 0%;"></div>
                                 </div>
@@ -217,61 +263,80 @@
                             <div class="confidence-badge-block" id="truthScoreBlock">
                                 <span class="conf-pct" id="truthScore">0%</span>
                                 <span class="conf-lbl" id="truthScoreLabel">TRUTH SCORE</span>
-                                <span class="conf-sub" id="certaintySub">AI Certainty: 95%</span>
+                                <span class="conf-sub" id="certaintySub">Certainty: 95%</span>
                             </div>
                         </div>
 
-                        <!-- 1-Sentence English Executive Summary (For Beginners & Presentations) -->
+                        <!-- 1-Sentence English Summary -->
                         <div class="executive-summary-strip">
                             <span class="summary-kicker">EXECUTIVE SUMMARY</span>
                             <p id="englishSummaryText">Loading summary...</p>
                         </div>
 
-                        <!-- Voice Transcription Bar (If Spoken) -->
+                        <!-- Voice Transcription Snippet -->
                         <div id="transcriptionSnippet" class="transcription-strip" style="display: none;">
-                            <span class="mic-glyph">🎙️</span>
+                            <span class="strip-icon">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                </svg>
+                            </span>
                             <div>
-                                <span class="transcribe-label">OpenAI Whisper Transcribed:</span>
+                                <span class="transcribe-label">Transcribed Speech:</span>
                                 <strong id="transcriptionContent"></strong>
                             </div>
                         </div>
 
-                        <!-- Detailed Telugu Explanation -->
+                        <!-- Telugu Detailed Explanation -->
                         <div class="verdict-body-block">
                             <div class="verdict-body-header">
-                                <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Detailed Telugu Verification)</span>
-                                <button class="btn-copy-verdict" onclick="copyResultText()">📋 Copy Verdict</button>
+                                <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Telugu Analysis)</span>
+                                <button class="btn-copy-verdict" onclick="copyResultText()">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy Analysis</span>
+                                </button>
                             </div>
                             <p id="resultText" class="telugu-body-content"></p>
                         </div>
 
-                        <!-- Spoken Voice Verdict Audio Player -->
+                        <!-- Audio Spoken Verdict -->
                         <div id="audioVerdictWrap" class="audio-verdict-player" style="display: none;">
                             <div class="audio-player-meta">
-                                <div class="audio-avatar">🔊</div>
+                                <div class="audio-avatar">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                                    </svg>
+                                </div>
                                 <div>
                                     <strong>Listen to Spoken Verdict (Telugu)</strong>
-                                    <span>Spoken Telugu audio explanation for accessibility & audio debunks</span>
+                                    <span>Synthesized audio explanation for accessibility and audio sharing</span>
                                 </div>
                             </div>
                             <audio id="verdictAudioPlayer" controls class="native-audio-player"></audio>
                         </div>
 
-                        <!-- Live RAG Fact-Checking Wire Citations -->
+                        <!-- RAG Wire Citations -->
                         <div id="ragCitationsWrap" class="rag-citations-strip" style="display: none;">
-                            <span class="citations-label">🔗 Ground-Truth Citations (Live Fact-Checking Wire):</span>
+                            <span class="citations-label">Ground-Truth Citations:</span>
                             <div class="citations-chips-container" id="citationsList"></div>
                         </div>
 
-                        <!-- Actionable Defense & WhatsApp Share Strip -->
+                        <!-- Defense Strip & WhatsApp Copy -->
                         <div class="actionable-defense-strip" id="actionableDefenseWrap">
                             <div class="defense-meta">
-                                <span class="defense-kicker">🛡️ ACTIONABLE DEFENSE ADVICE</span>
-                                <p class="defense-text" id="actionAdviceText">Do not forward this message. Viral claims spread when users share without independent verification.</p>
+                                <span class="defense-kicker">ACTIONABLE ADVICE</span>
+                                <p class="defense-text" id="actionAdviceText">Do not forward unverified claims. Confirm reporting with independent news bureaus before sharing.</p>
                             </div>
                             <button class="btn-whatsapp-debunk" id="btnWhatsappCopy" onclick="copyWhatsAppDebunkCard()">
-                                <span>📲 Copy for WhatsApp</span>
-                                <small>1-Click Debunk Card</small>
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
+                                </svg>
+                                <span>Copy WhatsApp Card</span>
                             </button>
                         </div>
                     </div>
@@ -279,147 +344,153 @@
             </div>
         </section>
 
-        <!-- SECTION 2: 🔥 TRENDING DEBUNKS & VIRAL MYTH BUSTER -->
+        <!-- SECTION 2: TRENDING DEBUNKED CLAIMS -->
         <section id="trending-section" class="portal-section">
             <div class="section-title-bar">
                 <div>
-                    <span class="kicker">VIRAL MISINFORMATION RADAR</span>
+                    <span class="kicker">MISINFORMATION RADAR</span>
                     <h2 class="section-heading">Trending Debunked Claims</h2>
-                    <p class="section-sub">Top fake news stories currently circulating on WhatsApp, YouTube, and social media, investigated by fact-checkers.</p>
+                    <p class="section-sub">Viral stories investigated by independent fact-checking bureaus.</p>
                 </div>
             </div>
 
-            <!-- Trending Claims Cards Grid -->
-            <div class="debunks-grid" id="debunksContainer">
-                <!-- Dynamically loaded from /api/trending-debunks -->
-            </div>
+            <!-- Dynamically loaded with fallback -->
+            <div class="debunks-grid" id="debunksContainer"></div>
         </section>
 
-        <!-- SECTION 3: 👁️ SPOT THE FAKE: INTERACTIVE AI & DEEPFAKE GUIDE -->
-        <section id="deepfake-guide-section" class="portal-section deepfake-guide-bg">
-            <div class="section-title-bar">
-                <div>
-                    <span class="kicker">AI LITERACY & FORENSICS</span>
-                    <h2 class="section-heading">How to Identify AI-Generated Images & Deepfakes</h2>
-                    <p class="section-sub">As generative AI tools (Midjourney, DALL-E, Sora) become common, use this practical 4-point inspection checklist to spot synthetic media.</p>
-                </div>
-            </div>
+        <!-- SECTION 3: AI & DEEPFAKE FORENSICS SPOTLIGHT -->
+        <section id="deepfake-guide-section" class="portal-section">
+            <div class="spotlight-banner">
+                <div class="spotlight-content">
+                    <span class="kicker-accent">AI LITERACY & DETECTION</span>
+                    <h2 class="spotlight-title">Spot Synthetic Media & AI Deepfakes</h2>
+                    <p class="spotlight-desc">Inspect fine anatomy, optical pupil reflections, blurred background lettering, and reverse image history with our interactive forensic field manual.</p>
+                    
+                    <div class="spotlight-pills">
+                        <div class="spotlight-pill">
+                            <span class="pill-dot"></span>
+                            <span>Anatomy Inspection</span>
+                        </div>
+                        <div class="spotlight-pill">
+                            <span class="pill-dot"></span>
+                            <span>Eye Reflections & Pupils</span>
+                        </div>
+                        <div class="spotlight-pill">
+                            <span class="pill-dot"></span>
+                            <span>Background Typography</span>
+                        </div>
+                        <div class="spotlight-pill">
+                            <span class="pill-dot"></span>
+                            <span>Reverse Search Verification</span>
+                        </div>
+                    </div>
 
-            <div class="forensics-cards-grid">
-                <!-- Card 1 -->
-                <div class="forensic-card">
-                    <div class="forensic-icon">✋</div>
-                    <h3>1. Hand & Finger Anatomy</h3>
-                    <p>AI image models frequently struggle with fine motor geometry. Look for:</p>
-                    <ul class="forensic-checklist">
-                        <li>Extra, missing, or conjoined fingers</li>
-                        <li>Unnatural finger lengths and deformed joints</li>
-                        <li>Melted fingernails or rings that blend into the skin</li>
-                    </ul>
-                    <div class="forensic-tag">Common in Midjourney / Flux</div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="forensic-card">
-                    <div class="forensic-icon">👁️</div>
-                    <h3>2. Eye Catchlights & Pupils</h3>
-                    <p>In authentic photography, light reflections in both pupils must match the scene's light sources:</p>
-                    <ul class="forensic-checklist">
-                        <li>Asymmetrical or non-circular pupil shapes</li>
-                        <li>Mismatched catchlights (e.g. square reflection in one eye, dot in another)</li>
-                        <li>Blurred boundaries between the iris and the sclera (white of eye)</li>
-                    </ul>
-                    <div class="forensic-tag">Key Clue in Portrait Deepfakes</div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="forensic-card">
-                    <div class="forensic-icon">🔤</div>
-                    <h3>3. Background Text & Gibberish</h3>
-                    <p>Diffusion models often cannot render coherent typography in backgrounds:</p>
-                    <ul class="forensic-checklist">
-                        <li>Pseudo-English or gibberish symbols on street signs and shirts</li>
-                        <li>Warped logos on branded apparel or police badges</li>
-                        <li>Nonsensical numbers on license plates or building placards</li>
-                    </ul>
-                    <div class="forensic-tag">Dead Giveaway on Fake Posters</div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="forensic-card">
-                    <div class="forensic-icon">🔍</div>
-                    <h3>4. Reverse Image Search (Google Lens)</h3>
-                    <p>Trace the image back to its original creator before sharing viral graphics:</p>
-                    <ul class="forensic-checklist">
-                        <li>Upload to <strong>Google Lens</strong> or <strong>TinEye</strong> to find the earliest publication date</li>
-                        <li>Look for labels like "Created by AI Artist" on Reddit or ArtStation</li>
-                        <li>Check if the photo only appeared within the last 2 hours without credible news coverage</li>
-                    </ul>
-                    <div class="forensic-tag">Verification Gold Standard</div>
+                    <a href="forensics.html" class="btn-spotlight">
+                        <span>Open Forensic Academy</span>
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4: 📱 TELEGRAM BOT ASSISTANT (MOBILE MISINFORMATION DEFENSE) -->
+        <!-- SECTION 4: TELEGRAM BOT ASSISTANT -->
         <section id="telegram-section" class="portal-section">
             <div class="telegram-showcase-card">
                 <div class="tg-info-content">
-                    <span class="kicker-light">INTEGRATED MOBILE DEFENSE</span>
-                    <h2 class="tg-title">Fact-Check on Telegram Directly from Your Phone</h2>
-                    <p class="tg-desc">Most rumors spread on WhatsApp and Telegram groups. Instead of opening a computer, forward any viral text, voice message, or photo directly to our <strong>VerifyIt Telegram Bot</strong>. The bot responds within seconds with the verified truth and audio verdict.</p>
+                    <span class="kicker-light">MOBILE VERIFICATION</span>
+                    <h2 class="tg-title">Fact-Check Directly from Telegram</h2>
+                    <p class="tg-desc">Forward suspicious WhatsApp forwards, voice notes, or photo circulars to our <strong>VerifyIt Telegram Assistant</strong> for instant truth checks and audio debunks on your phone.</p>
 
                     <div class="tg-features-list">
                         <div class="tg-feature-item">
-                            <span class="tg-feat-icon">🎙️</span>
+                            <div class="tg-feat-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                </svg>
+                            </div>
                             <div>
                                 <strong>Voice Note Transcription</strong>
-                                <span>Forwards voice recordings to OpenAI Whisper & fact-checks them automatically.</span>
+                                <span>Transcribes voice forwards with high accuracy and verifies the underlying claim.</span>
                             </div>
                         </div>
                         <div class="tg-feature-item">
-                            <span class="tg-feat-icon">🖼️</span>
+                            <div class="tg-feat-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                </svg>
+                            </div>
                             <div>
-                                <strong>Photo & Screenshot Verification</strong>
-                                <span>Inspects posters and viral circulars with Gemini Vision.</span>
+                                <strong>Image & Screenshot Verification</strong>
+                                <span>Inspects circulars, viral headlines, and photo claims.</span>
                             </div>
                         </div>
                         <div class="tg-feature-item">
-                            <span class="tg-feat-icon">🔊</span>
+                            <div class="tg-feat-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                </svg>
+                            </div>
                             <div>
-                                <strong>Audio Voice Notes Returned</strong>
-                                <span>The bot replies with a synthesized voice note in Telugu so anyone can listen.</span>
+                                <strong>Spoken Voice Notes Returned</strong>
+                                <span>Replies with synthesized audio in Telugu so any group member can listen.</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="tg-cta-row">
                         <a href="https://t.me/" target="_blank" rel="noopener noreferrer" class="btn-open-telegram">
-                            <span class="tg-send-icon">✈️</span>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z"/>
+                            </svg>
                             <span>Connect on Telegram (@VerifyItFactCheckBot)</span>
                         </a>
-                        <span class="tg-status-note">🟢 Active 24/7 via FastAPI Webhook</span>
+                        <span class="tg-status-note">
+                            <span class="online-dot"></span>
+                            <span>Active 24/7 Webhook</span>
+                        </span>
                     </div>
                 </div>
 
-                <!-- Visual Phone Mockup -->
+                <!-- Sleek Phone Mockup -->
                 <div class="tg-mockup-wrapper">
                     <div class="phone-frame">
                         <div class="chat-header">
-                            <div class="chat-bot-avatar">🛡️</div>
+                            <div class="chat-bot-avatar">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <path d="m9 12 2 2 4-4"/>
+                                </svg>
+                            </div>
                             <div>
                                 <strong>VerifyIt Assistant</strong>
-                                <span class="bot-online">bot · online</span>
+                                <span class="bot-online">online · automated</span>
                             </div>
                         </div>
                         <div class="chat-bubbles">
                             <div class="chat-bubble user">
-                                <p>Fwd: <em>"Schools closed for 15 days due to extreme heatwave in Andhra Pradesh."</em></p>
+                                <p>Fwd: <em>"Schools closed for 15 days due to heatwave in Andhra Pradesh."</em></p>
                                 <span class="chat-time">2:14 PM</span>
                             </div>
                             <div class="chat-bubble bot">
-                                <span class="bot-bubble-tag">🔴 VERDICT: FALSE</span>
-                                <p>The circular circulating on WhatsApp is fabricated. The Education Department confirmed that schools remain open as per regular schedule.</p>
-                                <div class="bubble-audio-indicator">🔊 Voice Verdict (0:18)</div>
+                                <div class="bot-bubble-tag">
+                                    <span class="tag-dot dot-false"></span>
+                                    <span>FALSE / FABRICATED</span>
+                                </div>
+                                <p>The circular circulating on WhatsApp is unverified. State education authorities confirmed schools are operating as scheduled.</p>
+                                <div class="bubble-audio-indicator">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                    </svg>
+                                    <span>Voice Verdict (0:18)</span>
+                                </div>
                                 <span class="chat-time">2:14 PM</span>
                             </div>
                         </div>
@@ -428,23 +499,29 @@
             </div>
         </section>
 
-        <!-- SECTION 5: 📰 LIVE VERIFIED NEWS & RSS WIRE -->
+        <!-- SECTION 5: LIVE VERIFIED WIRE -->
         <section id="news-section" class="portal-section">
             <div class="section-title-bar">
                 <div>
                     <span class="kicker">REAL-TIME INTELLIGENCE</span>
-                    <h2 class="section-heading">Verified Fact-Checking Wire & Live Debunks</h2>
-                    <p class="section-sub">Live auto-synced feeds from IFCN-certified fact-checking bureaus: BOOM Live, Alt News, Snopes, Vishvas News, and FactCheck.org.</p>
+                    <h2 class="section-heading">Verified Fact-Checking Wire</h2>
+                    <p class="section-sub">Curated and auto-synced feeds from certified bureaus: BOOM Live, Alt News, Snopes, Vishvas News, and FactCheck.org.</p>
                 </div>
-                <button class="btn-outline-add" onclick="toggleAddSourceForm()">+ Add Custom RSS Feed</button>
+                <button class="btn-outline-add" onclick="toggleAddSourceForm()">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Add Custom RSS Feed</span>
+                </button>
             </div>
 
             <!-- Collapsible Add Feed Drawer -->
             <div id="addSourceForm" class="add-source-drawer" style="display: none;">
-                <h4>Add Custom News / Fact-Check RSS Feed</h4>
+                <h4>Add Custom Fact-Check RSS Feed</h4>
                 <div class="drawer-inputs-row">
-                    <input type="text" id="sourceNameInput" placeholder="Source Name (e.g. AltNews, Reuters Fact Check)">
-                    <input type="text" id="rssUrlInput" placeholder="RSS Feed URL (e.g. https://www.reuters.com/arc/outboundfeeds/rss/)">
+                    <input type="text" id="sourceNameInput" placeholder="Source Name (e.g. Reuters Fact Check)">
+                    <input type="text" id="rssUrlInput" placeholder="RSS Feed URL (e.g. https://.../feed/)">
                     <div class="drawer-actions">
                         <button class="btn-subtle" onclick="toggleAddSourceForm()">Cancel</button>
                         <button class="btn-verify-primary btn-sm" onclick="addNewsSource()">Save & Sync Feed</button>
@@ -457,53 +534,63 @@
                 <button class="source-filter-pill active" id="chipAllSources" onclick="selectSource(null)">
                     All Feeds
                 </button>
-                <!-- Populated dynamically -->
             </div>
 
             <!-- Articles Feed Stream -->
-            <div class="articles-feed-grid" id="articlesList">
-                <!-- Articles loaded dynamically -->
-            </div>
+            <div class="articles-feed-grid" id="articlesList"></div>
 
             <div id="loadMoreWrap" class="load-more-center" style="display: none;">
                 <button id="btnLoadMore" class="btn-load-more" onclick="loadMoreArticles()">
-                    Load More Headlines
+                    Load More Articles
                 </button>
             </div>
         </section>
     </main>
 
-    <!-- Professional Editorial Footer -->
+    <!-- Professional Footer -->
     <footer class="portal-footer-block">
         <div class="footer-wrap">
             <div class="footer-top">
                 <div class="footer-brand-info">
-                    <div class="footer-brand-name">🛡️ Verify<span class="accent-blue">It</span> Portal</div>
-                    <p>An integrated fact-checking intelligence platform combining speech-to-text, computer vision, generative reasoning, and vernacular voice synthesis.</p>
+                    <div class="footer-brand-name">
+                        <svg class="footer-brand-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                        <span>Verify<span class="brand-accent">It</span> Portal</span>
+                    </div>
+                    <p>An independent fact-checking intelligence platform combining speech transcription, computer vision, verified knowledge retrieval, and vernacular voice synthesis.</p>
                 </div>
                 <div class="footer-links-col">
-                    <strong>Platform Stack</strong>
+                    <strong>Architecture</strong>
                     <span>FastAPI & Python 3.13</span>
-                    <span>OpenAI Whisper & GPT-4o Mini</span>
-                    <span>Google Gemini 2.5 Flash</span>
-                    <span>Google Cloud Neural TTS</span>
-                    <span>python-telegram-bot</span>
+                    <span>Speech & Vision Ingestion</span>
+                    <span>Knowledge Ground-Truth RAG</span>
+                    <span>Multi-Lingual Audio Synthesis</span>
                 </div>
                 <div class="footer-links-col">
-                    <strong>Trusted Wire Sources</strong>
+                    <strong>Primary Sources</strong>
                     <span>FactCheck.org</span>
-                    <span>BBC World & BBC Telugu</span>
-                    <span>The Hindu & NDTV</span>
+                    <span>BOOM Live & Alt News</span>
+                    <span>Vishvas News & Snopes</span>
+                    <span>International Fact-Checking Network</span>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2026 VerifyIt Misinformation Detection Portal · Open Fact-Checking Project</span>
-                <span>Designed for accuracy, transparency, and accessible truth.</span>
+                <span>&copy; 2026 VerifyIt Misinformation Detection Portal · Open Fact-Checking Project</span>
+                <span>Designed for transparency, accuracy, and accessible truth.</span>
             </div>
         </div>
     </footer>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
+
+    <script>
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mainNav');
+            if (nav) nav.classList.toggle('mobile-open');
+        }
+    </script>
 </body>
 </html>
