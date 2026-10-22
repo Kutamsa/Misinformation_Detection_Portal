@@ -118,6 +118,11 @@ const FALLBACK_ARTICLES = [
     }
 ];
 
+// Staged Media State for Unified Omnibar
+let currentAudioBlob = null;
+let currentImageFile = null;
+let allLoadedDebunks = [];
+
 // ============================================================================
 // 1. Toast Notification Helper
 // ============================================================================
@@ -131,29 +136,20 @@ function showToast(message, isError = false) {
     }, 4000);
 }
 
-// ============================================================================
-// 2. Mode Switcher (Voice / Text / Image)
-// ============================================================================
+// Backward-compatible switchMode stub in case called from legacy links
 function switchMode(mode) {
-    // 1. Update tab buttons
-    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-    const activeTab = document.getElementById(`tab-${mode}`);
-    if (activeTab) activeTab.classList.add("active");
-
-    // 2. Display corresponding mode view
-    ["voice", "text", "image"].forEach(m => {
-        const view = document.getElementById(`mode-${m}`);
-        if (view) view.style.display = (m === mode) ? "block" : "none";
-    });
-
-    // 3. Stop recording if switching away during recording
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        stopVoiceRecording();
+    const input = document.getElementById("inputText");
+    if (mode === "voice") {
+        toggleRecording();
+    } else if (mode === "image") {
+        document.getElementById("imageInput").click();
+    } else if (input) {
+        input.focus();
     }
 }
 
 // ============================================================================
-// 3. Voice Recording Mode
+// 2. Voice Recording Controls
 // ============================================================================
 async function toggleRecording() {
     if (mediaRecorder && mediaRecorder.state === "recording") {
@@ -171,7 +167,7 @@ async function startVoiceRecording() {
     const recordTimer = document.getElementById("recordTimer");
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        showToast("Audio recording is not supported in this browser environment.", true);
+        showToast("Audio recording is not supported in this browser.", true);
         return;
     }
 
@@ -186,21 +182,24 @@ async function startVoiceRecording() {
         mediaRecorder.onstop = handleRecordingComplete;
 
         mediaRecorder.start();
-        recordBtn.classList.add("recording");
-        recordStatus.textContent = "Listening... Speak your claim";
-        recordTimer.textContent = "00:00";
+        if (recordBtn) recordBtn.classList.add("recording");
+        if (recordStatus) recordStatus.textContent = "Listening...";
+        if (recordTimer) {
+            recordTimer.textContent = "00:00";
+            recordTimer.style.display = "inline-block";
+        }
 
         clearInterval(recordingTimer);
         recordingTimer = setInterval(() => {
             recordingSeconds++;
             const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, "0");
             const secs = String(recordingSeconds % 60).padStart(2, "0");
-            recordTimer.textContent = `${mins}:${secs}`;
+            if (recordTimer) recordTimer.textContent = `${mins}:${secs}`;
         }, 1000);
 
     } catch (err) {
         console.warn("Microphone access error:", err);
-        showToast("Microphone access unavailable or denied. Please check browser permissions.", true);
+        showToast("Microphone access unavailable or denied. Please check permissions.", true);
     }
 }
 
@@ -212,68 +211,123 @@ function stopVoiceRecording() {
     clearInterval(recordingTimer);
     const recordBtn = document.getElementById("recordBtn");
     const recordStatus = document.getElementById("recordStatus");
-    recordBtn.classList.remove("recording");
-    recordStatus.textContent = "Transcribing speech...";
+    const recordTimer = document.getElementById("recordTimer");
+
+    if (recordBtn) recordBtn.classList.remove("recording");
+    if (recordStatus) recordStatus.textContent = "Processing voice...";
+    if (recordTimer) recordTimer.style.display = "none";
 }
 
 async function handleRecordingComplete() {
     const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
-    const formData = new FormData();
-    formData.append("audio_file", audioBlob, "recording.mp3");
+    currentAudioBlob = audioBlob;
 
+    const audioPreviewContainer = document.getElementById("audioPreviewContainer");
     const previewPlayer = document.getElementById("recordedAudioPlayer");
+
     if (previewPlayer) {
         previewPlayer.src = URL.createObjectURL(audioBlob);
-        previewPlayer.style.display = "block";
+    }
+    if (audioPreviewContainer) {
+        audioPreviewContainer.style.display = "flex";
     }
 
-    setLoading(true, "Transcribing speech and cross-examining databases...");
+    const recordStatus = document.getElementById("recordStatus");
+    if (recordStatus) recordStatus.textContent = "Voice Staged";
 
-    try {
-        const res = await fetch(`${API_BASE}/factcheck/audio`, {
-            method: "POST",
-            body: formData
-        });
-        const data = await res.json();
-        setLoading(false);
+    // Auto-verify voice recording seamlessly
+    submitOmnibar();
+}
 
-        if (res.ok) {
-            displayVerdictResult(data);
-            document.getElementById("recordStatus").textContent = "Recording verified";
-        } else {
-            showToast(data.error || "Failed to analyze voice recording.", true);
-        }
-    } catch (err) {
-        setLoading(false);
-        showToast("Unable to reach verification server. Please check backend connection.", true);
+function removeAudioFile(event) {
+    if (event) event.stopPropagation();
+    currentAudioBlob = null;
+    const previewPlayer = document.getElementById("recordedAudioPlayer");
+    if (previewPlayer) {
+        previewPlayer.pause();
+        previewPlayer.src = "";
     }
+    const audioContainer = document.getElementById("audioPreviewContainer");
+    if (audioContainer) audioContainer.style.display = "none";
+    const recordStatus = document.getElementById("recordStatus");
+    if (recordStatus) recordStatus.textContent = "Speak";
 }
 
 // ============================================================================
-// 4. Text Statement Mode
+// 3. Photo & Screenshot Attachment
+// ============================================================================
+function handleImageSelection(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    currentImageFile = file;
+    const preview = document.getElementById("imagePreview");
+    const previewContainer = document.getElementById("imagePreviewContainer");
+    const fileNameEl = document.getElementById("imageFileName");
+
+    if (preview) preview.src = URL.createObjectURL(file);
+    if (fileNameEl) fileNameEl.textContent = file.name || "Photo Attached";
+    if (previewContainer) previewContainer.style.display = "flex";
+}
+
+function removeImageFile(event) {
+    if (event) event.stopPropagation();
+    currentImageFile = null;
+    const input = document.getElementById("imageInput");
+    if (input) input.value = "";
+    const preview = document.getElementById("imagePreview");
+    if (preview) preview.src = "";
+    const previewContainer = document.getElementById("imagePreviewContainer");
+    if (previewContainer) previewContainer.style.display = "none";
+}
+
+// ============================================================================
+// 4. Omnibar Control & Verification Dispatcher
 // ============================================================================
 function fillSample(text) {
     const input = document.getElementById("inputText");
-    input.value = text;
-    switchMode('text');
-    input.focus();
+    if (input) {
+        input.value = text;
+        input.focus();
+    }
+    submitOmnibar();
 }
 
-function clearTextInput() {
-    document.getElementById("inputText").value = "";
-}
-
-async function submitText() {
+function clearAllInputs() {
     const input = document.getElementById("inputText");
-    const text = input.value.trim();
+    if (input) input.value = "";
+    removeImageFile();
+    removeAudioFile();
+}
 
-    if (!text) {
-        showToast("Please enter a statement or news rumor to verify.", true);
+async function submitOmnibar() {
+    const textInput = document.getElementById("inputText");
+    const text = textInput ? textInput.value.trim() : "";
+
+    // 1. Audio Priority: If audio was just recorded
+    if (currentAudioBlob) {
+        await submitAudioBlob(currentAudioBlob);
         return;
     }
 
-    setLoading(true, "Cross-referencing claim across authoritative databases...");
+    // 2. Photo Priority: If photo was attached
+    if (currentImageFile) {
+        await submitImageFile(currentImageFile, text);
+        return;
+    }
 
+    // 3. Text Claim
+    if (text) {
+        await submitTextClaim(text);
+        return;
+    }
+
+    showToast("Please enter a claim, speak into the mic, or attach a photo to verify.", true);
+}
+
+// Individual Verification Callers
+async function submitTextClaim(text) {
+    setLoading(true, "Cross-referencing claim across authoritative bureaus & live databases...");
     try {
         const res = await fetch(`${API_BASE}/factcheck/text`, {
             method: "POST",
@@ -294,49 +348,40 @@ async function submitText() {
     }
 }
 
-// ============================================================================
-// 5. Image & Screenshot Mode
-// ============================================================================
-function handleImageSelection(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+async function submitAudioBlob(audioBlob) {
+    const formData = new FormData();
+    formData.append("audio_file", audioBlob, "recording.mp3");
 
-    const preview = document.getElementById("imagePreview");
-    const previewContainer = document.getElementById("imagePreviewContainer");
-    const promptWrap = document.getElementById("dropzonePrompt");
+    setLoading(true, "Transcribing speech and cross-examining ground truth...");
+    try {
+        const res = await fetch(`${API_BASE}/factcheck/audio`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await res.json();
+        setLoading(false);
 
-    preview.src = URL.createObjectURL(file);
-    previewContainer.style.display = "inline-block";
-    promptWrap.style.display = "none";
-}
-
-function removeImageFile(event) {
-    if (event) event.stopPropagation();
-    const input = document.getElementById("imageInput");
-    input.value = "";
-    document.getElementById("imagePreview").src = "";
-    document.getElementById("imagePreviewContainer").style.display = "none";
-    document.getElementById("dropzonePrompt").style.display = "block";
-}
-
-async function uploadImage() {
-    const input = document.getElementById("imageInput");
-    const captionInput = document.getElementById("captionInput");
-    const file = input.files[0];
-
-    if (!file) {
-        showToast("Please select an image or screenshot to analyze.", true);
-        return;
+        if (res.ok) {
+            displayVerdictResult(data);
+            const recordStatus = document.getElementById("recordStatus");
+            if (recordStatus) recordStatus.textContent = "Verified";
+        } else {
+            showToast(data.error || "Failed to analyze voice recording.", true);
+        }
+    } catch (err) {
+        setLoading(false);
+        showToast("Unable to reach verification server.", true);
     }
+}
 
+async function submitImageFile(file, caption) {
     const formData = new FormData();
     formData.append("image", file);
-    if (captionInput.value.trim()) {
-        formData.append("caption", captionInput.value.trim());
+    if (caption) {
+        formData.append("caption", caption);
     }
 
     setLoading(true, "Inspecting screenshot claims with vision intelligence...");
-
     try {
         const res = await fetch(`${API_BASE}/factcheck/image`, {
             method: "POST",
@@ -353,6 +398,33 @@ async function uploadImage() {
     } catch (err) {
         setLoading(false);
         showToast("Server connection error during image analysis.", true);
+    }
+}
+
+// Compatibility functions for legacy buttons
+function submitText() { submitOmnibar(); }
+function uploadImage() { submitOmnibar(); }
+function clearTextInput() { clearAllInputs(); }
+
+// ============================================================================
+// 5. Perspective Dossier Tabs
+// ============================================================================
+function switchDossierTab(tab) {
+    const btnTelugu = document.getElementById("tab-dossier-telugu");
+    const btnEvidence = document.getElementById("tab-dossier-evidence");
+    const viewTelugu = document.getElementById("dossier-view-telugu");
+    const viewEvidence = document.getElementById("dossier-view-evidence");
+
+    if (tab === "telugu") {
+        if (btnTelugu) btnTelugu.classList.add("active");
+        if (btnEvidence) btnEvidence.classList.remove("active");
+        if (viewTelugu) viewTelugu.style.display = "block";
+        if (viewEvidence) viewEvidence.style.display = "none";
+    } else {
+        if (btnTelugu) btnTelugu.classList.remove("active");
+        if (btnEvidence) btnEvidence.classList.add("active");
+        if (viewTelugu) viewTelugu.style.display = "none";
+        if (viewEvidence) viewEvidence.style.display = "block";
     }
 }
 
@@ -482,6 +554,13 @@ function displayVerdictResult(data) {
     }
 
     currentWhatsAppCard = data.whatsapp_card || "";
+    const whatsappPreview = document.getElementById("whatsappPreviewContent");
+    if (whatsappPreview) {
+        const previewStr = (currentWhatsAppCard || `[VERIFYIT FACT-CHECK REPORT]\nVerdict: ${verdictTitle.textContent}\nSummary: ${englishSummary.textContent}\nAction: Please verify before forwarding in groups.`)
+            .replace(/\n/g, "<br>");
+        whatsappPreview.innerHTML = previewStr;
+    }
+
     const actionAdviceText = document.getElementById("actionAdviceText");
     if (actionAdviceText) {
         if (rawVerdict.includes("FALSE") || rawVerdict.includes("FAKE")) {
@@ -495,7 +574,7 @@ function displayVerdictResult(data) {
         }
     }
 
-    resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    resultCard.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function copyWhatsAppDebunkCard() {
@@ -509,6 +588,11 @@ function copyWhatsAppDebunkCard() {
     }).catch(() => {
         showToast("Could not access clipboard.", true);
     });
+}
+
+function openWhatsAppDirect() {
+    const text = encodeURIComponent(currentWhatsAppCard || "Check facts before forwarding! Verified with VerifyIt Portal.");
+    window.open(`https://api.whatsapp.com/send?text=${text}`, "_blank");
 }
 
 function copyResultText() {
@@ -533,12 +617,9 @@ function setLoading(isLoading, message = "Analyzing claim...") {
 }
 
 // ============================================================================
-// 7. Trending Debunks Section
+// 7. Trending Debunks Section & Radar Filtering
 // ============================================================================
 async function loadTrendingDebunks() {
-    const container = document.getElementById("debunksContainer");
-    if (!container) return;
-
     let debunks = [];
 
     try {
@@ -557,7 +638,41 @@ async function loadTrendingDebunks() {
         debunks = FALLBACK_DEBUNKS;
     }
 
+    allLoadedDebunks = debunks;
+    renderDebunkCards(allLoadedDebunks);
+}
+
+function filterRadarDebunks(category, btnElement) {
+    document.querySelectorAll(".radar-pill").forEach(p => p.classList.remove("active"));
+    if (btnElement) btnElement.classList.add("active");
+
+    if (category === "All") {
+        renderDebunkCards(allLoadedDebunks);
+        return;
+    }
+
+    const filtered = allLoadedDebunks.filter(item => {
+        const cat = (item.category || "").toLowerCase();
+        if (category === "AI") return cat.includes("ai") || cat.includes("deepfake");
+        if (category === "Health") return cat.includes("health") || cat.includes("medicine");
+        if (category === "Economy") return cat.includes("economy") || cat.includes("bank") || cat.includes("rbi");
+        if (category === "National") return cat.includes("gov") || cat.includes("national") || cat.includes("scheme") || cat.includes("culture");
+        return true;
+    });
+
+    renderDebunkCards(filtered);
+}
+
+function renderDebunkCards(debunks) {
+    const container = document.getElementById("debunksContainer");
+    if (!container) return;
+
     container.innerHTML = "";
+
+    if (!debunks.length) {
+        container.innerHTML = `<div class="empty-wire-state">No debunks found in this category. Showing all items.</div>`;
+        return;
+    }
 
     debunks.forEach(item => {
         const card = document.createElement("div");

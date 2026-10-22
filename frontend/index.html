@@ -78,231 +78,192 @@
     <!-- Main Content -->
     <main class="portal-main-body">
 
-        <!-- HERO & FACT-CHECKING ENGINE WORKSPACE -->
+        <!-- HERO & UNIFIED COMMAND CENTER -->
         <section id="verifier-section" class="section-anchor">
             <div class="hero-header-block">
                 <span class="hero-kicker">INDEPENDENT VERIFICATION ENGINE</span>
                 <h1 class="hero-title">Verify News, Audio & Photos in Seconds</h1>
-                <p class="hero-desc">Cross-reference viral claims, voice forwards, and photo uploads against verified databases. Delivers an objective Truth Score, verified evidence, and clear spoken Telugu explanation.</p>
+                <p class="hero-desc">Cross-examine viral forwards, voice notes, and photo circulars with objective truth scoring, verified citations, and clear spoken Telugu explanations.</p>
             </div>
 
-            <div class="engine-workspace-grid">
-                <!-- Left Column: Ingestion Desk -->
-                <div class="engine-card">
-                    <!-- Segmented Mode Tabs -->
-                    <div class="engine-tabs-header" role="tablist">
-                        <button type="button" class="tab-button active" id="tab-voice" onclick="switchMode('voice')">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                <line x1="12" x2="12" y1="19" y2="22"/>
-                            </svg>
-                            <span>Voice Audio</span>
-                        </button>
-                        <button type="button" class="tab-button" id="tab-text" onclick="switchMode('text')">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10 9 9 9 8 9"/>
-                            </svg>
-                            <span>Text Statement</span>
-                        </button>
-                        <button type="button" class="tab-button" id="tab-image" onclick="switchMode('image')">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
-                                <circle cx="9" cy="9" r="2"/>
-                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
-                            </svg>
-                            <span>Photo</span>
-                        </button>
+            <!-- Unified Omnibar Command Center -->
+            <div class="omnibar-wrapper">
+                <div class="omnibar-card" id="omnibarCard">
+                    <!-- Text / Claim Input Area -->
+                    <div class="omnibar-input-row">
+                        <textarea id="inputText" class="omnibar-textarea" placeholder="Paste a viral WhatsApp forward, statement, speak a claim, or attach a screenshot..." rows="3"></textarea>
                     </div>
 
-                    <!-- MODE 1: Voice Recording Console -->
-                    <div id="mode-voice" class="mode-container active">
-                        <div class="voice-deck">
-                            <div class="record-orb-wrap">
-                                <button id="recordBtn" class="record-orb-button" onclick="toggleRecording()" title="Click to start/stop speaking">
-                                    <svg class="mic-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                        <line x1="12" x2="12" y1="19" y2="22"/>
-                                    </svg>
-                                </button>
-                                <div class="audio-wave-anim" id="waveVisualizer">
-                                    <span></span><span></span><span></span><span></span><span></span>
-                                </div>
+                    <!-- Staged Attachments Tray -->
+                    <div class="omnibar-attachments-tray" id="attachmentsTray">
+                        <!-- Photo Attachment Chip -->
+                        <div id="imagePreviewContainer" class="staged-chip image-chip" style="display: none;">
+                            <img id="imagePreview" alt="Attached photo thumbnail">
+                            <span class="staged-chip-name" id="imageFileName">Photo Attached</span>
+                            <button type="button" class="btn-staged-remove" onclick="removeImageFile(event)" title="Remove image">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Audio Recording Chip -->
+                        <div id="audioPreviewContainer" class="staged-chip audio-chip" style="display: none;">
+                            <div class="audio-chip-icon">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                </svg>
                             </div>
-                            <div class="voice-meta">
-                                <h3 id="recordStatus" class="voice-status-title">Click Microphone to Speak</h3>
-                                <div id="recordTimer" class="voice-timer">00:00</div>
-                                <p class="voice-tip">Speak any rumor or claim in Telugu or English. Transcribes speech accurately and verifies against ground truth.</p>
-                            </div>
-                            <audio id="recordedAudioPlayer" controls class="audio-playback-bar" style="display: none;"></audio>
+                            <span class="staged-chip-name">Voice Recording</span>
+                            <audio id="recordedAudioPlayer" controls class="chip-audio-player"></audio>
+                            <button type="button" class="btn-staged-remove" onclick="removeAudioFile(event)" title="Discard audio">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- MODE 2: Text Statement Box -->
-                    <div id="mode-text" class="mode-container" style="display: none;">
-                        <div class="text-input-field-wrap">
-                            <textarea id="inputText" placeholder="Paste a viral forward, news headline, or claim to fact-check..." rows="4"></textarea>
-                            <div class="text-input-actions">
-                                <button class="btn-clear" onclick="clearTextInput()">Clear</button>
-                                <button class="btn-verify-primary" id="btnCheckText" onclick="submitText()">
-                                    <span>Verify Statement</span>
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </button>
-                            </div>
+                    <!-- Omnibar Action Bar -->
+                    <div class="omnibar-action-bar">
+                        <div class="omnibar-tools-left">
+                            <!-- Hidden Photo Input -->
+                            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif" style="display: none;" onchange="handleImageSelection(event)">
+                            <button type="button" class="btn-omni-tool" onclick="document.getElementById('imageInput').click()" title="Attach photo or circular screenshot">
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                                    <circle cx="9" cy="9" r="2"/>
+                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                                </svg>
+                                <span>Attach Photo</span>
+                            </button>
+
+                            <!-- Voice Dictation Button -->
+                            <button type="button" class="btn-omni-tool btn-voice-dictate" id="recordBtn" onclick="toggleRecording()" title="Speak in Telugu or English">
+                                <svg class="mic-icon-svg" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                    <line x1="12" x2="12" y1="19" y2="22"/>
+                                </svg>
+                                <span id="recordStatus">Speak</span>
+                                <span id="recordTimer" class="inline-timer" style="display: none;">00:00</span>
+                            </button>
+
+                            <!-- Clear Button -->
+                            <button type="button" class="btn-omni-clear" onclick="clearAllInputs()" title="Clear all fields">Clear</button>
                         </div>
 
-                        <!-- One-Click Instant Test Claims -->
-                        <div class="instant-claims-box">
-                            <span class="instant-label">SAMPLE CLAIMS (1-CLICK TEST)</span>
-                            <div class="chips-grid">
-                                <button class="rumor-chip chip-false" onclick="fillSample('మోదీ అమెరికా అధ్యక్షుడు')">
-                                    <span class="chip-dot dot-false"></span>
-                                    <span>మోదీ అమెరికా అధ్యక్షుడు</span>
-                                </button>
-                                <button class="rumor-chip chip-false" onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
-                                    <span class="chip-dot dot-false"></span>
-                                    <span>COVID-19 5G Chips</span>
-                                </button>
-                                <button class="rumor-chip chip-mislead" onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
-                                    <span class="chip-dot dot-mislead"></span>
-                                    <span>Boiled Water Cures Viruses</span>
-                                </button>
-                                <button class="rumor-chip chip-true" onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
-                                    <span class="chip-dot dot-true"></span>
-                                    <span>Chandrayaan-3 Moon Landing</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MODE 3: Photo Upload -->
-                    <div id="mode-image" class="mode-container" style="display: none;">
-                        <div class="image-upload-dropzone" id="imageDropzone">
-                            <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp, image/gif" onchange="handleImageSelection(event)">
-                            <div id="dropzonePrompt" class="dropzone-text-block">
-                                <div class="dropzone-circle-icon">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                        <polyline points="17 8 12 3 7 8"/>
-                                        <line x1="12" y1="3" x2="12" y2="15"/>
-                                    </svg>
-                                </div>
-                                <h4>Drop photo or <span class="link-browse">Browse file</span></h4>
-                                <p>Upload WhatsApp forwards, circulars, or photo graphics</p>
-                                <span class="format-note">Supports PNG, JPG, WebP</span>
-                            </div>
-                            <div id="imagePreviewContainer" class="image-preview-wrapper" style="display: none;">
-                                <img id="imagePreview" alt="Upload preview">
-                                <button class="btn-remove-thumb" onclick="removeImageFile(event)" title="Remove image">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="caption-input-box">
-                            <input type="text" id="captionInput" placeholder="Optional question or context (e.g. 'Is this circular genuine?')">
-                        </div>
-
-                        <button class="btn-verify-primary full-width" id="btnCheckImage" onclick="uploadImage()">
-                            <span>Analyze Photo</span>
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Loading Indicator -->
-                    <div id="loadingIndicator" class="verification-loader" style="display: none;">
-                        <div class="spinner-circle"></div>
-                        <div class="loader-labels">
-                            <strong id="loadingTitle">Cross-Checking Knowledge Bases...</strong>
-                            <span id="loadingMessage">Evaluating claims, computing truth score, and synthesizing Telugu audio...</span>
+                        <!-- Submit Verification -->
+                        <div class="omnibar-tools-right">
+                            <button type="button" class="btn-verify-primary" id="btnVerifyOmni" onclick="submitOmnibar()">
+                                <span>Verify Claim</span>
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Truth-O-Meter Verdict Display -->
-                <div class="verdict-display-wrapper">
-                    <!-- Standby State -->
-                    <div id="resultPlaceholder" class="verdict-placeholder-card">
-                        <div class="meter-illustration-wrap">
-                            <svg class="standby-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="m12 6 3 6-3 6-3-6z"/>
-                                <circle cx="12" cy="12" r="2"/>
-                            </svg>
+                <!-- Instant Viral Rumor Hot-Chips -->
+                <div class="omnibar-chips-row">
+                    <span class="chips-label">TRY SAMPLE CLAIMS:</span>
+                    <div class="chips-grid">
+                        <button class="rumor-chip chip-false" onclick="fillSample('మోదీ అమెరికా అధ్యక్షుడు')">
+                            <span class="chip-dot dot-false"></span>
+                            <span>మోదీ అమెరికా అధ్యక్షుడు</span>
+                        </button>
+                        <button class="rumor-chip chip-false" onclick="fillSample('COVID-19 vaccines contain 5G tracking microchips')">
+                            <span class="chip-dot dot-false"></span>
+                            <span>COVID-19 5G Chips</span>
+                        </button>
+                        <button class="rumor-chip chip-mislead" onclick="fillSample('Drinking hot boiled water kills all stomach viruses and cures COVID')">
+                            <span class="chip-dot dot-mislead"></span>
+                            <span>Boiled Water Cures Viruses</span>
+                        </button>
+                        <button class="rumor-chip chip-true" onclick="fillSample('ISRO successfully launched the Chandrayaan-3 mission to the Moon south pole')">
+                            <span class="chip-dot dot-true"></span>
+                            <span>Chandrayaan-3 Moon Landing</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading State Banner -->
+                <div id="loadingIndicator" class="verification-loader" style="display: none;">
+                    <div class="spinner-circle"></div>
+                    <div class="loader-labels">
+                        <strong id="loadingTitle">Cross-Checking Knowledge Bases...</strong>
+                        <span id="loadingMessage">Evaluating claims, computing truth score, and synthesizing Telugu audio...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VERIFICATION DOSSIER (ACTIVE RESULT) -->
+            <div id="resultCard" class="verdict-active-dossier" style="display: none;">
+                <!-- Status Ribbon Banner -->
+                <div class="verdict-header-banner" id="verdictBanner">
+                    <div class="verdict-header-left">
+                        <span class="verdict-pre-tag" id="verdictTag">VERIFICATION FINDING</span>
+                        <h2 class="verdict-headline" id="verdictTitle">FALSE / MISINFORMATION</h2>
+                        <div class="truth-progress-bar-wrap">
+                            <div class="truth-progress-bar" id="truthProgressBar" style="width: 0%;"></div>
                         </div>
-                        <h3>Verification Desk Standby</h3>
-                        <p>Submit a voice clip, statement, or screenshot to view verified findings, truth rating, and spoken Telugu analysis.</p>
-                        <div class="placeholder-sample-hint">Tip: Click any <strong>Sample Claim</strong> on the left for a 1-click demonstration.</div>
+                    </div>
+                    <div class="confidence-badge-block" id="truthScoreBlock">
+                        <span class="conf-pct" id="truthScore">0%</span>
+                        <span class="conf-lbl" id="truthScoreLabel">TRUTH SCORE</span>
+                        <span class="conf-sub" id="certaintySub">Certainty: 95%</span>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div class="executive-summary-strip">
+                    <span class="summary-kicker">EXECUTIVE SUMMARY</span>
+                    <p id="englishSummaryText">Loading summary...</p>
+                </div>
+
+                <!-- Transcribed Speech Snippet (if voice was used) -->
+                <div id="transcriptionSnippet" class="transcription-strip" style="display: none;">
+                    <span class="strip-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        </svg>
+                    </span>
+                    <div>
+                        <span class="transcribe-label">Transcribed Speech:</span>
+                        <strong id="transcriptionContent"></strong>
+                    </div>
+                </div>
+
+                <!-- Perspective Split Tabs: Telugu Citizen View vs. Investigative Evidence -->
+                <div class="dossier-perspectives">
+                    <div class="dossier-tabs-nav" role="tablist">
+                        <button type="button" class="dossier-tab-btn active" id="tab-dossier-telugu" onclick="switchDossierTab('telugu')">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                            </svg>
+                            <span>తెలుగు సారాంశం & వాట్సాప్ కార్డ్</span>
+                        </button>
+                        <button type="button" class="dossier-tab-btn" id="tab-dossier-evidence" onclick="switchDossierTab('evidence')">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span>Evidence & Citations</span>
+                        </button>
                     </div>
 
-                    <!-- Active Verdict Card -->
-                    <div id="resultCard" class="verdict-active-card" style="display: none;">
-                        <!-- Status Banner -->
-                        <div class="verdict-header-banner" id="verdictBanner">
-                            <div class="verdict-header-left">
-                                <span class="verdict-pre-tag" id="verdictTag">VERIFICATION FINDING</span>
-                                <h2 class="verdict-headline" id="verdictTitle">FALSE / MISINFORMATION</h2>
-                                <div class="truth-progress-bar-wrap">
-                                    <div class="truth-progress-bar" id="truthProgressBar" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                            <div class="confidence-badge-block" id="truthScoreBlock">
-                                <span class="conf-pct" id="truthScore">0%</span>
-                                <span class="conf-lbl" id="truthScoreLabel">TRUTH SCORE</span>
-                                <span class="conf-sub" id="certaintySub">Certainty: 95%</span>
-                            </div>
-                        </div>
-
-                        <!-- 1-Sentence English Summary -->
-                        <div class="executive-summary-strip">
-                            <span class="summary-kicker">EXECUTIVE SUMMARY</span>
-                            <p id="englishSummaryText">Loading summary...</p>
-                        </div>
-
-                        <!-- Voice Transcription Snippet -->
-                        <div id="transcriptionSnippet" class="transcription-strip" style="display: none;">
-                            <span class="strip-icon">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                                </svg>
-                            </span>
-                            <div>
-                                <span class="transcribe-label">Transcribed Speech:</span>
-                                <strong id="transcriptionContent"></strong>
-                            </div>
-                        </div>
-
-                        <!-- Telugu Detailed Explanation -->
-                        <div class="verdict-body-block">
-                            <div class="verdict-body-header">
-                                <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Telugu Analysis)</span>
-                                <button class="btn-copy-verdict" onclick="copyResultText()">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                    <span>Copy Analysis</span>
-                                </button>
-                            </div>
-                            <p id="resultText" class="telugu-body-content"></p>
-                        </div>
-
-                        <!-- Audio Spoken Verdict -->
+                    <!-- VIEW 1: Telugu Citizen View & WhatsApp Kit -->
+                    <div id="dossier-view-telugu" class="dossier-panel active">
+                        <!-- Custom Spoken Verdict Player -->
                         <div id="audioVerdictWrap" class="audio-verdict-player" style="display: none;">
                             <div class="audio-player-meta">
                                 <div class="audio-avatar">
@@ -313,31 +274,84 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <strong>Listen to Spoken Verdict (Telugu)</strong>
-                                    <span>Synthesized audio explanation for accessibility and audio sharing</span>
+                                    <strong>Listen to Spoken Verdict (తెలుగు ఆడియో)</strong>
+                                    <span>Synthesized vernacular audio debunker ready for group listening</span>
                                 </div>
                             </div>
                             <audio id="verdictAudioPlayer" controls class="native-audio-player"></audio>
                         </div>
 
-                        <!-- RAG Wire Citations -->
-                        <div id="ragCitationsWrap" class="rag-citations-strip" style="display: none;">
-                            <span class="citations-label">Ground-Truth Citations:</span>
+                        <!-- Telugu Analysis Paragraph -->
+                        <div class="verdict-body-block">
+                            <div class="verdict-body-header">
+                                <span class="telugu-section-label">వాస్తవ విశ్లేషణ (Telugu Analysis)</span>
+                                <button class="btn-copy-verdict" onclick="copyResultText()">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy Telugu Text</span>
+                                </button>
+                            </div>
+                            <p id="resultText" class="telugu-body-content"></p>
+                        </div>
+
+                        <!-- WhatsApp Defense Kit Preview -->
+                        <div class="whatsapp-kit-box">
+                            <div class="whatsapp-kit-header">
+                                <div class="whatsapp-kit-brand">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366">
+                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
+                                    </svg>
+                                    <strong>1-Click WhatsApp Debunk Card</strong>
+                                </div>
+                                <span class="whatsapp-kit-sub">Ready to paste into family & community groups</span>
+                            </div>
+                            <div class="whatsapp-preview-card" id="whatsappCardPreview">
+                                <div class="whatsapp-preview-content" id="whatsappPreviewContent">
+                                    [FACT CHECK REPORT]<br>
+                                    Verdict: Evaluating...<br>
+                                    Do not forward unverified claims.
+                                </div>
+                            </div>
+                            <div class="whatsapp-kit-actions">
+                                <button class="btn-whatsapp-debunk" id="btnWhatsappCopy" onclick="copyWhatsAppDebunkCard()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
+                                    </svg>
+                                    <span>Copy WhatsApp Debunk Card</span>
+                                </button>
+                                <button class="btn-clear" onclick="openWhatsAppDirect()" title="Open WhatsApp Web directly">
+                                    <span>Open WhatsApp Web</span>
+                                    <span>↗</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VIEW 2: Investigative Evidence & Sources -->
+                    <div id="dossier-view-evidence" class="dossier-panel" style="display: none;">
+                        <!-- Ground Truth Citations -->
+                        <div id="ragCitationsWrap" class="rag-citations-strip">
+                            <span class="citations-label">Ground-Truth Fact-Checking Bureaus:</span>
                             <div class="citations-chips-container" id="citationsList"></div>
                         </div>
 
-                        <!-- Defense Strip & WhatsApp Copy -->
+                        <!-- Actionable Defense Advice -->
                         <div class="actionable-defense-strip" id="actionableDefenseWrap">
                             <div class="defense-meta">
-                                <span class="defense-kicker">ACTIONABLE ADVICE</span>
+                                <span class="defense-kicker">COMMUNITY DEFENSE ADVICE</span>
                                 <p class="defense-text" id="actionAdviceText">Do not forward unverified claims. Confirm reporting with independent news bureaus before sharing.</p>
                             </div>
-                            <button class="btn-whatsapp-debunk" id="btnWhatsappCopy" onclick="copyWhatsAppDebunkCard()">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.123-.526-1.782-.754-2.894-2.597-2.981-2.716-.089-.12-1.002-1.332-1.002-2.54 0-1.209.637-1.802.864-2.043.226-.24.493-.301.657-.301.164 0 .329.002.473.01.152.008.356-.058.556.423.206.494.704 1.716.766 1.84.062.125.103.271.021.436-.082.164-.124.267-.247.411-.123.144-.258.322-.369.432-.123.123-.252.257-.108.504.144.246.64 1.055 1.374 1.708.946.842 1.745 1.103 1.992 1.226.247.123.391.103.535-.062.144-.165.617-.719.782-.966.164-.247.329-.206.555-.123.226.082 1.44.679 1.687.802.247.123.411.185.473.288.062.103.062.597-.082 1.002z"/>
-                                </svg>
-                                <span>Copy WhatsApp Card</span>
-                            </button>
+                        </div>
+
+                        <!-- Link to Forensic Academy -->
+                        <div class="forensic-callout-strip">
+                            <div>
+                                <strong>Suspect this photo or voice note is an AI synthetic clone?</strong>
+                                <span>Inspect optical reflections, breathing pauses, and serial numbers.</span>
+                            </div>
+                            <a href="forensics.html" class="btn-verify-chip">Open Forensic Academy ↗</a>
                         </div>
                     </div>
                 </div>
@@ -351,6 +365,13 @@
                     <span class="kicker">MISINFORMATION RADAR</span>
                     <h2 class="section-heading">Trending Debunked Claims</h2>
                     <p class="section-sub">Viral stories investigated by independent fact-checking bureaus.</p>
+                </div>
+                <div class="radar-category-pills" id="radarCategoryPills">
+                    <button type="button" class="radar-pill active" onclick="filterRadarDebunks('All', this)">All Topics</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('AI', this)">AI & Deepfakes</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('Health', this)">Health</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('Economy', this)">Economy & Banks</button>
+                    <button type="button" class="radar-pill" onclick="filterRadarDebunks('National', this)">Gov Schemes</button>
                 </div>
             </div>
 
