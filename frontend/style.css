@@ -286,7 +286,8 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    flex-wrap: nowrap;
 }
 
 .nav-link {
@@ -297,6 +298,7 @@ body {
     padding: 8px 14px;
     border-radius: var(--radius-sm);
     transition: var(--transition);
+    white-space: nowrap;
 }
 
 .nav-link:hover {
