@@ -1,160 +1,141 @@
-# VerifyIt — 100% Free AI Truth Radar & Fact-Checking Portal
+# VerifyIt — Fact-Checking & Misinformation Detection Portal
 
-An open-source, multi-modal verification platform designed to detect misinformation, fake news, and manipulated media across voice audio, text statements, and photos. Built entirely on **100% free and open services** with zero subscription or infrastructure costs.
+An open-source verification platform designed to detect disinformation, manipulated media, and viral rumors across text statements, voice notes, and images. Built with FastAPI, Google Gemini, and automated retrieval-augmented generation (RAG) across verified fact-checking bureaus.
 
-[![Python](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-009688.svg)](https://fastapi.tiangolo.com/)
-[![Gemini](https://img.shields.io/badge/AI%20Engine-Google%20Gemini%202.5%20Flash%20(Free)-4285F4.svg)](https://aistudio.google.com/)
-[![Database](https://img.shields.io/badge/Database-PostgreSQL%20%2F%20SQLite-336791.svg)](https://neon.tech/)
-[![Hosting](https://img.shields.io/badge/Hosting-Render%20Free%20Tier-46E3B7.svg)](https://render.com/)
-[![Telegram](https://img.shields.io/badge/Telegram%20Bot-Free-26A5E4.svg)](https://telegram.org/)
+[![Gemini](https://img.shields.io/badge/AI%20Engine-Google%20Gemini%202.5%20Flash-4285F4.svg)](https://aistudio.google.com/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL%20-336791.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## Live Deployment
+## Key Features
 
-- **Web Portal:** [https://proverify.onrender.com/](https://proverify.onrender.com/)
-- **Forensic Academy:** [https://proverify.onrender.com/forensics](https://proverify.onrender.com/forensics)
-- **Telegram Assistant:** `@VerifyItFactCheckBot`
+### 1. Multi-Modal Verification Desk
 
----
+- **Voice Audio:** Speak claims in Telugu or English. Transcribed and fact-checked via multi-modal audio understanding.
+- **Text Statements:** Cross-examine viral WhatsApp forwards, news headlines, and political claims.
+- **Photo & Document Inspection:** Upload screenshots, circulars, or images to detect manipulation and context discrepancies.
 
-## The Reality: What Is ACTUALLY Powering This App
+### 2. Calibrated Truth Scoring & Spoken Explanations
 
-To be completely transparent, here is the exact tech stack executing in production:
+- Objective veracity classifications: `TRUE`, `FALSE`, `MISLEADING`, and `UNVERIFIED` with calibrated truth scores (0–100%).
+- Bilingual debunks: Concise English executive summary paired with natural Telugu conversational explanations.
+- Spoken audio playback in Telugu for regional accessibility.
+- Instant 1-click formatted debunks ready to forward directly to chat groups.
 
-| Component                              | What is Actually Used                               | Cost                                  | Why / Details                                                                                           |
-| -------------------------------------- | --------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| **AI Reasoning & Fact-Checking** | **Google Gemini 2.5 Flash**                   | **$0.00** (Free Tier)           | Structured JSON verification and claim evaluation via `GEMINI_API_KEY`. OpenAI is **not** used. |
-| **Voice Audio Transcription**    | **Gemini 2.5 Flash Multimodal Audio**         | **$0.00** (Free Tier)           | Audio bytes are sent directly to Gemini's native audio understanding. No Whisper or paid API.           |
-| **Photo / Visual Analysis**      | **Gemini 2.5 Flash Vision**                   | **$0.00** (Free Tier)           | Inspects circulars, viral claims, and photo graphics for authenticity.                                  |
-| **Vernacular Speech Synthesis**  | **gTTS (Google Text-to-Speech)**              | **$0.00** (Free Python Library) | Generates spoken Telugu voice debunks without any Google Cloud billing or credentials.                  |
-| **Fact-Check RSS Feeds**         | **Feedparser & HTTPX**                        | **$0.00** (Public RSS)          | Direct scraping of live RSS feeds from BOOM Live, Alt News, FactCheck.org, Snopes, Vishvas News.        |
-| **Web Server & Hosting**         | **FastAPI on Render Free Tier**               | **$0.00**                       | Python 3.13 ASGI server running on Render.                                                              |
-| **Database**                     | **Neon.tech Serverless Postgres (or SQLite)** | **$0.00**                       | Replaces Render's expired 30-day database with a permanent free cloud PostgreSQL database.              |
-| **Mobile Bot**                   | **python-telegram-bot**                       | **$0.00**                       | Free bot token via `@BotFather`.                                                                      |
+### 3. Swipe The Fake — Interactive Verification Game (`game.html`)
 
----
+- Rapid-fire 10-round educational game challenging users to spot misinformation.
+- Swipe or tap (Left = Fake, Right = Real) across a rotating bank of 100+ viral Indian and global claims.
+- Real-time scorecards, tactile feedback, and streak tracking saved in local storage.
 
-## The Database :
+### 4. Spot The Fake — Forensic Field Manual (`forensics.html`)
 
-### Neon.tech
+A practical, 60-second inspection guide for citizens and journalists:
 
- connect to **[Neon Serverless Postgres](https://neon.tech/)**:
+- **Video Deepfakes:** Ocular corneal reflections, plosive lip-sync latency, and boundary warping.
+- **Voice Clones:** Pulmonary breath gaps, prosodic cadence flattening, and ambient noise gating.
+- **Photos & Circulars:** Font antialiasing mismatches, government gazette tracking numbers, and urgency triggers.
+- **S.I.F.T. Protocol:** 4-step framework (`Stop`, `Investigate Source`, `Find Better Coverage`, `Trace to Context`).
+- **OSINT Tools:** Free citizen tools including TinEye, InVID WeVerify, FotoForensics, and Hive AI.
 
-- **Cost:** 100% Free forever (0.5 GB storage, generous compute).
-- **No 30-Day Expiration:** Your database never expires or deletes itself.
-- **Drop-In Compatibility:** Provides a standard `postgresql://...` connection string that works immediately with the existing `backend/app.py` code.
+### 5. Automated Fact-Checking Wire (Live RAG)
 
-#### How to Connect in 2 Minutes:
+- Continuously aggregates and indexes verified debunks from accredited IFCN sources (BOOM Live, Alt News, FactCheck.org, Snopes, Vishvas News).
+- Automatically cross-references claims against local indices before AI evaluation to prevent hallucinations.
 
-1. Sign up for free at [neon.tech](https://neon.tech/) (using GitHub or Google).
-2. Create a free project (e.g., `verifyit-db`).
-3. Copy the **Connection String** provided on the Neon dashboard:
-   ```text
-   postgresql://username:password@ep-xyz.us-east-2.aws.neon.tech/neondb?sslmode=require
-   ```
-4. In your [Render Dashboard](https://dashboard.render.com/) under your **VerifyIt Web Service** -> **Environment**:
-   - Set `DATABASE_URL` = `<your_neon_connection_string>`
-5. Click **Save Changes**. On restart, `backend/app.py` automatically initializes the `sources` and `articles` tables and syncs verified news!
+### 6. Mobile Telegram Assistant
+
+- Submit forwarded voice notes, images, or text queries directly to the bot (`@Verifyitprobot`) for real-time verification and audio notes on mobile.
 
 ---
 
-## Features
+## Architecture & Tech Stack
 
-### 1. Multi-Modal Ingestion Desk
-
-- **Voice Audio:** Speak claims in Telugu or English. Gemini transcribes and verifies the statement.
-- **Text Statement:** Paste viral WhatsApp forwards, headlines, or claims.
-- **Photo Upload:** Upload photos, news circulars, or social media screenshots.
-
-### 2. Objective Truth-O-Meter & Spoken Telugu Verdict
-
-- Calibrated veracity rating (`TRUE`, `FALSE`, `MISLEADING`, `UNVERIFIED`).
-- Executive summary in English + detailed explanation in conversational Telugu.
-- Spoken audio playback in Telugu for accessibility in regional groups.
-- 1-Click WhatsApp Debunk Card ready to copy and paste into group chats.
-
-### 3. Verified Fact-Checking Wire (Live RAG)
-
-- Continuously aggregates and indexes verified debunks from certified IFCN fact-checking portals:
-  - **BOOM Live** (Fast Check)
-  - **Alt News**
-  - **FactCheck.org**
-  - **Snopes**
-  - **Vishvas News**
-- User queries are cross-referenced against this local database before running AI evaluation.
-
-### 4. Forensic Academy (`forensics.html`)
-
-An interactive citizen field manual on spotting AI deepfakes and manipulated media:
-
-- **Module 01:** Frame-by-Frame Video Deepfake Autopsy (Ocular reflections, labial sync, boundary distortion).
-- **Module 02:** Synthetic Voice Clone Detection (Breath gaps, emotional monotone, ambient noise discontinuities).
-- **Module 03:** Manipulated Photo & Circular Autopsy (Typography mismatch, gazette file numbers, urgency signals).
-- **Module 04:** The 4-Step S.I.F.T. Verification Protocol (`STOP`, `INVESTIGATE`, `FIND`, `TRACE`).
-- **Module 05:** Free Citizen Forensic Tools Directory (TinEye, InVID WeVerify, FotoForensics, Hive AI).
+| Layer                           | Technology              | Details                                                                 |
+| ------------------------------- | ----------------------- | ----------------------------------------------------------------------- |
+| **Backend API**           | FastAPI (Python 3.13)   | Asynchronous REST endpoints, CORS middleware, static file serving       |
+| **AI Reasoning & Vision** | Google Gemini 2.5 Flash | Multimodal evaluation across text, image bytes, and raw audio           |
+| **Database**              | PostgreSQL / SQLite     | Stores RSS feed registry and verified fact-checking article cache       |
+| **Text-to-Speech**        | gTTS / Google Cloud TTS | Generates natural Telugu audio debunks                                  |
+| **Wire Scraping**         | Feedparser & HTTPX      | Automated background synchronization of certified debunk feeds          |
+| **Frontend**              | Vanilla HTML5, CSS3, JS | Responsive editorial UI with Lucide iconography, zero framework lock-in |
 
 ---
 
-## Local Setup (100% Free)
+## Quickstart & Local Setup
 
-### 1. Clone & Set Up Virtual Environment
+### 1. Prerequisites
+
+- Python 3.11+ (Python 3.13 recommended)
+- Git
+
+### 2. Clone & Setup Environment
 
 ```bash
 git clone https://github.com/Kutamsa/Misinformation_Detection_Portal.git
 cd Misinformation_Detection_Portal
 
+# Create virtual environment
 python -m venv venv
-# Windows
+
+# Activate virtual environment
+# Windows:
 venv\Scripts\activate
-# macOS/Linux
+# macOS/Linux:
 source venv/bin/activate
 
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Configure Environment (`.env`)
+### 3. Environment Configuration (`.env`)
 
 Create a `.env` file in the project root:
 
 ```env
-# 1. Google Gemini API Key (100% Free at https://aistudio.google.com/app/apikey)
+# Google Gemini API Key (Required - get free at https://aistudio.google.com/)
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# 2. Database URL (Optional: leave empty to use local SQLite, or paste Neon Postgres URL)
+# Database URL (Optional: defaults to local SQLite if left empty)
 DATABASE_URL=
 
-# 3. Telegram Bot Token (Optional: get free from @BotFather on Telegram)
+# Telegram Bot Token (Optional: from @BotFather on Telegram)
 TELEGRAM_BOT_TOKEN=
 ```
 
-### 3. Run the Server
+### 4. Run the Application
 
 ```bash
 python -m uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Visit `http://127.0.0.1:8000/` in your browser.
+Open your browser at:
+
+- **Verification Desk:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- **Swipe Game:** [http://127.0.0.1:8000/game.html](http://127.0.0.1:8000/game.html)
+- **Spot The Fake Guide:** [http://127.0.0.1:8000/forensics.html](http://127.0.0.1:8000/forensics.html)
 
 ---
 
-## API Endpoints
+## API Reference
 
-| Method   | Endpoint                  | Description                                                |
-| -------- | ------------------------- | ---------------------------------------------------------- |
-| `POST` | `/factcheck/text`       | Verifies a text statement against RAG database and Gemini. |
-| `POST` | `/factcheck/audio`      | Transcribes and verifies an uploaded audio recording.      |
-| `POST` | `/factcheck/image`      | Inspects an uploaded photo or document graphic.            |
-| `GET`  | `/api/trending-debunks` | Returns curated viral debunks with fallback data.          |
-| `GET`  | `/news/sources`         | Lists all active fact-checking RSS wire sources.           |
-| `POST` | `/news/add_source`      | Adds a custom fact-checking RSS feed URL.                  |
-| `POST` | `/news/remove_source`   | Deletes an RSS feed source by ID.                          |
-| `GET`  | `/news/articles`        | Returns paginated verified articles.                       |
-| `GET`  | `/health`               | Application health check.                                  |
+| Method   | Endpoint                  | Description                                               |
+| -------- | ------------------------- | --------------------------------------------------------- |
+| `POST` | `/factcheck/text`       | Verifies a text claim against the RAG database and Gemini |
+| `POST` | `/factcheck/audio`      | Transcribes and verifies uploaded audio recordings        |
+| `POST` | `/factcheck/image`      | Analyzes uploaded images, news screenshots, or circulars  |
+| `GET`  | `/api/trending-debunks` | Curated live and trending debunked claims                 |
+| `GET`  | `/news/sources`         | Lists active certified fact-checking RSS sources          |
+| `POST` | `/news/add_source`      | Registers a new fact-checking RSS feed source             |
+| `POST` | `/news/remove_source`   | Removes a fact-checking feed source by ID                 |
+| `GET`  | `/news/articles`        | Returns paginated verified articles from local cache      |
+| `GET`  | `/health`               | Service health status check                               |
 
 ---
 
 ## License
 
-MIT License · Open Fact-Checking Project for accessible public truth.
+MIT License — Open-source and accessible for public media literacy and verification.

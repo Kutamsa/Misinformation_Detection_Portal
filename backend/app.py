@@ -980,7 +980,7 @@ async def lifespan(app: FastAPI):
                 authorized_ids=AUTHORIZED_TELEGRAM_USER_IDS,
                 perform_image_factcheck_func=perform_image_factcheck,
                 transcribe_audio_func=transcribe_audio,
-                perform_text_factcheck_func=perform_factcheck,
+                perform_text_factcheck_func=perform_text_factcheck,
                 gemini_api_key=GEMINI_API_KEY,
             )
             print("[Telegram] Bot initialized.")
@@ -1033,6 +1033,10 @@ def serve_root_css():
 @app.get("/script.js")
 def serve_root_js():
     return FileResponse(os.path.join(FRONTEND_DIR, "script.js"))
+
+@app.get("/logo.png")
+def serve_root_logo():
+    return FileResponse(os.path.join(FRONTEND_DIR, "logo.png"))
 
 @app.head("/")
 @app.get("/health")
