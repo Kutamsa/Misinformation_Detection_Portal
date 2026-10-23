@@ -329,6 +329,40 @@ body {
 }
 
 .btn-telegram-header {
+    background: #24A1DE;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(36, 161, 222, 0.28);
+    border: none;
+}
+
+.btn-telegram-header:hover {
+    background: #1E96D1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(36, 161, 222, 0.42);
+    color: #FFFFFF;
+}
+
+.btn-telegram-header:active {
+    transform: translateY(0);
+}
+
+.btn-telegram-header svg {
+    flex-shrink: 0;
+}
+
+.btn-header-cta {
     background: var(--brand-primary);
     color: #FFFFFF;
     text-decoration: none;
@@ -340,12 +374,14 @@ body {
     align-items: center;
     gap: 8px;
     transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.btn-telegram-header:hover {
-    background: #0088cc;
+.btn-header-cta:hover {
+    background: #000000;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.25);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
 
 .mobile-menu-btn {
@@ -379,6 +415,28 @@ body {
 
     .mobile-menu-btn {
         display: flex;
+    }
+}
+
+@media (max-width: 680px) {
+    .btn-telegram-header {
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: var(--radius-sm);
+        justify-content: center;
+        gap: 0;
+    }
+
+    .btn-telegram-header .btn-telegram-text {
+        display: none;
+    }
+
+    .btn-telegram-header svg {
+        width: 18px;
+        height: 18px;
+        margin: 0;
     }
 }
 
@@ -499,13 +557,14 @@ body {
     outline: none;
     resize: none;
     font-family: var(--font-ui);
-    font-size: 1.18rem;
-    line-height: 1.55;
+    font-size: 1.15rem;
+    line-height: 1.6;
     color: var(--text-primary);
     background: transparent;
-    padding: 6px 46px 10px 4px;
-    min-height: 84px;
+    padding: 16px 54px 16px 14px;
+    min-height: 140px;
     box-sizing: border-box;
+    display: block;
 }
 
 .omnibar-textarea::placeholder {
@@ -514,17 +573,18 @@ body {
     line-height: 1.5;
 }
 
-/* Embedded Mic Button Inside Text Box */
+/* Embedded Mic Button Inside Text Box - Vertically Centered at Middle */
 .btn-mic-inside {
     position: absolute;
-    right: 6px;
-    bottom: 8px;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
     background: #F1F5F9;
     border: 1px solid var(--border-subtle);
     color: var(--text-muted);
-    height: 34px;
-    min-width: 34px;
-    padding: 0 8px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0 10px;
     border-radius: var(--radius-full);
     display: inline-flex;
     align-items: center;
@@ -539,15 +599,30 @@ body {
     background: #FFFFFF;
     color: var(--brand-blue);
     border-color: var(--brand-blue);
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
-    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.18);
+    transform: translateY(-50%) scale(1.06);
 }
 
 .btn-mic-inside.recording {
     background: #FEE2E2;
     border-color: #F87171;
     color: #DC2626;
-    animation: livePulse 1.4s infinite ease-in-out;
+    animation: livePulseCenter 1.4s infinite ease-in-out;
+}
+
+@keyframes livePulseCenter {
+    0% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.06);
+        box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+    }
+    100% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
 }
 
 .mic-inside-timer {
@@ -1952,49 +2027,71 @@ body {
 }
 
 .badge-verdict {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: var(--radius-xs);
-    letter-spacing: 0.5px;
+    font-family: var(--font-ui);
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.01em;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    line-height: 1.2;
 }
 
 .status-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .badge-verdict.badge-false {
-    background: var(--status-false-bg);
-    color: var(--status-false);
-    border: 1px solid var(--status-false-border);
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
+}
+.badge-verdict.badge-false .status-dot {
+    background: #DC2626;
 }
 
 .badge-verdict.badge-mislead {
-    background: var(--status-mislead-bg);
-    color: var(--status-mislead);
-    border: 1px solid var(--status-mislead-border);
+    background: #FFFBEB;
+    color: #D97706;
+    border: 1px solid #FDE68A;
+}
+.badge-verdict.badge-mislead .status-dot {
+    background: #D97706;
 }
 
 .badge-verdict.badge-true {
-    background: var(--status-true-bg);
-    color: var(--status-true);
-    border: 1px solid var(--status-true-border);
+    background: #F0FDF4;
+    color: #16A34A;
+    border: 1px solid #BBF7D0;
+}
+.badge-verdict.badge-true .status-dot {
+    background: #16A34A;
 }
 
-.debunk-origin-pill {
-    font-size: 0.7rem;
+.badge-verdict.badge-ai {
+    background: #F5F3FF;
+    color: #7C3AED;
+    border: 1px solid #DDD6FE;
+}
+.badge-verdict.badge-ai .status-dot {
+    background: #7C3AED;
+}
+
+.debunk-topic-pill {
+    font-size: 0.73rem;
     color: var(--text-muted);
-    font-family: var(--font-mono);
-    background: var(--bg-subtle);
-    padding: 2px 7px;
-    border-radius: var(--radius-xs);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    background: #F8FAFC;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
     border: 1px solid var(--border-subtle);
+    white-space: nowrap;
 }
 
 .debunk-claim-text {
@@ -2026,11 +2123,14 @@ body {
     padding-top: 12px;
 }
 
-.debunk-category {
-    font-size: 0.75rem;
-    font-weight: 600;
+.debunk-meta-date {
+    font-size: 0.74rem;
+    font-weight: 500;
     color: var(--text-muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .debunk-card-actions {
@@ -2934,22 +3034,24 @@ body {
     }
 
     .omnibar-textarea {
-        font-size: 1.16rem;
-        line-height: 1.6;
-        padding-right: 48px;
-        min-height: 85px;
+        font-size: 1.1rem;
+        line-height: 1.55;
+        padding: 14px 50px 14px 12px;
+        min-height: 130px;
     }
 
     .omnibar-textarea::placeholder {
-        font-size: 1.05rem;
+        font-size: 1.02rem;
         line-height: 1.5;
     }
 
     .btn-mic-inside {
         height: 38px;
         min-width: 38px;
-        right: 4px;
-        bottom: 6px;
+        right: 10px;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
     }
 
     .omnibar-action-bar {

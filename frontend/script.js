@@ -20,35 +20,35 @@ const FALLBACK_DEBUNKS = [
         id: 1,
         claim: "Viral claim that UNESCO declared the Indian National Anthem as the 'Best in the World'",
         verdict: "FALSE",
-        verdict_badge: "DEBUNKED",
+        verdict_badge: "False Claim",
         truth_score: 0,
         confidence: 99,
         category: "National / Culture",
-        origin: "WhatsApp Forward",
+        origin: "Fact-Checked",
         summary: "UNESCO confirmed it has never held such competitions or declarations. This is a recurring hoax circulating since 2008.",
-        date: "Updated Recently"
+        date: "Debunked"
     },
     {
         id: 2,
         claim: "Photo of Pope Francis walking the streets wearing a luxury Balenciaga white puffer jacket",
         verdict: "FALSE",
-        verdict_badge: "AI-GENERATED",
+        verdict_badge: "AI Generated Media",
         truth_score: 0,
         confidence: 98,
-        category: "AI Imagery & Deepfakes",
-        origin: "Social Media Viral",
+        category: "AI & Deepfakes",
+        origin: "Synthetic Media",
         summary: "The image was generated using Midjourney v5 by a digital creator. Physical inspection reveals distorted glasses and blurred earlobes.",
-        date: "Trending"
+        date: "Manipulated"
     },
     {
         id: 3,
         claim: "RBI to introduce new ₹1000 notes embedded with GPS nano-chips for satellite tracking",
         verdict: "FALSE",
-        verdict_badge: "FABRICATED",
+        verdict_badge: "Fabricated Claim",
         truth_score: 0,
         confidence: 97,
         category: "Banking & Economy",
-        origin: "Viral Forward",
+        origin: "Fact-Checked",
         summary: "The Reserve Bank of India has repeatedly clarified that no such currency is being printed and banknotes do not contain nano-chips.",
         date: "Debunked"
     },
@@ -56,19 +56,19 @@ const FALLBACK_DEBUNKS = [
         id: 4,
         claim: "Drinking boiled ginger, garlic, and turmeric water completely cures chronic asthma & lung infections",
         verdict: "MISLEADING",
-        verdict_badge: "MISLEADING",
+        verdict_badge: "Misleading Medical Claim",
         truth_score: 40,
         confidence: 92,
         category: "Health & Medicine",
-        origin: "Video Reels",
+        origin: "Medical Advisory",
         summary: "These ingredients offer mild anti-inflammatory benefits but cannot cure asthma or replace prescribed clinical treatment.",
-        date: "Medical Warning"
+        date: "Health Warning"
     },
     {
         id: 5,
         claim: "ISRO successfully landed Chandrayaan-3 Vikram Lander near the Lunar South Pole",
         verdict: "TRUE",
-        verdict_badge: "VERIFIED FACT",
+        verdict_badge: "Verified Fact",
         truth_score: 100,
         confidence: 100,
         category: "Science & Space",
@@ -971,16 +971,32 @@ function renderDebunkCards(debunks) {
         let badgeClass = "badge-false";
         let dotClass = "dot-false";
         let cardBorderClass = "border-false";
-        let confidencePct = item.confidence || 95;
 
-        if (item.verdict === "TRUE") {
+        // Clean & normalize verdict badge text
+        let displayBadge = item.verdict_badge || item.verdict || "Debunked";
+        const upper = displayBadge.toUpperCase();
+        if (upper.includes("PANTS ON FIRE")) {
+            displayBadge = "False Claim";
+        } else if (upper.includes("AI-GENERATED") || upper.includes("DEEPFAKE") || upper.includes("SYNTHETIC")) {
+            displayBadge = "AI Generated Media";
+        } else if (upper.includes("FABRICATED")) {
+            displayBadge = "Fabricated Claim";
+        } else if (upper.includes("MEDICAL MISINFORMATION")) {
+            displayBadge = "Misleading Medical Claim";
+        }
+
+        if (item.verdict === "TRUE" || upper.includes("TRUE") || upper.includes("VERIFIED")) {
             badgeClass = "badge-true";
             dotClass = "dot-true";
             cardBorderClass = "border-true";
-        } else if (item.verdict === "MISLEADING") {
+        } else if (item.verdict === "MISLEADING" || upper.includes("MISLEAD") || upper.includes("WARNING")) {
             badgeClass = "badge-mislead";
             dotClass = "dot-mislead";
             cardBorderClass = "border-mislead";
+        } else if (upper.includes("AI") || upper.includes("DEEPFAKE")) {
+            badgeClass = "badge-ai";
+            dotClass = "dot-ai";
+            cardBorderClass = "border-ai";
         }
 
         card.className = "debunk-card";
@@ -989,18 +1005,24 @@ function renderDebunkCards(debunks) {
             <div class="debunk-meta-row">
                 <span class="badge-verdict ${badgeClass}">
                     <span class="status-dot ${dotClass}"></span>
-                    <span>${escapeHtml(item.verdict_badge || item.verdict)}</span>
+                    <span>${escapeHtml(displayBadge)}</span>
                 </span>
-                <span class="debunk-origin-pill">${escapeHtml(item.origin || "Viral Wire")}</span>
+                <span class="debunk-topic-pill">${escapeHtml(item.category || "Fact Check")}</span>
             </div>
             
             <h4 class="debunk-claim-text">${escapeHtml(item.claim)}</h4>
             <p class="debunk-summary-text">${escapeHtml(item.summary)}</p>
 
             <div class="debunk-footer">
-                <span class="debunk-category">${escapeHtml(item.category || "General")}</span>
+                <span class="debunk-meta-date">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.65; flex-shrink: 0;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>${escapeHtml(item.date || "Verified Investigation")}</span>
+                </span>
                 <div class="debunk-card-actions">
-                    <button class="btn-card-copy-debunk" onclick="quickShareDebunk('${escapeHtml(item.claim)}', '${escapeHtml(item.verdict_badge || item.verdict)}', '${escapeHtml(item.summary)}')" title="Copy debunk statement for WhatsApp">
+                    <button class="btn-card-copy-debunk" onclick="quickShareDebunk('${escapeHtml(item.claim)}', '${escapeHtml(displayBadge)}', '${escapeHtml(item.summary)}')" title="Copy debunk statement for WhatsApp">
                         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>

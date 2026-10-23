@@ -20,8 +20,8 @@
 
     <style>
         /* ==========================================================================
-           Senior Designer Refined Swipe Game Aesthetics
-           Clean, human, editorial palette with tactile physical micro-interactions
+           Swipe The Fake — Modern Editorial Arena Design System
+           Dual-Column Desktop Architecture · Tactile Physics · Consistent UX
            ========================================================================== */
         :root {
             --bg-game-canvas: #F8FAFC;
@@ -35,6 +35,8 @@
             --brand-blue-hover: #1D4ED8;
             --status-fake: #DC2626;
             --status-real: #16A34A;
+            --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .game-page-body {
@@ -43,15 +45,68 @@
             display: flex;
             flex-direction: column;
             color: var(--text-title);
+            font-family: var(--font-ui);
         }
 
-        /* Clean Editorial Hero Banner */
-        .game-hero-banner {
+        /* Header Tool Buttons */
+        .btn-header-tool {
             background: #FFFFFF;
-            border-bottom: 1px solid var(--border-clean);
-            padding: 36px 20px 28px;
-            text-align: center;
+            border: 1px solid var(--border-clean);
+            color: var(--text-body-slate);
+            font-family: var(--font-ui);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 13px;
+            border-radius: var(--radius-sm, 8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .btn-header-tool:hover {
+            background: #F8FAFC;
+            border-color: var(--border-hover);
+            color: var(--text-title);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+        }
+
+        .btn-header-tool svg {
+            flex-shrink: 0;
+        }
+
+        /* Main Viewport & Dual-Column Layout */
+        .game-viewport-container {
+            max-width: 1140px;
+            margin: 32px auto 60px;
+            padding: 0 24px;
+            width: 100%;
+            flex: 1;
+            box-sizing: border-box;
+        }
+
+        .game-dual-layout {
+            display: grid;
+            grid-template-columns: 390px 1fr;
+            gap: 44px;
+            align-items: start;
+        }
+
+        /* LEFT COLUMN: Arena Briefing & Tactical Dashboard */
+        .game-sidebar-col {
             position: relative;
+        }
+
+        .sidebar-sticky-panel {
+            position: sticky;
+            top: 86px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
 
         .game-hero-badge {
@@ -61,80 +116,216 @@
             background: #EFF6FF;
             border: 1px solid #BFDBFE;
             color: #1D4ED8;
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
             font-size: 0.74rem;
             font-weight: 700;
-            letter-spacing: 0.8px;
-            padding: 5px 14px;
+            letter-spacing: 0.4px;
+            padding: 5px 12px;
             border-radius: 9999px;
-            margin-bottom: 12px;
             text-transform: uppercase;
+            width: fit-content;
+        }
+
+        .badge-dot-live {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
 
         .game-hero-title {
             font-family: var(--font-heading);
-            font-size: clamp(2rem, 4.5vw, 2.65rem);
+            font-size: clamp(2rem, 3.4vw, 2.5rem);
             font-weight: 800;
-            letter-spacing: -0.7px;
-            margin-bottom: 8px;
+            letter-spacing: -0.6px;
             color: var(--text-title);
             line-height: 1.15;
+            margin: 0;
         }
 
         .game-hero-sub {
-            font-size: 1.02rem;
+            font-family: var(--font-ui);
+            font-size: 0.98rem;
             color: var(--text-sub);
-            max-width: 560px;
-            margin: 0 auto 16px;
             line-height: 1.55;
+            margin: 0;
         }
 
-        /* Stats Capsule Ribbon */
-        .user-stats-ribbon {
-            display: inline-flex;
+        .game-hero-sub strong {
+            color: var(--text-title);
+        }
+
+        /* Performance Stats Card */
+        .arena-stats-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-clean);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+        }
+
+        .arena-stats-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 16px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-clean);
+        }
+
+        .arena-stats-title {
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-title);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .btn-stats-reset-link {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-family: var(--font-ui);
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-stats-reset-link:hover {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .arena-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .arena-stat-tile {
             background: #F8FAFC;
             border: 1px solid var(--border-clean);
-            padding: 6px 18px;
-            border-radius: 9999px;
-            font-size: 0.82rem;
+            border-radius: 12px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .tile-label {
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            font-weight: 600;
             color: var(--text-sub);
-            flex-wrap: wrap;
-            justify-content: center;
-            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
-        .user-stats-ribbon strong {
+        .tile-val {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 800;
             color: var(--text-title);
-            font-family: var(--font-mono);
-            font-weight: 700;
+            line-height: 1.2;
         }
 
-        .stat-item {
+        .tile-val.val-green {
+            color: #16A34A;
+        }
+
+        .tile-val.val-blue {
+            color: #2563EB;
+        }
+
+        /* How to Play / Friendly Guide Card */
+        .arena-guide-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-clean);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.04);
+        }
+
+        .guide-heading {
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-title);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 14px;
+        }
+
+        .guide-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 14px;
+            margin-bottom: 14px;
         }
 
-        .stat-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #10B981;
+        .guide-item:last-child {
+            margin-bottom: 0;
         }
 
-        /* Main Game Arena */
-        .game-arena-wrapper {
-            max-width: 540px;
-            margin: 24px auto 48px;
-            padding: 0 16px;
-            position: relative;
-            z-index: 10;
+        .guide-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .guide-icon-box.box-fake {
+            background: #FEF2F2;
+            color: #DC2626;
+            border: 1px solid #FECACA;
+        }
+
+        .guide-icon-box.box-real {
+            background: #F0FDF4;
+            color: #16A34A;
+            border: 1px solid #BBF7D0;
+        }
+
+        .guide-icon-box.box-hint {
+            background: #FEF9C3;
+            color: #CA8A04;
+            border: 1px solid #FDE047;
+        }
+
+        .guide-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .guide-text strong {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-title);
+        }
+
+        .guide-text span {
+            font-family: var(--font-ui);
+            font-size: 0.77rem;
+            color: var(--text-sub);
+            line-height: 1.35;
+        }
+
+        /* RIGHT COLUMN: Swiping Game Deck & Interactive Controls */
+        .game-interactive-col {
             width: 100%;
         }
 
-        /* Progress Bar Card */
+        /* Progress Card */
         .game-progress-card {
             background: #FFFFFF;
             border: 1px solid var(--border-clean);
@@ -156,14 +347,15 @@
 
         .progress-current {
             font-family: var(--font-heading);
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-title);
         }
 
         .progress-total {
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
             font-size: 0.78rem;
+            font-weight: 600;
             color: var(--text-sub);
         }
 
@@ -184,12 +376,18 @@
             transition: width 0.25s ease;
         }
 
+        .progress-controls-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .score-pill-tag {
             background: #F8FAFC;
             border: 1px solid var(--border-clean);
-            padding: 4px 12px;
+            padding: 5px 12px;
             border-radius: 9999px;
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
             font-size: 0.8rem;
             font-weight: 700;
             color: var(--text-title);
@@ -199,8 +397,8 @@
             background: #FFFFFF;
             border: 1px solid var(--border-clean);
             color: var(--text-sub);
-            font-family: var(--font-mono);
-            font-size: 0.74rem;
+            font-family: var(--font-ui);
+            font-size: 0.76rem;
             font-weight: 700;
             padding: 5px 11px;
             border-radius: 9999px;
@@ -218,7 +416,7 @@
             transform: translateY(-1px);
         }
 
-        /* Non-blocking Live Feedback Bar */
+        /* Non-blocking Live Feedback Toast Pill */
         .swipe-feedback-bar {
             display: flex;
             flex-direction: column;
@@ -232,14 +430,13 @@
         .feedback-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 14px;
+            gap: 10px;
+            padding: 5px 14px;
             border-radius: 9999px;
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.3px;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+            font-family: var(--font-ui);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
             animation: slideDownPill 0.2s ease-out;
             transition: all 0.2s ease;
         }
@@ -261,36 +458,34 @@
             color: #991B1B;
         }
 
-        .feedback-status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
+        .feedback-status-text {
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.2px;
         }
-
-        .feedback-pill.pill-correct .feedback-status-dot { background: #10B981; }
-        .feedback-pill.pill-wrong .feedback-status-dot { background: #EF4444; }
 
         .btn-feedback-expand {
             background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             color: inherit;
             border-radius: 9999px;
-            padding: 2px 8px;
-            font-size: 0.72rem;
+            padding: 2px 10px;
+            font-size: 0.73rem;
             font-weight: 700;
+            font-family: var(--font-ui);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 4px;
             transition: all 0.15s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
 
         .btn-feedback-expand:hover {
-            background: rgba(0, 0, 0, 0.04);
-            transform: scale(1.05);
+            background: #F8FAFC;
+            transform: scale(1.03);
         }
 
-        /* Expandable Inline Fact-Check Drawer */
         .feedback-drawer {
             background: #FFFFFF;
             border: 1px solid var(--border-clean);
@@ -317,11 +512,11 @@
         }
 
         .feedback-drawer-verdict {
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
             font-size: 0.72rem;
-            font-weight: 800;
-            padding: 2px 7px;
-            border-radius: 4px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px;
             text-transform: uppercase;
         }
 
@@ -357,18 +552,19 @@
             color: var(--text-body-slate);
             line-height: 1.5;
             margin: 0;
+            font-family: var(--font-ui);
         }
 
         /* Card Swipe Container */
         .swipe-stack-container {
             position: relative;
             width: 100%;
-            height: clamp(360px, 50vh, 440px);
+            height: clamp(380px, 48vh, 450px);
             perspective: 1000px;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
-        /* Swipe Card - Clean Apple/Linear Minimalism */
+        /* Swipe Card - Clean Linear & Apple Aesthetic */
         .swipe-card {
             position: absolute;
             top: 0;
@@ -378,8 +574,8 @@
             background: #FFFFFF;
             border: 1px solid var(--border-clean);
             border-radius: 20px;
-            box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-            padding: 24px 24px 20px;
+            box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08), 0 2px 8px -2px rgba(15, 23, 42, 0.04);
+            padding: 26px 26px 22px;
             display: flex;
             flex-direction: column;
             cursor: grab;
@@ -388,6 +584,7 @@
             overflow: hidden;
             transform-origin: 50% 100%;
             transition: box-shadow 0.2s ease;
+            box-sizing: border-box;
         }
 
         .swipe-card:active {
@@ -450,7 +647,7 @@
             transform: rotate(15deg);
         }
 
-        /* Card Content Layout */
+        /* Card Content Layout & Modern Typography */
         .card-top-meta {
             display: flex;
             justify-content: space-between;
@@ -462,24 +659,31 @@
         .card-origin-tag {
             background: #F1F5F9;
             border: 1px solid var(--border-clean);
-            color: var(--text-sub);
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
+            color: var(--text-body-slate);
+            font-family: var(--font-ui);
+            font-size: 0.74rem;
             font-weight: 600;
-            padding: 3px 9px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            letter-spacing: 0.2px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+        }
+
+        .card-origin-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--brand-blue);
+            flex-shrink: 0;
         }
 
         .card-category-tag {
             color: var(--text-sub);
-            font-size: 0.74rem;
-            font-family: var(--font-mono);
-            font-weight: 500;
+            font-size: 0.76rem;
+            font-family: var(--font-ui);
+            font-weight: 600;
         }
 
         .card-claim-quote {
@@ -488,12 +692,12 @@
             flex-direction: column;
             justify-content: center;
             text-align: left;
-            padding: 10px 0;
+            padding: 8px 0;
         }
 
         .card-claim-text {
             font-family: var(--font-heading);
-            font-size: clamp(1.12rem, 2.7vw, 1.34rem);
+            font-size: clamp(1.15rem, 2.2vw, 1.35rem);
             font-weight: 700;
             line-height: 1.55;
             color: var(--text-title);
@@ -501,15 +705,23 @@
         }
 
         .card-hint-drawer {
-            background: #F8FAFC;
-            border: 1px dashed var(--border-clean);
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-top: 10px;
-            font-size: 0.82rem;
-            color: var(--text-sub);
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-family: var(--font-ui);
+            font-size: 0.84rem;
+            color: #1E40AF;
             line-height: 1.5;
             display: none;
+        }
+
+        .hint-title {
+            color: #1E3A8A;
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
         }
 
         .card-bottom-actions {
@@ -521,28 +733,29 @@
         }
 
         .btn-hint-toggle {
-            background: transparent;
-            border: 1px dashed var(--border-clean);
-            color: var(--text-sub);
+            background: #F8FAFC;
+            border: 1px solid var(--border-clean);
+            color: var(--text-body-slate);
             font-size: 0.76rem;
             font-weight: 600;
-            font-family: var(--font-mono);
-            padding: 5px 11px;
-            border-radius: 6px;
+            font-family: var(--font-ui);
+            padding: 6px 13px;
+            border-radius: 9999px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: all 0.2s ease;
         }
 
         .btn-hint-toggle:hover {
-            background: #F8FAFC;
-            color: var(--text-title);
-            border-color: #94A3B8;
+            background: #FFFFFF;
+            color: var(--brand-blue);
+            border-color: var(--brand-blue);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
         }
 
-        /* Tactile Swipe Buttons */
+        /* Tactile Swipe Action Buttons */
         .swipe-controls-bar {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -556,7 +769,7 @@
             align-items: center;
             justify-content: center;
             padding: 14px 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             font-family: var(--font-heading);
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -567,58 +780,67 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 1.05rem;
+            font-size: 1.08rem;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
 
         .action-sub-hint {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-family: var(--font-ui);
+            font-size: 0.74rem;
             font-weight: 600;
-            margin-top: 3px;
-            opacity: 0.75;
+            margin-top: 4px;
+            opacity: 0.85;
         }
 
         .btn-swipe-fake {
             background: #FFFFFF;
-            border: 1.5px solid #FCA5A5;
+            border: 2px solid #FECACA;
             color: #DC2626;
-            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.06);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
         }
 
         .btn-swipe-fake:hover {
             background: #FEF2F2;
-            border-color: #F87171;
+            border-color: #EF4444;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.12);
+            box-shadow: 0 8px 22px rgba(239, 68, 68, 0.18);
+        }
+
+        .btn-swipe-fake:active {
+            transform: translateY(0);
         }
 
         .btn-swipe-real {
             background: #FFFFFF;
-            border: 1.5px solid #86EFAC;
+            border: 2px solid #BBF7D0;
             color: #16A34A;
-            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.06);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.08);
         }
 
         .btn-swipe-real:hover {
             background: #F0FDF4;
-            border-color: #4ADE80;
+            border-color: #10B981;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(22, 163, 74, 0.12);
+            box-shadow: 0 8px 22px rgba(22, 163, 74, 0.18);
+        }
+
+        .btn-swipe-real:active {
+            transform: translateY(0);
         }
 
         .keyboard-shortcuts-pill {
             text-align: center;
             font-size: 0.76rem;
             color: var(--text-sub);
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
+            font-weight: 500;
         }
 
         .key-cap {
             background: #FFFFFF;
             border: 1px solid var(--border-clean);
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             font-weight: 700;
             color: var(--text-title);
@@ -663,10 +885,10 @@
 
         .results-tier-badge {
             display: inline-block;
-            font-family: var(--font-mono);
+            font-family: var(--font-ui);
             font-size: 0.78rem;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             padding: 4px 14px;
             border-radius: 9999px;
             background: #F1F5F9;
@@ -690,6 +912,7 @@
             max-width: 440px;
             margin: 0 auto 26px;
             line-height: 1.55;
+            font-family: var(--font-ui);
         }
 
         .results-actions-grid {
@@ -712,6 +935,7 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.2s ease;
+            font-family: var(--font-ui);
         }
 
         .btn-share-whatsapp:hover {
@@ -733,6 +957,7 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.2s ease;
+            font-family: var(--font-ui);
         }
 
         .btn-play-again:hover {
@@ -787,6 +1012,7 @@
             color: var(--text-title);
             margin-bottom: 4px;
             line-height: 1.4;
+            font-family: var(--font-ui);
         }
 
         .review-content p {
@@ -794,6 +1020,93 @@
             color: var(--text-sub);
             line-height: 1.5;
             margin: 0;
+            font-family: var(--font-ui);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 960px) {
+            .game-viewport-container {
+                margin: 20px auto 40px;
+                padding: 0 16px;
+            }
+
+            .game-dual-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .sidebar-sticky-panel {
+                position: static;
+                text-align: center;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .game-hero-sub {
+                max-width: 540px;
+                margin: 0 auto;
+            }
+
+            .arena-stats-card {
+                width: 100%;
+                max-width: 520px;
+                margin: 0 auto;
+            }
+
+            .arena-stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .arena-guide-card,
+            .arena-tactical-card {
+                display: none; /* Keep swiping arena immediate on mobile */
+            }
+
+            .game-interactive-col {
+                max-width: 520px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .arena-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn-header-tool .header-tool-label {
+                display: none;
+            }
+
+            .btn-header-tool {
+                padding: 8px;
+                width: 36px;
+                height: 36px;
+                justify-content: center;
+            }
+
+            .btn-telegram-header {
+                padding: 0;
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+                border-radius: var(--radius-sm, 8px);
+                justify-content: center;
+                gap: 0;
+            }
+
+            .btn-telegram-header .btn-telegram-text {
+                display: none;
+            }
+
+            .btn-telegram-header svg {
+                width: 18px;
+                height: 18px;
+                margin: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -815,228 +1128,298 @@
             </nav>
 
             <div class="header-actions">
-                <a href="https://t.me/Verifyitprobot" target="_blank" rel="noopener noreferrer" class="btn-subtle" title="Chat with VerifyIt Assistant on Telegram">
-                    🤖 Telegram Bot
+                <a href="https://t.me/Verifyitprobot" target="_blank" rel="noopener noreferrer" class="btn-telegram-header" aria-label="VerifyIt Telegram Bot" title="Open Telegram Bot Assistant">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z" />
+                    </svg>
+                    <span class="btn-telegram-text">Telegram Bot</span>
                 </a>
-                <button type="button" class="btn-subtle" id="btnToggleSound" onclick="toggleSound()" title="Toggle audio chimes">
-                    🔊 Sound: ON
+                <button type="button" class="btn-header-tool" id="btnToggleSound" onclick="toggleSound()" title="Sound Effects: ON (Click to toggle)">
+                    <svg class="sound-on-svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg class="sound-off-svg" style="display:none;" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                    <span class="header-tool-label">Sound: ON</span>
                 </button>
-                <button type="button" class="btn-subtle" onclick="resetGameStats()" title="Reset saved scores in browser">
-                    Reset
+                <button type="button" class="btn-header-tool" onclick="resetGameStats()" title="Reset score record">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span class="header-tool-label">Reset</span>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" onclick="toggleMobileMenu()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Clean Editorial Hero Banner -->
-    <section class="game-hero-banner">
-        <div class="game-hero-badge">Misinformation Detection Arena</div>
-        <h1 class="game-hero-title">Swipe The Fake</h1>
-        <p class="game-hero-sub">
-            10 viral claims. Test your critical instincts: Swipe <strong>Left for Fake</strong>, <strong>Right for Real</strong>. Fast, fluid, and non-stop.
-        </p>
-
-        <!-- Stats Ribbon -->
-        <div class="user-stats-ribbon" id="userStatsRibbon">
-            <div class="stat-item">
-                <span class="stat-dot"></span>
-                <span>Best: <strong id="statBestScore">0/10</strong></span>
-            </div>
-            <div class="stat-item">
-                <span>Rounds: <strong id="statGamesPlayed">0</strong></span>
-            </div>
-            <div class="stat-item">
-                <span>Accuracy: <strong id="statAccuracy">0%</strong></span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-dot" style="background:#2563EB;"></span>
-                <span>Library: <strong>105 Verified Claims</strong></span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Game Arena -->
-    <main class="game-arena-wrapper">
-
-        <!-- Active Game Screen -->
-        <div id="gamePlayScreen">
-            <!-- Progress Tracker -->
-            <div class="game-progress-card">
-                <div class="progress-info">
-                    <span class="progress-current" id="currentQuestionNum">1</span>
-                    <span class="progress-total">/ 10 Claims</span>
-                </div>
-                <div class="progress-bar-track">
-                    <div class="progress-bar-fill" id="progressBarFill" style="width: 10%;"></div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <button type="button" class="btn-fresh-deck" onclick="reshuffleDeck()" title="Draw a fresh set of 10 claims from the 105+ pool">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="23 4 23 10 17 10"></polyline>
-                            <polyline points="1 20 1 14 7 14"></polyline>
-                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-                        </svg>
-                        <span>Fresh 10</span>
-                    </button>
-                    <div class="score-pill-tag">
-                        Score: <span id="currentScoreCount">0</span>
+    <!-- Main Game Dual-Column Layout Container -->
+    <main class="game-viewport-container">
+        <div class="game-dual-layout">
+            <!-- LEFT COLUMN: Arena Briefing & Guide -->
+            <aside class="game-sidebar-col">
+                <div class="sidebar-sticky-panel">
+                    <div class="game-hero-badge">
+                        <span class="badge-dot-live"></span>
+                        <span>Fact or Fake Quiz</span>
                     </div>
-                </div>
-            </div>
+                    <h1 class="game-hero-title">Swipe The Fake</h1>
+                    <p class="game-hero-sub">
+                        10 viral claims. Test your instincts: Swipe <strong>Left for Fake</strong>, <strong>Right for Real</strong>. Quick, fun, and non-stop.
+                    </p>
 
-            <!-- Non-blocking Live Feedback Toast Pill -->
-            <div class="swipe-feedback-bar" id="swipeFeedbackBar" style="display: none;">
-                <div class="feedback-pill" id="feedbackPill">
-                    <span class="feedback-status-dot" id="feedbackDot"></span>
-                    <span class="feedback-status-text" id="feedbackText">Correct! (+1)</span>
-                    <button type="button" class="btn-feedback-expand" id="btnFeedbackExpand" onclick="toggleFeedbackDetail(event)" title="View fact-check summary">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                        </svg>
-                        <span>Why?</span>
-                    </button>
-                </div>
-                <div class="feedback-drawer" id="feedbackDetailDrawer" style="display: none;">
-                    <div class="feedback-drawer-header">
-                        <span class="feedback-drawer-verdict" id="drawerVerdictBadge">DEBUNKED</span>
-                        <button type="button" class="btn-drawer-close" onclick="closeFeedbackDetail(event)">✕</button>
-                    </div>
-                    <p class="feedback-drawer-explanation" id="drawerExplanationText"></p>
-                </div>
-            </div>
-
-            <!-- Swipe Cards Stack Area -->
-            <div class="swipe-stack-container" id="swipeContainer">
-                <!-- Top Card (Active) -->
-                <div class="swipe-card card-top" id="topCard">
-                    <!-- Stamps -->
-                    <div class="card-stamp stamp-fake" id="stampFake">FAKE ✕</div>
-                    <div class="card-stamp stamp-real" id="stampReal">REAL ✓</div>
-
-                    <div class="card-top-meta">
-                        <span class="card-origin-tag" id="cardOrigin">
-                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            <span id="cardOriginText">WhatsApp Forward</span>
-                        </span>
-                        <span class="card-category-tag" id="cardCategory">Culture & National</span>
+                    <!-- Stats Grid -->
+                    <div class="arena-stats-card">
+                        <div class="arena-stats-header">
+                            <span class="arena-stats-title">Your Stats</span>
+                            <button type="button" class="btn-stats-reset-link" onclick="resetGameStats()" title="Reset saved scores in browser">Reset</button>
+                        </div>
+                        <div class="arena-stats-grid">
+                            <div class="arena-stat-tile">
+                                <span class="tile-label">Best Score</span>
+                                <strong class="tile-val" id="statBestScore">0/10</strong>
+                            </div>
+                            <div class="arena-stat-tile">
+                                <span class="tile-label">Accuracy</span>
+                                <strong class="tile-val val-green" id="statAccuracy">0%</strong>
+                            </div>
+                            <div class="arena-stat-tile">
+                                <span class="tile-label">Played</span>
+                                <strong class="tile-val" id="statGamesPlayed">0</strong>
+                            </div>
+                            <div class="arena-stat-tile">
+                                <span class="tile-label">Total Claims</span>
+                                <strong class="tile-val val-blue">105+</strong>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="card-claim-quote">
-                        <p class="card-claim-text" id="cardClaimText">
-                            UNESCO officially declared India's National Anthem ("Jana Gana Mana") the best anthem in the world.
-                        </p>
+                    <!-- How to Play Guide -->
+                    <div class="arena-guide-card">
+                        <div class="guide-heading">How to Play</div>
+                        <div class="guide-item">
+                            <div class="guide-icon-box box-fake" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </div>
+                            <div class="guide-text">
+                                <strong>Swipe Left for Fake</strong>
+                                <span>Rumors, false claims, and hoaxes</span>
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon-box box-real" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="guide-text">
+                                <strong>Swipe Right for Real</strong>
+                                <span>Verified news and true facts</span>
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon-box box-hint" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 18h6"></path>
+                                    <path d="M10 22h4"></path>
+                                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                                </svg>
+                            </div>
+                            <div class="guide-text">
+                                <strong>Need a Hint?</strong>
+                                <span>Tap "Need Clue?" if you get stuck</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT COLUMN: Swiping Deck & Interactive Controls -->
+            <section class="game-interactive-col">
+                <!-- Active Game Screen -->
+                <div id="gamePlayScreen">
+                    <!-- Progress Tracker -->
+                    <div class="game-progress-card">
+                        <div class="progress-info">
+                            <span class="progress-current" id="currentQuestionNum">1</span>
+                            <span class="progress-total">/ 10 Questions</span>
+                        </div>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressBarFill" style="width: 10%;"></div>
+                        </div>
+                        <div class="progress-controls-right">
+                            <button type="button" class="btn-fresh-deck" onclick="reshuffleDeck()" title="Draw a fresh set of 10 claims">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                    <polyline points="1 20 1 14 7 14"></polyline>
+                                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                                </svg>
+                                <span>New Questions</span>
+                            </button>
+                            <div class="score-pill-tag">
+                                Score: <span id="currentScoreCount">0</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="card-hint-drawer" id="cardHintDrawer">
-                        <strong style="color: var(--text-title); display: block; margin-bottom: 2px;">Fact-Check Clue:</strong>
-                        <span id="cardHintText">Does UNESCO actually hold competitive rankings for national anthems?</span>
+                    <!-- Clean Feedback Toast Pill -->
+                    <div class="swipe-feedback-bar" id="swipeFeedbackBar" style="display: none;">
+                        <div class="feedback-pill" id="feedbackPill">
+                            <span class="feedback-status-text" id="feedbackText">Correct</span>
+                            <button type="button" class="btn-feedback-expand" id="btnFeedbackExpand" onclick="toggleFeedbackDetail(event)" title="View explanation">
+                                <span>Why?</span>
+                            </button>
+                        </div>
+                        <div class="feedback-drawer" id="feedbackDetailDrawer" style="display: none;">
+                            <div class="feedback-drawer-header">
+                                <span class="feedback-drawer-verdict" id="drawerVerdictBadge">Verified Fact</span>
+                                <button type="button" class="btn-drawer-close" onclick="closeFeedbackDetail(event)">✕</button>
+                            </div>
+                            <p class="feedback-drawer-explanation" id="drawerExplanationText"></p>
+                        </div>
                     </div>
 
-                    <div class="card-bottom-actions">
-                        <button type="button" class="btn-hint-toggle" onclick="toggleHint()">
-                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            <span>Need Clue?</span>
+                    <!-- Swipe Cards Stack Area -->
+                    <div class="swipe-stack-container" id="swipeContainer">
+                        <!-- Top Card (Active) -->
+                        <div class="swipe-card card-top" id="topCard">
+                            <!-- Stamps -->
+                            <div class="card-stamp stamp-fake" id="stampFake">FAKE ✕</div>
+                            <div class="card-stamp stamp-real" id="stampReal">REAL ✓</div>
+
+                            <div class="card-top-meta">
+                                <span class="card-origin-tag" id="cardOrigin">
+                                    <span class="card-origin-dot"></span>
+                                    <span id="cardOriginText">WhatsApp Forward</span>
+                                </span>
+                                <span class="card-category-tag" id="cardCategory">Culture & National</span>
+                            </div>
+
+                            <div class="card-claim-quote">
+                                <p class="card-claim-text" id="cardClaimText">
+                                    UNESCO officially declared India's National Anthem ("Jana Gana Mana") the best anthem in the world.
+                                </p>
+                            </div>
+
+                            <div class="card-hint-drawer" id="cardHintDrawer">
+                                <strong class="hint-title">Fact-Check Clue:</strong>
+                                <span id="cardHintText">Does UNESCO actually hold competitive rankings for national anthems?</span>
+                            </div>
+
+                            <div class="card-bottom-actions">
+                                <button type="button" class="btn-hint-toggle" onclick="toggleHint()">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                    </svg>
+                                    <span>Need Clue?</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Behind Card 1 (Visual Depth) -->
+                        <div class="swipe-card card-behind card-behind-1" id="behindCard">
+                            <div class="card-top-meta">
+                                <span class="card-origin-tag">Incoming Claim</span>
+                                <span class="card-category-tag">Next in Deck</span>
+                            </div>
+                            <div class="card-claim-quote">
+                                <p class="card-claim-text" style="color: #94A3B8;">
+                                    Loading next claim...
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Behind Card 2 (Bottom Deck Depth) -->
+                        <div class="swipe-card card-behind card-behind-2" id="behindCard2"></div>
+                    </div>
+
+                    <!-- Tactile Swipe Buttons -->
+                    <div class="swipe-controls-bar">
+                        <button type="button" class="btn-swipe-action btn-swipe-fake" onclick="triggerDecision(false)" id="btnFake">
+                            <span class="action-main-text">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                                <span>FAKE</span>
+                            </span>
+                            <span class="action-sub-hint">Swipe Left ←</span>
+                        </button>
+
+                        <button type="button" class="btn-swipe-action btn-swipe-real" onclick="triggerDecision(true)" id="btnReal">
+                            <span class="action-main-text">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                <span>REAL</span>
+                            </span>
+                            <span class="action-sub-hint">Swipe Right →</span>
                         </button>
                     </div>
-                </div>
 
-                <!-- Behind Card 1 (Visual Depth) -->
-                <div class="swipe-card card-behind card-behind-1" id="behindCard">
-                    <div class="card-top-meta">
-                        <span class="card-origin-tag">Incoming Claim</span>
-                        <span class="card-category-tag">Next in Deck</span>
-                    </div>
-                    <div class="card-claim-quote">
-                        <p class="card-claim-text" style="color: #94A3B8;">
-                            Loading next intelligence claim...
-                        </p>
+                    <!-- Keyboard Guide -->
+                    <div class="keyboard-shortcuts-pill">
+                        Press <span class="key-cap">← Left Arrow</span> for Fake &nbsp;&bull;&nbsp; <span class="key-cap">→ Right Arrow</span> for Real
                     </div>
                 </div>
 
-                <!-- Behind Card 2 (Bottom Deck Depth) -->
-                <div class="swipe-card card-behind card-behind-2" id="behindCard2"></div>
-            </div>
-
-            <!-- Tactile Swipe Buttons -->
-            <div class="swipe-controls-bar">
-                <button type="button" class="btn-swipe-action btn-swipe-fake" onclick="triggerDecision(false)" id="btnFake">
-                    <span class="action-main-text">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                <!-- End of Game Results Screen -->
+                <div class="results-container" id="resultsScreen">
+                    <div class="results-trophy-wrap">
+                        <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                            <path d="M4 22h16"></path>
+                            <path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-2c-.55 0-1-.45-1-1v-2.34"></path>
+                            <path d="M18 4H6v7a6 6 0 0 0 12 0V4z"></path>
                         </svg>
-                        <span>FAKE</span>
-                    </span>
-                    <span class="action-sub-hint">Swipe Left ←</span>
-                </button>
+                    </div>
+                    <h2 class="results-headline">Quiz Complete!</h2>
+                    <div class="results-tier-badge" id="resultsTierBadge">FACT-CHECK PRO</div>
+                    <div class="results-score-big" id="resultsScoreBig">8/10</div>
+                    <p class="results-score-sub" id="resultsScoreSub">
+                        You spotted 8 out of 10 viral claims correctly. Great job spotting real facts from rumors!
+                    </p>
 
-                <button type="button" class="btn-swipe-action btn-swipe-real" onclick="triggerDecision(true)" id="btnReal">
-                    <span class="action-main-text">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>REAL</span>
-                    </span>
-                    <span class="action-sub-hint">Swipe Right →</span>
-                </button>
-            </div>
+                    <div class="results-actions-grid">
+                        <a href="#" class="btn-share-whatsapp" id="btnShareWhatsapp" target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                <path d="M12.031 2C6.496 2 2 6.5 2 12.043c0 1.77.464 3.498 1.345 5.027L2 22l5.101-1.336a10.024 10.024 0 0 0 4.93 1.285h.004c5.535 0 10.031-4.5 10.031-10.043C22.066 6.5 17.566 2 12.031 2zm5.86 14.207c-.244.686-1.42 1.32-1.956 1.378-.49.052-1.127.075-3.626-.957-3.197-1.321-5.253-4.568-5.412-4.781-.158-.213-1.295-1.724-1.295-3.288 0-1.564.818-2.333 1.108-2.651.29-.317.633-.396.844-.396.21 0 .422.002.607.012.195.01.457-.074.714.545.264.633.9 2.193.978 2.352.079.158.132.343.026.555-.105.211-.158.343-.316.528-.158.185-.333.413-.475.555-.158.158-.322.33-.138.647.185.316.822 1.353 1.764 2.193 1.213 1.08 2.235 1.415 2.552 1.573.316.158.502.132.686-.079.185-.211.792-.924 1.003-1.241.21-.316.422-.264.713-.158.29.106 1.847.871 2.164 1.03.316.158.528.237.607.369.079.132.079.766-.165 1.452z"/>
+                            </svg>
+                            <span>Share on WhatsApp</span>
+                        </a>
+                        <button type="button" class="btn-play-again" onclick="restartGame()">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="1 4 1 10 7 10"></polyline>
+                                <polyline points="23 20 23 14 17 14"></polyline>
+                                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                            </svg>
+                            <span>Play Again</span>
+                        </button>
+                    </div>
 
-            <!-- Keyboard Guide -->
-            <div class="keyboard-shortcuts-pill">
-                Press <span class="key-cap">← Left Arrow</span> for Fake &nbsp;&bull;&nbsp; <span class="key-cap">→ Right Arrow</span> for Real
-            </div>
+                    <!-- Detailed Review breakdown (Shown ONLY at end of 10 cards) -->
+                    <h3 class="results-review-title">Answers &amp; Explanations</h3>
+                    <div class="results-review-list" id="reviewListContainer"></div>
+                </div>
+            </section>
         </div>
-
-        <!-- End of Game Results Screen (Full Details Shown ONLY Here) -->
-        <div class="results-container" id="resultsScreen">
-            <div class="results-trophy-wrap">
-                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                    <path d="M4 22h16"></path>
-                    <path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h10c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-2c-.55 0-1-.45-1-1v-2.34"></path>
-                    <path d="M18 4H6v7a6 6 0 0 0 12 0V4z"></path>
-                </svg>
-            </div>
-            <h2 class="results-headline">Assessment Complete!</h2>
-            <div class="results-tier-badge" id="resultsTierBadge">MASTER FACT-CHECKER</div>
-            <div class="results-score-big" id="resultsScoreBig">8/10</div>
-            <p class="results-score-sub" id="resultsScoreSub">
-                You spotted 8 out of 10 viral rumors correctly. Your misinformation detection radar is well above average!
-            </p>
-
-            <div class="results-actions-grid">
-                <a href="#" class="btn-share-whatsapp" id="btnShareWhatsapp" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M12.031 2C6.496 2 2 6.5 2 12.043c0 1.77.464 3.498 1.345 5.027L2 22l5.101-1.336a10.024 10.024 0 0 0 4.93 1.285h.004c5.535 0 10.031-4.5 10.031-10.043C22.066 6.5 17.566 2 12.031 2zm5.86 14.207c-.244.686-1.42 1.32-1.956 1.378-.49.052-1.127.075-3.626-.957-3.197-1.321-5.253-4.568-5.412-4.781-.158-.213-1.295-1.724-1.295-3.288 0-1.564.818-2.333 1.108-2.651.29-.317.633-.396.844-.396.21 0 .422.002.607.012.195.01.457-.074.714.545.264.633.9 2.193.978 2.352.079.158.132.343.026.555-.105.211-.158.343-.316.528-.158.185-.333.413-.475.555-.158.158-.322.33-.138.647.185.316.822 1.353 1.764 2.193 1.213 1.08 2.235 1.415 2.552 1.573.316.158.502.132.686-.079.185-.211.792-.924 1.003-1.241.21-.316.422-.264.713-.158.29.106 1.847.871 2.164 1.03.316.158.528.237.607.369.079.132.079.766-.165 1.452z"/>
-                    </svg>
-                    <span>Share on WhatsApp</span>
-                </a>
-                <button type="button" class="btn-play-again" onclick="restartGame()">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="1 4 1 10 7 10"></polyline>
-                        <polyline points="23 20 23 14 17 14"></polyline>
-                        <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
-                    </svg>
-                    <span>Play Again (Fresh 10)</span>
-                </button>
-            </div>
-
-            <!-- Detailed Review breakdown (Shown ONLY at end of 10 cards) -->
-            <h3 class="results-review-title">Detailed Claim Fact-Check Dossier</h3>
-            <div class="results-review-list" id="reviewListContainer"></div>
-        </div>
-
     </main>
 
     <!-- Professional Footer -->
@@ -2249,10 +2632,25 @@
 
         function toggleSound() {
             soundEnabled = !soundEnabled;
+            const onSvg = document.querySelector("#btnToggleSound .sound-on-svg");
+            const offSvg = document.querySelector("#btnToggleSound .sound-off-svg");
+            const label = document.querySelector("#btnToggleSound .header-tool-label");
+            if (onSvg && offSvg) {
+                onSvg.style.display = soundEnabled ? "block" : "none";
+                offSvg.style.display = soundEnabled ? "none" : "block";
+            }
+            if (label) {
+                label.textContent = soundEnabled ? "Sound: ON" : "Sound: OFF";
+            }
             const btn = document.getElementById("btnToggleSound");
             if (btn) {
-                btn.textContent = soundEnabled ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+                btn.title = soundEnabled ? "Sound Effects: ON (Click to mute)" : "Sound Effects: OFF (Click to unmute)";
             }
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById("mainNav");
+            if (nav) nav.classList.toggle("mobile-open");
         }
 
         // 3. Fluid Non-blocking Decision Logic
@@ -2314,12 +2712,10 @@
                 pill.className = isCorrect ? "feedback-pill pill-correct" : "feedback-pill pill-wrong";
             }
             if (text) {
-                text.textContent = isCorrect 
-                    ? "✓ Spot on! (+1)" 
-                    : `✕ Missed — Actually ${q.isReal ? "REAL" : "FAKE"}`;
+                text.textContent = isCorrect ? "Correct" : "Wrong";
             }
             if (drawerVerdict) {
-                drawerVerdict.textContent = q.isReal ? "VERIFIED FACT" : "DEBUNKED HOAX";
+                drawerVerdict.textContent = q.isReal ? "Verified Fact" : "False Claim";
                 drawerVerdict.className = `feedback-drawer-verdict ${q.isReal ? 'verdict-real' : 'verdict-fake'}`;
             }
             if (drawerText) {
@@ -2452,22 +2848,22 @@
             scoreBig.textContent = `${score} / 10`;
 
             if (score >= 9) {
-                badge.textContent = "ELITE FACT-CHECK RADAR";
-                scoreSub.textContent = "Incredible precision! You have sharp skepticism, deep media literacy, and are virtually immune to viral disinformation.";
+                badge.textContent = "FACT-CHECK PRO";
+                scoreSub.textContent = "Outstanding score! You have sharp instincts and can easily spot misinformation.";
             } else if (score >= 7) {
-                badge.textContent = "SAVVY TRUTH SEEKER";
-                scoreSub.textContent = "Strong analytical instincts! You caught the vast majority of fabricated claims and AI media artifacts.";
+                badge.textContent = "SHARP DETECTIVE";
+                scoreSub.textContent = "Great job! You caught most of the rumors and identified the real facts.";
             } else if (score >= 5) {
-                badge.textContent = "CAUTIOUS CITIZEN";
-                scoreSub.textContent = "Decent radar, but a few subtle hoaxes slipped through. Keep double-checking before forwarding on family groups!";
+                badge.textContent = "GOOD EYE";
+                scoreSub.textContent = "Good effort! A couple of tricky claims caught you off guard, but you did well.";
             } else {
-                badge.textContent = "VIRAL FORWARD TARGET";
-                scoreSub.textContent = "Be careful! Several emotional and fabricated hoaxes fooled your radar. Practice using the S.I.F.T. protocol before sharing.";
+                badge.textContent = "NEEDS PRACTICE";
+                scoreSub.textContent = "Don't worry, viral claims can be tricky. Try another round to sharpen your skills!";
             }
 
             // WhatsApp Share link
             const shareText = encodeURIComponent(
-                `🕵️‍♂️ I just took the VerifyIt Misinformation Swipe Challenge and scored ${score}/10! Can you spot what's real and what's fake? Test your truth radar here: ${window.location.href}`
+                `I just took the VerifyIt Fact or Fake Quiz and scored ${score}/10! Can you beat my score? Test yourself here: ${window.location.href}`
             );
             document.getElementById("btnShareWhatsapp").href = `https://api.whatsapp.com/send?text=${shareText}`;
 
@@ -2489,8 +2885,8 @@
                     <div class="review-content">
                         <strong>#${i + 1}. ${ans.claim.claim}</strong>
                         <p>
-                            Actual Truth: <strong style="display:inline; color:${ans.claim.isReal ? '#10B981' : '#EF4444'}">${verdictLabel}</strong> · 
-                            Your Answer: <strong>${userChoiceLabel}</strong>
+                            Correct Answer: <strong style="display:inline; color:${ans.claim.isReal ? '#10B981' : '#EF4444'}">${verdictLabel}</strong> &nbsp;·&nbsp; 
+                            Your Choice: <strong>${userChoiceLabel}</strong>
                         </p>
                         <p style="margin-top:6px; color: #475569;">${ans.claim.explanation}</p>
                     </div>

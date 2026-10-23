@@ -38,12 +38,12 @@
             </nav>
 
             <div class="header-actions">
-                <a href="https://t.me/Verifyitprobot" target="_blank" rel="noopener noreferrer" class="btn-telegram-header">
+                <a href="https://t.me/Verifyitprobot" target="_blank" rel="noopener noreferrer" class="btn-telegram-header" aria-label="VerifyIt Telegram Bot" title="Open Telegram Bot Assistant">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                         <path
                             d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.784-1.291 5.918-1.859 8.785-.24.11-.476.166-.71.166-.368 0-.583-.14-.844-.313-.41-.274-2.298-1.517-2.73-1.808-.288-.194-.572-.387-.272-.693.078-.08 1.439-1.378 2.651-2.544.186-.179.37-.36.216-.541-.153-.182-.397-.11-.571-.035-.246.106-3.957 2.56-4.475 2.898-.517.338-.988.384-1.391.265-.403-.119-1.233-.393-1.838-.592-.743-.245-.802-.572-.058-.871 3.097-1.348 7.42-3.153 9.49-3.965.987-.387 1.841-.309 2.012.185.07.202.046.621.03.864z" />
                     </svg>
-                    <span>Telegram Bot</span>
+                    <span class="btn-telegram-text">Telegram Bot</span>
                 </a>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu"
                     onclick="toggleMobileMenu()">
@@ -76,7 +76,7 @@
                         <div class="omnibar-input-wrapper">
                             <textarea id="inputText" class="omnibar-textarea"
                                 placeholder="Paste a viral WhatsApp forward, statement, or screenshot... (Double-click box to speak)"
-                                rows="3" ondblclick="toggleRecording()"></textarea>
+                                rows="5" ondblclick="toggleRecording()"></textarea>
                             <button type="button" class="btn-mic-inside" id="recordBtn"
                                 onclick="toggleRecording()" ondblclick="toggleRecording()"
                                 title="Click or double-click to speak claim (Telugu / English)">
